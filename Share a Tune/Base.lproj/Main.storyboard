@@ -246,6 +246,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <state key="normal" title="Votre Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="choixMode:" destination="RS5-gt-vIc" eventType="touchUpInside" id="EFW-7K-qR0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -267,7 +270,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="boutonPhoto" destination="h6r-Vc-ioK" id="jyl-il-lTd"/>
+                        <outlet property="boutonPhoto" destination="h6r-Vc-ioK" id="ojh-Vr-Ur4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXj-13-cxo" userLabel="First Responder" sceneMemberID="firstResponder"/>

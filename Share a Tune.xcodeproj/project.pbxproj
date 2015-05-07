@@ -32,13 +32,13 @@
 		771D751F1AFAA01600C59D82 /* 2 - Login.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D751E1AFAA01500C59D82 /* 2 - Login.png */; };
 		771D75231AFAA16C00C59D82 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75211AFAA16C00C59D82 /* background.png */; };
 		771D75241AFAA16C00C59D82 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75221AFAA16C00C59D82 /* logo.png */; };
+		77377CFE1AFBC56F00621D2A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */; };
-		77B965D61AFAC5BC00CE1145 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */; };
 		77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */; };
 		77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */; };
 		77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B965E31AFB7CBF00CE1145 /* addphoto.png */; };
-		77B965E61AFB930400CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E51AFB930400CE1145 /* SignUpFirstViewController.swift */; };
+		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +87,7 @@
 		77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
 		77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionFinalViewController.swift; sourceTree = "<group>"; };
 		77B965E31AFB7CBF00CE1145 /* addphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addphoto.png; sourceTree = "<group>"; };
-		77B965E51AFB930400CE1145 /* SignUpFirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFirstViewController.swift; sourceTree = "<group>"; };
+		77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFirstViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77B965D61AFAC5BC00CE1145 /* Parse.framework in Frameworks */,
+				77377CFE1AFBC56F00621D2A /* Parse.framework in Frameworks */,
 				771D751D1AFA75E100C59D82 /* libsqlite3.dylib in Frameworks */,
 				771D751B1AFA75D900C59D82 /* libz.dylib in Frameworks */,
 				771D75191AFA75D000C59D82 /* SystemConfiguration.framework in Frameworks */,
@@ -152,8 +152,8 @@
 				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
 				77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */,
-				77B965E51AFB930400CE1145 /* SignUpFirstViewController.swift */,
 				77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */,
+				77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */,
 				77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */,
 				77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */,
 				771D74E21AFA63BD00C59D82 /* Images.xcassets */,
@@ -335,7 +335,7 @@
 				77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */,
 				77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */,
 				77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */,
-				77B965E61AFB930400CE1145 /* SignUpFirstViewController.swift in Sources */,
+				77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +475,9 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -493,6 +496,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
