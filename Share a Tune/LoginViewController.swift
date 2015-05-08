@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet var username: UITextField!
@@ -29,6 +29,9 @@ class LoginViewController: UIViewController {
         password.attributedPlaceholder = NSAttributedString(string:"Votre mot de passe",
             attributes:[NSForegroundColorAttributeName: UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)])
         
+        self.username.delegate = self;
+        self.password.delegate = self;
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,6 +43,14 @@ class LoginViewController: UIViewController {
         self.navigationController?.navigationBarHidden = true
     }
     
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true);
+    }
+    
+    func textFieldShouldReturn(textField : UITextField ) -> Bool{
+        textField.resignFirstResponder()
+        return true
+    }
     
     /*
     // MARK: - Navigation

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpFirstViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class SignUpFirstViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate{
     
     var isCamera = UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice(rawValue: 0)!)
     
@@ -18,7 +18,13 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         println("image")
         self.dismissViewControllerAnimated(true, completion: nil)
+        boutonPhoto.setImage(image, forState: UIControlState.Normal)
+        boutonPhoto.titleLabel?.text = "Votre Photo"
     }
+    @IBOutlet var email: UITextField!
+    @IBOutlet var username: UITextField!
+    @IBOutlet var password: UITextField!
+    
     
     @IBAction func choixMode(sender: AnyObject) {
         
@@ -36,7 +42,7 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
                 self.presentViewController(image, animated: true, completion: nil)
             }))
         }
-     
+        
         
         
         alert.addAction(UIAlertAction(title: "Choisir une photo enregistrée", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
@@ -65,12 +71,25 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         
         boutonPhoto.layer.cornerRadius = 0.5 * boutonPhoto.bounds.size.width
         
-        // Do any additional setup after loading the view.
+        
+        self.password.delegate = self;
+        self.email.delegate = self;
+        self.username.delegate = self;
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true);
+    }
+    
+    func textFieldShouldReturn(textField : UITextField ) -> Bool{
+        textField.resignFirstResponder()
+        return true
     }
     
     

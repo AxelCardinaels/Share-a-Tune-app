@@ -246,6 +246,12 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <state key="normal" title="Votre Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="choixMode:" destination="RS5-gt-vIc" eventType="touchUpInside" id="EFW-7K-qR0"/>
                                 </connections>
@@ -271,6 +277,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="boutonPhoto" destination="h6r-Vc-ioK" id="ojh-Vr-Ur4"/>
+                        <outlet property="email" destination="uqf-4k-viH" id="Rvb-eA-0Js"/>
+                        <outlet property="password" destination="e8O-he-fWv" id="1H3-eW-oI0"/>
+                        <outlet property="username" destination="w0B-uw-Woi" id="c6g-JK-K2K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXj-13-cxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -347,6 +356,10 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="nom" destination="Rbx-2P-XDm" id="LMy-Co-CCc"/>
+                        <outlet property="prenom" destination="cwx-Fe-XNh" id="dt2-zH-qoP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NuP-6u-QvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
