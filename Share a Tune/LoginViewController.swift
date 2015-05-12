@@ -73,7 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 activityIndicatorButtonKill(self.senderButton)
                 
                 if user != nil {
-                    println("logged In")
+                    self.performSegueWithIdentifier("isLogged", sender: self)
                     
                 } else {
                     
@@ -108,6 +108,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.username.delegate = self;
         self.password.delegate = self;
         
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if PFUser.currentUser() != nil {
+            self.performSegueWithIdentifier("isLogged", sender: self)
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -18,6 +18,8 @@ class FeedViewController: UIViewController {
         
         //On affiche la bar de navigation
         self.navigationController?.navigationBarHidden = false;
+        
+        
 
         
         // Do any additional setup after loading the view.
@@ -26,6 +28,10 @@ class FeedViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationItem.setHidesBackButton(true, animated: true)
     }
     
 
