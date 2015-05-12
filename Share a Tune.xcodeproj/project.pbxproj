@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7708C8511B015D36006B1AE9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		7708C8531B016821006B1AE9 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 7708C8521B016821006B1AE9 /* facebook.png */; };
 		771D74DC1AFA63BD00C59D82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */; };
 		771D74DE1AFA63BD00C59D82 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D74DD1AFA63BD00C59D82 /* ViewController.swift */; };
 		771D74E11AFA63BD00C59D82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771D74DF1AFA63BD00C59D82 /* Main.storyboard */; };
@@ -32,7 +34,12 @@
 		771D751F1AFAA01600C59D82 /* 2 - Login.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D751E1AFAA01500C59D82 /* 2 - Login.png */; };
 		771D75231AFAA16C00C59D82 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75211AFAA16C00C59D82 /* background.png */; };
 		771D75241AFAA16C00C59D82 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75221AFAA16C00C59D82 /* logo.png */; };
-		77377CFE1AFBC56F00621D2A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		77377D001AFD539700621D2A /* noopf.png in Resources */ = {isa = PBXBuildFile; fileRef = 77377CFF1AFD539700621D2A /* noopf.png */; };
+		77377D021B00258800621D2A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D011B00258700621D2A /* FeedViewController.swift */; };
+		77377D0E1B0107B000621D2A /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D0D1B0107B000621D2A /* UserSearchViewController.swift */; };
+		77377D121B0146F400621D2A /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D111B0146F400621D2A /* NewPostViewController.swift */; };
+		77377D141B01504D00621D2A /* pochette.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77377D131B01504D00621D2A /* pochette.jpg */; };
+		77377D161B01517E00621D2A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77377D151B01517D00621D2A /* MapKit.framework */; };
 		77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */; };
 		77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */; };
 		77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */; };
@@ -52,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7708C8521B016821006B1AE9 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
 		771D74D61AFA63BD00C59D82 /* Share a Tune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Share a Tune.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		771D74DA1AFA63BD00C59D82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +90,12 @@
 		771D751E1AFAA01500C59D82 /* 2 - Login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2 - Login.png"; sourceTree = "<group>"; };
 		771D75211AFAA16C00C59D82 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		771D75221AFAA16C00C59D82 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		77377CFF1AFD539700621D2A /* noopf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noopf.png; sourceTree = "<group>"; };
+		77377D011B00258700621D2A /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		77377D0D1B0107B000621D2A /* UserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
+		77377D111B0146F400621D2A /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		77377D131B01504D00621D2A /* pochette.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pochette.jpg; sourceTree = "<group>"; };
+		77377D151B01517D00621D2A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionViewController.swift; sourceTree = "<group>"; };
 		77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +109,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77377CFE1AFBC56F00621D2A /* Parse.framework in Frameworks */,
+				7708C8511B015D36006B1AE9 /* Parse.framework in Frameworks */,
+				77377D161B01517E00621D2A /* MapKit.framework in Frameworks */,
 				771D751D1AFA75E100C59D82 /* libsqlite3.dylib in Frameworks */,
 				771D751B1AFA75D900C59D82 /* libz.dylib in Frameworks */,
 				771D75191AFA75D000C59D82 /* SystemConfiguration.framework in Frameworks */,
@@ -148,9 +163,12 @@
 			isa = PBXGroup;
 			children = (
 				771D75201AFAA14C00C59D82 /* images */,
+				77377D111B0146F400621D2A /* NewPostViewController.swift */,
 				771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */,
 				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
+				77377D0D1B0107B000621D2A /* UserSearchViewController.swift */,
+				77377D011B00258700621D2A /* FeedViewController.swift */,
 				77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */,
 				77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */,
 				77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */,
@@ -191,6 +209,7 @@
 		771D74FB1AFA74F000C59D82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77377D151B01517D00621D2A /* MapKit.framework */,
 				771D751C1AFA75E100C59D82 /* libsqlite3.dylib */,
 				771D751A1AFA75D900C59D82 /* libz.dylib */,
 				771D75181AFA75D000C59D82 /* SystemConfiguration.framework */,
@@ -216,10 +235,13 @@
 		771D75201AFAA14C00C59D82 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				77377CFF1AFD539700621D2A /* noopf.png */,
 				771D751E1AFAA01500C59D82 /* 2 - Login.png */,
 				771D75211AFAA16C00C59D82 /* background.png */,
 				771D75221AFAA16C00C59D82 /* logo.png */,
+				77377D131B01504D00621D2A /* pochette.jpg */,
 				77B965E31AFB7CBF00CE1145 /* addphoto.png */,
+				7708C8521B016821006B1AE9 /* facebook.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -309,8 +331,11 @@
 				771D75231AFAA16C00C59D82 /* background.png in Resources */,
 				771D75241AFAA16C00C59D82 /* logo.png in Resources */,
 				771D74E11AFA63BD00C59D82 /* Main.storyboard in Resources */,
+				77377D141B01504D00621D2A /* pochette.jpg in Resources */,
 				77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */,
 				771D74E61AFA63BD00C59D82 /* LaunchScreen.xib in Resources */,
+				7708C8531B016821006B1AE9 /* facebook.png in Resources */,
+				77377D001AFD539700621D2A /* noopf.png in Resources */,
 				771D74E31AFA63BD00C59D82 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +360,10 @@
 				77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */,
 				77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */,
 				77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */,
+				77377D021B00258800621D2A /* FeedViewController.swift in Sources */,
+				77377D0E1B0107B000621D2A /* UserSearchViewController.swift in Sources */,
 				77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */,
+				77377D121B0146F400621D2A /* NewPostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,13 +506,16 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -508,13 +539,16 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
