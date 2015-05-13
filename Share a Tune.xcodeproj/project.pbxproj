@@ -47,6 +47,7 @@
 		77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B965E31AFB7CBF00CE1145 /* addphoto.png */; };
 		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
 		77DF0BF71B02A56500A7E2BF /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionFinalViewController.swift; sourceTree = "<group>"; };
 		77B965E31AFB7CBF00CE1145 /* addphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addphoto.png; sourceTree = "<group>"; };
 		77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFirstViewController.swift; sourceTree = "<group>"; };
+		77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				771D75201AFAA14C00C59D82 /* images */,
+				77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */,
 				7708C85A1B024F2B006B1AE9 /* UserSearchViewController.swift */,
 				7708C85F1B0265A8006B1AE9 /* UsersTableViewCell.swift */,
 				77377D111B0146F400621D2A /* NewPostViewController.swift */,
@@ -357,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */,
 				77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */,
 				771D74DE1AFA63BD00C59D82 /* ViewController.swift in Sources */,
 				771D74DC1AFA63BD00C59D82 /* AppDelegate.swift in Sources */,
