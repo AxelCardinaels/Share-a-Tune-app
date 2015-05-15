@@ -13,16 +13,15 @@ import SystemConfiguration
 
 class SelfProfileViewController: UIViewController {
     
-    @IBOutlet var profilPicture: UIImageView!
+   @IBOutlet var profilPicture: UIImageView!
     
     @IBOutlet var ProfilDescription: UILabel!
-    
     
     @IBOutlet var followersButton: UIButton!
     
     @IBOutlet var followingButton: UIButton!
     
-    
+
     func doProfile(){
         
         var theUser = PFUser.currentUser()
@@ -49,6 +48,8 @@ class SelfProfileViewController: UIViewController {
         profilPicture.layer.cornerRadius = 0.5 * profilPicture.bounds.size.width
         self.profilPicture.layer.borderWidth = 3.0;
         self.profilPicture.layer.borderColor = UIColor.whiteColor().CGColor
+
+        
         
         doProfile()
         

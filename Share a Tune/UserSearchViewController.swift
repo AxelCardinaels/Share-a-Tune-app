@@ -25,8 +25,6 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     var profilePicturesFiles = [PFUser.currentUser()?.objectForKey("profilePicture")!]
     var error = ""
     
-    
-    
     var searchBar = UISearchBar()
     
     @IBOutlet var tableUsers: UITableView!
@@ -58,9 +56,12 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
                 for object in objects! {
                     var user:PFUser = object as! PFUser
                     
+                    if user.username != PFUser.currentUser()?.username{
+                        self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
+                        self.users.append(user.username!)
+                    }
                     
-                    self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
-                    self.users.append(user.username!)
+                    
                     
                 }
                 
@@ -90,8 +91,6 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     }
     
     
-    
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! UsersTableViewCell
         
@@ -99,17 +98,34 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         cell.imageCell.layer.cornerRadius = 0.5 * cell.imageCell.bounds.size.width
         cell.labelCell.text = users[indexPath.row]
         
-        println(self.profilePicturesFiles)
-        
         profilePicturesFiles[indexPath.row]!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
-        
+            
             if imageError == nil{
                 let image = UIImage(data: imageData!)
-                    cell.imageCell.image = image
-                }
+                cell.imageCell.image = image
             }
+        }
         
         return cell;
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "showUserProfil" {
+            var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
+            var indexPath = tableUsers.indexPathForSelectedRow()
+            var theCell = tableUsers.cellForRowAtIndexPath(indexPath!)
+            var theName: AnyObject? = theCell?.valueForKey("labelCell")
+            var theNameText: AnyObject? = theName?.valueForKey("text")
+            
+            secondView.title = theNameText as? String
+        }
+        
+        
+        
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,15 +133,5 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         // Dispose of any resources that can be recreated.
     }
     
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
     
 }

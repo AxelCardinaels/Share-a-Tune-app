@@ -46,8 +46,9 @@
 		77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */; };
 		77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B965E31AFB7CBF00CE1145 /* addphoto.png */; };
 		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
-		77DF0BF71B02A56500A7E2BF /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		77CB43BA1B063AC300D7A9FA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */; };
+		77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		77B965E31AFB7CBF00CE1145 /* addphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addphoto.png; sourceTree = "<group>"; };
 		77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFirstViewController.swift; sourceTree = "<group>"; };
 		77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfProfileViewController.swift; sourceTree = "<group>"; };
+		77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77DF0BF71B02A56500A7E2BF /* Parse.framework in Frameworks */,
+				77CB43BA1B063AC300D7A9FA /* Parse.framework in Frameworks */,
 				77377D161B01517E00621D2A /* MapKit.framework in Frameworks */,
 				771D751D1AFA75E100C59D82 /* libsqlite3.dylib in Frameworks */,
 				771D751B1AFA75D900C59D82 /* libz.dylib in Frameworks */,
@@ -174,6 +176,7 @@
 				771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */,
 				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
+				77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */,
 				77377D011B00258700621D2A /* FeedViewController.swift */,
 				77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */,
 				77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */,
@@ -368,6 +371,7 @@
 				77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */,
 				77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */,
 				77377D021B00258800621D2A /* FeedViewController.swift in Sources */,
+				77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */,
 				77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */,
 				77377D121B0146F400621D2A /* NewPostViewController.swift in Sources */,
 				7708C85B1B024F2B006B1AE9 /* UserSearchViewController.swift in Sources */,
@@ -523,6 +527,9 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -541,6 +548,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
