@@ -61,8 +61,6 @@ class UserProfilViewController: UIViewController {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                // The find succeeded.
-                println("Successfully retrieved \(objects!.count) scores.")
                 
                 if objects!.count == 0{
                     self.makeFollowButton()
@@ -71,7 +69,6 @@ class UserProfilViewController: UIViewController {
                 }
                 
             } else {
-                // Log details of the failure
                 println("Fail")
             }
         }
@@ -109,8 +106,8 @@ class UserProfilViewController: UIViewController {
     }
     
     func makeLoadingButton(){
-        var followButton : UIBarButtonItem = UIBarButtonItem(title: "Chargement", style: UIBarButtonItemStyle.Plain, target: self, action: "fakeFollow")
-        self.navigationItem.rightBarButtonItem = followButton
+        var loadingButton : UIBarButtonItem = UIBarButtonItem(title: "Chargement", style: UIBarButtonItemStyle.Plain, target: self, action: "fakeFollow")
+        self.navigationItem.rightBarButtonItem = loadingButton
     }
     
     func makeFollowButton(){
@@ -150,15 +147,6 @@ class UserProfilViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
+
     
 }

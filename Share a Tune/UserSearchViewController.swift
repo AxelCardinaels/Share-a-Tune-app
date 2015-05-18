@@ -27,24 +27,7 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     
     var searchBar = UISearchBar()
     
-    @IBOutlet var tableUsers: UITableView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.navigationItem.setHidesBackButton(true, animated: true)
-        
-        //Mise en place de la barre de recherche dans la bar de navigation
-        
-        var colorTextSearchBar = searchBar.valueForKey("searchField") as? UITextField
-        colorTextSearchBar?.textColor = UIColor.whiteColor()
-        searchBar.sizeToFit()
-        searchBar.searchBarStyle = UISearchBarStyle.Minimal
-        //searchBar.setShowsCancelButton(true, animated: true)
-        searchBar.placeholder = "Rechercher un utilisateur"
-        self.navigationItem.titleView = searchBar
-        
-        //Remplissage du tableau
-        
+    func loadAllUser(){
         var query = PFUser.query()
         query?.findObjectsInBackgroundWithBlock({ (objects , findError : NSError?) -> Void in
             
@@ -74,6 +57,93 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
             }
             
         })
+    }
+    
+    func loadFollowedUser(){
+        
+        var currentUser = PFUser.currentUser()!.username
+        var query = PFQuery(className: "Followers")
+        query.whereKey("follower", equalTo: currentUser! )
+        
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                self.users.removeAll(keepCapacity: true)
+                self.profilePictures.removeAll(keepCapacity: true)
+                self.profilePicturesFiles.removeAll(keepCapacity: true)
+                if let objects = objects as? [PFObject] {
+                    for object in objects {
+                        
+                        var followed: AnyObject? = object.valueForKey("following")
+                        self.getUserInfos(followed! as! String)
+                    }
+                }
+               
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    func getUserInfos(username:String){
+        var query = PFUser.query()
+        query?.whereKey("username", equalTo: username)
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    for object in objects {
+                        var user:PFUser = object as! PFUser
+                        self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
+                        self.users.append(user.username!)
+                        println(self.users)
+                    }
+                }
+                 self.reloadTable(self.tableUsers)
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func reloadTable(table : UITableView){
+        table.reloadData()
+        println("done")
+    }
+    
+    @IBOutlet var tableUsers: UITableView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        //Mise en place de la barre de recherche dans la bar de navigation
+        
+        var colorTextSearchBar = searchBar.valueForKey("searchField") as? UITextField
+        colorTextSearchBar?.textColor = UIColor.whiteColor()
+        searchBar.sizeToFit()
+        searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        //searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.placeholder = "Rechercher un utilisateur"
+        self.navigationItem.titleView = searchBar
+        
+        //Remplissage du tableau
+        
+        
+        loadFollowedUser()
         
         
         
