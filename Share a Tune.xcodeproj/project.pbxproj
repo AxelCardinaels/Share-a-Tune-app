@@ -169,12 +169,12 @@
 			isa = PBXGroup;
 			children = (
 				771D75201AFAA14C00C59D82 /* images */,
+				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */,
 				7708C85A1B024F2B006B1AE9 /* UserSearchViewController.swift */,
 				7708C85F1B0265A8006B1AE9 /* UsersTableViewCell.swift */,
 				77377D111B0146F400621D2A /* NewPostViewController.swift */,
 				771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */,
-				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
 				77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */,
 				77377D011B00258700621D2A /* FeedViewController.swift */,

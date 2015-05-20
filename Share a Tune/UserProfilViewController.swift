@@ -136,8 +136,6 @@ class UserProfilViewController: UIViewController {
         
         
         checkIfFollow()
-        
-        
         doProfile()
         
     }

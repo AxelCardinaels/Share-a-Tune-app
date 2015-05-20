@@ -18,7 +18,27 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         errorFade(time, self.erreurBar)
     }
     
+    
+    
     @IBOutlet var erreurBar: UILabel!
+    
+    @IBOutlet var boutonSuivi: UIBarButtonItem!
+    
+    @IBOutlet var boutonAll: UIBarButtonItem!
+    @IBAction func followingButton(sender: AnyObject) {
+        
+        boutonSuivi.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
+        boutonAll.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
+        loadFollowedUser()
+    }
+    
+    @IBAction func allButton(sender: AnyObject) {
+        boutonSuivi.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
+        boutonAll.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
+        loadAllUser()
+    }
+    
+    
     
     var users = [""]
     var profilePictures = [UIImage]()
@@ -28,64 +48,86 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     var searchBar = UISearchBar()
     
     func loadAllUser(){
-        var query = PFUser.query()
-        query?.findObjectsInBackgroundWithBlock({ (objects , findError : NSError?) -> Void in
-            
-            if objects != nil{
-                self.users.removeAll(keepCapacity: true)
-                self.profilePictures.removeAll(keepCapacity: true)
-                self.profilePicturesFiles.removeAll(keepCapacity: true)
+        
+        if isConnectedToNetwork() == false {
+            error = "noInternet"
+        }else{
+            var query = PFUser.query()
+            query?.findObjectsInBackgroundWithBlock({ (objects , findError : NSError?) -> Void in
                 
-                for object in objects! {
-                    var user:PFUser = object as! PFUser
+                if objects != nil{
+                    self.users.removeAll(keepCapacity: true)
+                    self.profilePictures.removeAll(keepCapacity: true)
+                    self.profilePicturesFiles.removeAll(keepCapacity: true)
                     
-                    if user.username != PFUser.currentUser()?.username{
-                        self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
-                        self.users.append(user.username!)
+                    for object in objects! {
+                        var user:PFUser = object as! PFUser
+                        
+                        if user.username != PFUser.currentUser()?.username{
+                            self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
+                            self.users.append(user.username!)
+                        }
+                        
                     }
                     
-                    
-                    
+                    self.tableUsers.reloadData()
+                }else{
+                    self.error = "noUsers"
+                    showError(self, self.error, self.erreurBar)
+                    var timer = NSTimer()
+                    timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
                 }
                 
-                self.tableUsers.reloadData()
-            }else{
-                self.error = "noUsers"
-                showError(self, self.error, self.erreurBar)
-                var timer = NSTimer()
-                timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
-            }
-            
-        })
+            })
+        }
+        
+        
+        if error != ""{
+            showError(self, self.error, self.erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+        }
+        
     }
     
     func loadFollowedUser(){
         
-        var currentUser = PFUser.currentUser()!.username
-        var query = PFQuery(className: "Followers")
-        query.whereKey("follower", equalTo: currentUser! )
-        
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        if isConnectedToNetwork() == false {
+            error = "noInternet"
+        }else{
+            var currentUser = PFUser.currentUser()!.username
+            var query = PFQuery(className: "Followers")
+            query.whereKey("follower", equalTo: currentUser! )
             
-            if error == nil {
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
                 
-                self.users.removeAll(keepCapacity: true)
-                self.profilePictures.removeAll(keepCapacity: true)
-                self.profilePicturesFiles.removeAll(keepCapacity: true)
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        
-                        var followed: AnyObject? = object.valueForKey("following")
-                        self.getUserInfos(followed! as! String)
+                if error == nil {
+                    
+                    self.users.removeAll(keepCapacity: true)
+                    self.profilePictures.removeAll(keepCapacity: true)
+                    self.profilePicturesFiles.removeAll(keepCapacity: true)
+                    if let objects = objects as? [PFObject] {
+                        for object in objects {
+                            
+                            var followed: AnyObject? = object.valueForKey("following")
+                            self.getUserInfos(followed! as! String)
+                        }
                     }
+                    
+                } else {
+                    // Log details of the failure
+                    println("Error: \(error!) \(error!.userInfo!)")
                 }
-               
-            } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
             }
         }
+        
+        if error != ""{
+            showError(self, self.error, self.erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+        }
+        
     }
     
     func getUserInfos(username:String){
@@ -103,20 +145,13 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
                         println(self.users)
                     }
                 }
-                 self.reloadTable(self.tableUsers)
+                self.reloadTable(self.tableUsers)
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
     
     
     func reloadTable(table : UITableView){
@@ -141,7 +176,6 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         self.navigationItem.titleView = searchBar
         
         //Remplissage du tableau
-        
         
         loadFollowedUser()
         
