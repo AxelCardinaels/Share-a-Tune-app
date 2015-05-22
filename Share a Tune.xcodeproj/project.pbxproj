@@ -37,16 +37,17 @@
 		771D75241AFAA16C00C59D82 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75221AFAA16C00C59D82 /* logo.png */; };
 		77377D001AFD539700621D2A /* noopf.png in Resources */ = {isa = PBXBuildFile; fileRef = 77377CFF1AFD539700621D2A /* noopf.png */; };
 		77377D021B00258800621D2A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D011B00258700621D2A /* FeedViewController.swift */; };
-		77377D121B0146F400621D2A /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D111B0146F400621D2A /* NewPostViewController.swift */; };
 		77377D141B01504D00621D2A /* pochette.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77377D131B01504D00621D2A /* pochette.jpg */; };
 		77377D161B01517E00621D2A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77377D151B01517D00621D2A /* MapKit.framework */; };
+		77B451371B0E622500586319 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */; };
 		77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */; };
 		77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */; };
 		77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */; };
 		77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B965E31AFB7CBF00CE1145 /* addphoto.png */; };
 		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
-		77CB43BA1B063AC300D7A9FA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		77CB43BC1B0CD54700D7A9FA /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */; };
+		77CB43BE1B0CD67600D7A9FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */; };
 		77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */; };
 		77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */; };
 /* End PBXBuildFile section */
@@ -97,7 +98,6 @@
 		771D75221AFAA16C00C59D82 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		77377CFF1AFD539700621D2A /* noopf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noopf.png; sourceTree = "<group>"; };
 		77377D011B00258700621D2A /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		77377D111B0146F400621D2A /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		77377D131B01504D00621D2A /* pochette.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pochette.jpg; sourceTree = "<group>"; };
 		77377D151B01517D00621D2A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +106,8 @@
 		77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionFinalViewController.swift; sourceTree = "<group>"; };
 		77B965E31AFB7CBF00CE1145 /* addphoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addphoto.png; sourceTree = "<group>"; };
 		77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFirstViewController.swift; sourceTree = "<group>"; };
+		77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfProfileViewController.swift; sourceTree = "<group>"; };
 		77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +117,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77CB43BA1B063AC300D7A9FA /* Parse.framework in Frameworks */,
+				77B451371B0E622500586319 /* Parse.framework in Frameworks */,
+				77CB43BE1B0CD67600D7A9FA /* MediaPlayer.framework in Frameworks */,
 				77377D161B01517E00621D2A /* MapKit.framework in Frameworks */,
 				771D751D1AFA75E100C59D82 /* libsqlite3.dylib in Frameworks */,
 				771D751B1AFA75D900C59D82 /* libz.dylib in Frameworks */,
@@ -169,11 +172,11 @@
 			isa = PBXGroup;
 			children = (
 				771D75201AFAA14C00C59D82 /* images */,
+				77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */,
 				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */,
 				7708C85A1B024F2B006B1AE9 /* UserSearchViewController.swift */,
 				7708C85F1B0265A8006B1AE9 /* UsersTableViewCell.swift */,
-				77377D111B0146F400621D2A /* NewPostViewController.swift */,
 				771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
 				77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */,
@@ -218,6 +221,7 @@
 		771D74FB1AFA74F000C59D82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */,
 				77377D151B01517D00621D2A /* MapKit.framework */,
 				771D751C1AFA75E100C59D82 /* libsqlite3.dylib */,
 				771D751A1AFA75D900C59D82 /* libz.dylib */,
@@ -364,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */,
+				77CB43BC1B0CD54700D7A9FA /* NewPostViewController.swift in Sources */,
 				77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */,
 				771D74DE1AFA63BD00C59D82 /* ViewController.swift in Sources */,
 				771D74DC1AFA63BD00C59D82 /* AppDelegate.swift in Sources */,
@@ -373,7 +378,6 @@
 				77377D021B00258800621D2A /* FeedViewController.swift in Sources */,
 				77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */,
 				77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */,
-				77377D121B0146F400621D2A /* NewPostViewController.swift in Sources */,
 				7708C85B1B024F2B006B1AE9 /* UserSearchViewController.swift in Sources */,
 				7708C8601B0265A9006B1AE9 /* UsersTableViewCell.swift in Sources */,
 			);
@@ -530,6 +534,9 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -548,6 +555,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
