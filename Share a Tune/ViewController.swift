@@ -11,7 +11,22 @@ import Parse
 import Foundation
 import SystemConfiguration
 
-var errors = ["invalidEmail" : "Merci d'entrer une adresse email valide", "takenEmail" : "Cette adresse email est déja utilisée", "takenUser" : "Ce nom d'utilisateur est déja utilisé", "empty" : "Merci de remplir tous les champs", "noInternet" : "Vous n'êtes pas connecté à internet", "noSpec" : "Merci de pas utiliser caractères spéciaux", "noSpecUser" : "Caractères spéciaux autorisés : '- _ et .'", "shortPassword" : "Le mot de passe doit dépasser 6 caractères", "shortUsername" : "Le nom d'utilisateur doit dépasser 2 caractères", "badLogin" : "Nom d'utilisateur ou Mot de passe incorrects", "noVerif" : "Merci de valider votre compte avant de vous connecter", "noUsers" : "Impossible de charger les utilisateurs"]
+var errors = [
+    "invalidEmail" : "Merci d'entrer une adresse email valide",
+    "takenEmail" : "Cette adresse email est déja utilisée",
+    "takenUser" : "Ce nom d'utilisateur est déja utilisé",
+    "empty" : "Merci de remplir tous les champs",
+    "noInternet" : "Vous n'êtes pas connecté à internet",
+    "noSpec" : "Merci de pas utiliser caractères spéciaux",
+    "noSpecUser" : "Caractères spéciaux autorisés : '- _ et .'",
+    "shortPassword" : "Le mot de passe doit dépasser 6 caractères",
+    "shortUsername" : "Le nom d'utilisateur doit dépasser 2 caractères",
+    "badLogin" : "Nom d'utilisateur ou Mot de passe incorrects",
+    "noVerif" : "Merci de valider votre compte avant de vous connecter",
+    "noUsers" : "Impossible de charger les utilisateurs",
+    "noSong" : "Et si vous écoutiez de la musique d'abord ?",
+    "descriptionTooLong" : "La description est trop longue"
+]
 
 var isCamera = UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice(rawValue: 0)!)
 
@@ -68,6 +83,13 @@ func showError(vc:UIViewController, error:String, bar:UILabel){
             bar.text = errors["shortUsername"]
         case "noVerif":
             bar.text = errors["noVerif"]
+        case "noSong":
+            bar.text = errors["noSong"]
+        case "noUser":
+            bar.text = errors["noUser"]
+        case "descriptionTooLong":
+            bar.text = errors["descriptionTooLong"]
+        
         
     default:
         bar.text = "Oups, Erreur inconnue"

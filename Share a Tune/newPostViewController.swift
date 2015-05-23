@@ -12,21 +12,22 @@ import Parse
 import Foundation
 import SystemConfiguration
 import MediaPlayer
+import Social
 
 class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate{
     
     var manager:CLLocationManager!
+    
+    
+    @IBOutlet var facebookButton: UIButton!
     
     @IBOutlet var localisationText: UILabel!
     @IBOutlet var descriptionPost: UITextView!
     @IBOutlet var photoPost: UIButton!
     @IBOutlet var localisationMap: MKMapView!
     @IBOutlet var titreMorceau: UILabel!
-    
     @IBOutlet var artisteMorceau: UILabel!
-    
     @IBOutlet var pochetteMorceau: UIImageView!
-    
     @IBOutlet var characterCount: UILabel!
     var trackName = ""
     var trackNameURL = ""
@@ -38,6 +39,17 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var finalObject : AnyObject = ""
     var canSaveImage = false
     var songExist = false
+    var canPost = ""
+    var actualCount = Int()
+    var gotLocation = false
+    
+    @IBOutlet var erreurBar: UILabel!
+    var error = ""
+    
+    func timeOut(){
+        time = true;
+        errorFade(time, self.erreurBar)
+    }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -113,11 +125,22 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             
             
         } else {
-            println("noSong")
+            self.error = "noSong"
+            showError(self, self.error, self.erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+            titreMorceau.text = "Pas de morceau"
+            artisteMorceau.text = "Pas d'artiste"
+            descriptionPost.text = "Vous pourriez réessayer en écoutant de la musique s'il vous plait ? Merci !"
+            canPost = "noSong"
+            
+            
         }
     }
     
     func launchMap(){
+        
+        localisationText.text = "Localisation désactivée"
         manager = CLLocationManager();
         manager.delegate = self;
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -125,10 +148,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         manager.startUpdatingLocation()
     }
     
+    
     func updateInfos(info : AnyObject){
-        
-        println(info["trackName"])
-        
         
         var stringImage = info["artworkUrl100"] as! String
         var urlImage = stringImage.stringByReplacingOccurrencesOfString("100x100-75.jpg", withString: "600x600-75.jpg")
@@ -143,16 +164,15 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 
                 self.pochetteMorceau.image = image
                 self.photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
+                self.descriptionPost.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
+                
+                
                 
             }
             else {
                 println("Error: \(error.localizedDescription)")
             }
         })
-        
-        
-        
-        
         
     }
     
@@ -169,18 +189,26 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 var resultCount: AnyObject = jsonResult["resultCount"]!
                 
                 if resultCount as! NSObject == 0{
-                    println("No infos found")
+                    self.songExist = false;
+                    
                 }else{
                     self.songExist = true;
                     var resultats: AnyObject = jsonResult["results"]!
                     self.finalObject = resultats[0]
                     self.updateInfos(self.finalObject)
+                    self.makeFacebookButton()
                 }
+                self.makeFacebookButton()
+                
                 
             }
+            
         })
         
         task.resume()
+        
+        
+        
     }
     
     func makePostButton(){
@@ -188,45 +216,195 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         self.navigationItem.rightBarButtonItem = postButton
     }
     
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == "Dites quelque chose de sympa à propos de votre coup de coeur..." || textView.text == "Impossible de trouver des informations pour ce titre... Mais n'hésitez pas à le partager quand même !" {
+            textView.text = nil
+        }
+    }
+    
     func textViewDidChange(textView: UITextView) { //Handle the text changes here
         var actualText : Int = count(textView.text) as Int
-        var actualCount = 120 - actualText
+        actualCount = 120 - actualText
         characterCount.text = "\(actualCount)"
     }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.isEmpty {
+            
+            if songExist == false{
+                textView.text = "Impossible de trouver des informations pour ce titre... Mais n'hésitez pas à le partager quand même !"
+            }else{
+                textView.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
+            }
+        }
+    }
+    
     
     
     func savePost(){
         
-        var stringImage = finalObject["artworkUrl100"] as! String
-        var urlImage = stringImage.stringByReplacingOccurrencesOfString("100x100-75.jpg", withString: "1400x1400-75.jpg")
-        var imageNoCover = UIImage(named: "noCover")
-        var imageData = UIImagePNGRepresentation(imageNoCover)
-        var imageFile = PFFile(name:"noCover", data: imageData)
         
-        if songExist == true{
-            var post = PFObject(className:"Post")
-            post["userName"] = PFUser.currentUser()?.username
-            post["albumName"] = finalObject["collectionName"] as! String
-            post["songName"] = titreMorceau.text
-            post["artistName"] = artisteMorceau.text
-            post["itunesLink"] = finalObject["trackViewUrl"] as! String
-            post["previewLink"] = finalObject["previewUrl"] as! String
-            post["postDescription"] = descriptionPost.text
-            post["location"] = localisationText.text!.stringByReplacingOccurrencesOfString("Depuis ", withString: "")
-            post["coverLink"] = urlImage as String
-            post["postImage"] = imageFile
+        
+        println(error)
+        
+        if error == ""{
             
-            post.saveInBackgroundWithBlock {
-                (success: Bool, error: NSError?) -> Void in
-                if (success) {
-                    println("Done")
-                } else {
-                    println("Shit happens")
+            if canPost == ""{
+                
+                if songExist == true{
+                    
+                    var stringImage = finalObject["artworkUrl100"] as! String
+                    var urlImage = stringImage.stringByReplacingOccurrencesOfString("100x100-75.jpg", withString: "1400x1400-75.jpg")
+                    var imageNoCover = UIImage(named: "noCover")
+                    var imageData = UIImagePNGRepresentation(imageNoCover)
+                    var imageFile = PFFile(name:"noCover", data: imageData)
+                    
+                    if actualCount >= 0 {
+                        
+                        println(actualCount)
+                        
+                        var post = PFObject(className:"Post")
+                        
+                        post["userName"] = PFUser.currentUser()?.username
+                        post["albumName"] = finalObject["collectionName"] as! String
+                        post["songName"] = titreMorceau.text
+                        post["artistName"] = artisteMorceau.text
+                        post["itunesLink"] = finalObject["trackViewUrl"] as! String
+                        post["previewLink"] = finalObject["previewUrl"] as! String
+                        post["postDescription"] = descriptionPost.text
+                        
+                        if gotLocation == false {
+                            post["location"] = "noLocalisation"
+                        }else{
+                            post["location"] = localisationText.text!.stringByReplacingOccurrencesOfString("Depuis ", withString: "")
+                        }
+                        
+                        
+                        if canSaveImage == true{
+                            
+                            var imageData = UIImagePNGRepresentation(pochetteMorceau.image)
+                            var imageFile = PFFile(name:"customCover", data: imageData)
+                            
+                            post["coverLink"] = "customImage"
+                            post["postImage"] = imageFile
+                            
+                            
+                        }else{
+                            post["coverLink"] = urlImage as String
+                            post["postImage"] = imageFile
+                        }
+                        
+                        
+                        post.saveInBackgroundWithBlock {
+                            (success: Bool, error: NSError?) -> Void in
+                            if (success) {
+                                println("Done")
+                            } else {
+                                println("Shit happens")
+                            }
+                        }
+                    }else{
+                        
+                        self.error = "descriptionTooLong"
+                    }
+                    
+                    
+                }else{
+                    if actualCount >= 0 {
+                        
+                        
+                        var post = PFObject(className:"Post")
+                        
+                        post["userName"] = PFUser.currentUser()?.username
+                        post["albumName"] = trackAlbum
+                        post["songName"] = titreMorceau.text
+                        post["artistName"] = artisteMorceau.text
+                        post["itunesLink"] = "noLink"
+                        post["previewLink"] = "noPreview"
+                        post["postDescription"] = descriptionPost.text
+                        
+                        if gotLocation == false {
+                            post["location"] = "noLocalisation"
+                        }else{
+                            post["location"] = localisationText.text!.stringByReplacingOccurrencesOfString("Depuis ", withString: "")
+                        }
+                        
+                        if canSaveImage == true{
+                            
+                            var imageData = UIImagePNGRepresentation(pochetteMorceau.image)
+                            var imageFile = PFFile(name:"customCover", data: imageData)
+                            
+                            post["coverLink"] = "customImage"
+                            post["postImage"] = imageFile
+                            
+                            
+                        }else{
+                            var imageBase = UIImage(named: "noCover")
+                            var imageData = UIImagePNGRepresentation(imageBase)
+                            var imageFile = PFFile(name:"noCover", data: imageData)
+                            
+                            post["coverLink"] = "noCover"
+                            post["postImage"] = imageFile
+                        }
+                        
+                        
+                        post.saveInBackgroundWithBlock {
+                            (success: Bool, error: NSError?) -> Void in
+                            if (success) {
+                                println("Done")
+                            }else {
+                                println("Shit happens")
+                            }
+                        }
+                    }else{
+                        
+                        self.error = "descriptionTooLong"
+                    }
                 }
             }
+            
         }
         
+        if error != "" {
+            showError(self, self.error, self.erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+        }
+        
+        
+        
+        
+        
     }
+    
+    
+    func makeFacebookButton(){
+        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        
+        
+        if songExist{
+            var url: AnyObject! = finalObject["trackViewUrl"]!
+            content.contentURL = NSURL(string: url as! String)
+        }else{
+            content.contentURL = NSURL(string: "http://www.axelcardinaels.be/shareatuneapp")
+            content.imageURL = NSURL(string: "http://www.axelcardinaels.be/shareatuneapp/img/nocover.jpg")
+        }
+        
+        content.contentTitle = "Nouveau Coup de Coeur !"
+        content.contentDescription = "Je viens de partager un nouveau Coup de Coeur sur l'application Share a Tune, \(trackName) par \(trackArtist) !"
+        
+        
+        let button : FBSDKShareButton = FBSDKShareButton()
+        button.shareContent = content
+        
+        button.frame = CGRectMake(facebookButton.frame.origin.x, facebookButton.frame.origin.y, facebookButton.frame.width, facebookButton.frame.height)
+        self.view.addSubview(button)
+        button.alpha = 0.05;
+    }
+    
+    
+    
+    
     
     
     override func viewDidLoad() {
@@ -241,6 +419,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         descriptionPost.delegate = self
         
         // Do any additional setup after loading the view.
+        
     }
     
     
@@ -248,6 +427,11 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true);
+    }
+    
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
@@ -275,12 +459,20 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             }else{
                 if let p = CLPlacemark(placemark: placemarks?[0] as! CLPlacemark){
                     
+                    self.gotLocation = true;
+                    
                     var subThoroughfare:String = ""
                     
                     if p.subThoroughfare != nil{
                         subThoroughfare = p.subThoroughfare
                     }
-                    self.localisationText.text = "Depuis \(p.subLocality)"
+                    
+                    if p.subLocality == nil{
+                        self.localisationText.text = "Depuis \(p.locality)"
+                    }else{
+                        self.localisationText.text = "Depuis \(p.subLocality)"
+                    }
+                    
                 }
             }
         })
