@@ -13,7 +13,7 @@ import SystemConfiguration
 
 class SelfProfileViewController: UIViewController {
     
-   @IBOutlet var profilPicture: UIImageView!
+    @IBOutlet var profilPicture: UIImageView!
     
     @IBOutlet var ProfilDescription: UILabel!
     
@@ -21,7 +21,24 @@ class SelfProfileViewController: UIViewController {
     
     @IBOutlet var followingButton: UIButton!
     
-
+    func makeSettingsButton(){
+        
+        var boutonSettings: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        boutonSettings.frame = CGRectMake(0, 0, 35, 35)
+        boutonSettings.setImage(UIImage(named:"Parametres"), forState: UIControlState.Normal)
+        boutonSettings.addTarget(self, action: "goToSettings:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var rightBarButtonItem: UIBarButtonItem = UIBarButtonItem(customView: boutonSettings)
+        
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        println("Done")
+    }
+    
+    func goToSettings(sender:UIButton!){
+        performSegueWithIdentifier("editionProfil", sender: self)
+    }
+    
+    
     func doProfile(){
         
         var theUser = PFUser.currentUser()
@@ -48,9 +65,9 @@ class SelfProfileViewController: UIViewController {
         profilPicture.layer.cornerRadius = 0.5 * profilPicture.bounds.size.width
         self.profilPicture.layer.borderWidth = 3.0;
         self.profilPicture.layer.borderColor = UIColor.whiteColor().CGColor
-
         
         
+        makeSettingsButton()
         doProfile()
         
     }

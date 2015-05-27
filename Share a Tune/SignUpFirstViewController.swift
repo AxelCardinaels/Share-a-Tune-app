@@ -96,9 +96,10 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
             
             var emailText = email.text!
             var emailLower = emailText.lowercaseString
+            var usernameLower = username.text.lowercaseString
             var user = PFUser()
             user.email = emailLower
-            user.username = username.text!
+            user.username = usernameLower
             user.password = password.text!
             user["profilePicture"] = imageFile
             

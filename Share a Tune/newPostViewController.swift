@@ -243,8 +243,6 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     func savePost(){
         
-        
-        
         println(error)
         
         if error == ""{
@@ -261,11 +259,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     
                     if actualCount >= 0 {
                         
-                        println(actualCount)
                         
                         var post = PFObject(className:"Post")
                         
-                        post["userName"] = PFUser.currentUser()?.username
+                        post["userID"] = PFUser.currentUser()?.objectId!
                         post["albumName"] = finalObject["collectionName"] as! String
                         post["songName"] = titreMorceau.text
                         post["artistName"] = artisteMorceau.text
@@ -315,7 +312,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         
                         var post = PFObject(className:"Post")
                         
-                        post["userName"] = PFUser.currentUser()?.username
+                        post["userID"] = PFUser.currentUser()?.objectId
                         post["albumName"] = trackAlbum
                         post["songName"] = titreMorceau.text
                         post["artistName"] = artisteMorceau.text

@@ -15,6 +15,7 @@ class UserProfilViewController: UIViewController {
     
     
     @IBOutlet var profilPicture: UIImageView!
+    var actualUserID = ""
     
     func doProfile(){
         
@@ -31,7 +32,9 @@ class UserProfilViewController: UIViewController {
                 // Do something with the found objects
                 if let objects = objects as? [PFObject] {
                     for object in objects {
+                        self.actualUserID = object.objectId!
                         profilPictureFile = object.valueForKey("profilePicture") as! PFFile
+                        self.checkIfFollow()
                         
                         profilPictureFile.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
                             var theImage = UIImage(data: imageData!)
@@ -53,10 +56,12 @@ class UserProfilViewController: UIViewController {
         
         makeLoadingButton()
         
-        var currentUser = PFUser.currentUser()?.username
+
+        
+        var currentUser = PFUser.currentUser()?.objectId!
         var query = PFQuery(className:"Followers")
         query.whereKey("follower", equalTo: currentUser!)
-        query.whereKey("following", equalTo: self.title!)
+        query.whereKey("following", equalTo: actualUserID)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
@@ -77,8 +82,8 @@ class UserProfilViewController: UIViewController {
     
     func followUser(){
         var following = PFObject(className: "Followers")
-        following["follower"] = PFUser.currentUser()?.username
-        following["following"] = self.title
+        following["follower"] = PFUser.currentUser()?.objectId
+        following["following"] = actualUserID
         following.saveInBackground()
         
         makeUnfollowButton()
@@ -90,7 +95,7 @@ class UserProfilViewController: UIViewController {
         var currentUser = PFUser.currentUser()?.username
         var query = PFQuery(className:"Followers")
         query.whereKey("follower", equalTo: currentUser!)
-        query.whereKey("following", equalTo: self.title!)
+        query.whereKey("following", equalTo: actualUserID)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
@@ -122,7 +127,7 @@ class UserProfilViewController: UIViewController {
     }
     
     func fakeFollow(){
-        println("Notre esclave ne pédale pas assez vite")
+        println("Gotcha")
     }
     
     override func viewDidLoad() {
@@ -135,8 +140,9 @@ class UserProfilViewController: UIViewController {
         
         
         
-        checkIfFollow()
+        
         doProfile()
+        
         
     }
     
@@ -145,6 +151,6 @@ class UserProfilViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     
 }

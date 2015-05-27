@@ -27,9 +27,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var senderButton: UIButton!
     
     
-
-    
-    
     @IBAction func login(sender: AnyObject) {
         
         
@@ -66,7 +63,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             activityIndicatorButtonMake(senderButton)
             view.addSubview(activityIndicatorButton)
             
-            PFUser.logInWithUsernameInBackground(username.text!, password: password.text!) {
+            var lowerUsername = username.text.lowercaseString
+            
+            PFUser.logInWithUsernameInBackground(lowerUsername, password: password.text!) {
                 (user: PFUser?, errorLogin: NSError?) -> Void in
                 
                 activityButtonText = self.senderButton.titleLabel!.text!

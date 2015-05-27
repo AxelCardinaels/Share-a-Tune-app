@@ -19,12 +19,16 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     }
     
     
-    
     @IBOutlet var erreurBar: UILabel!
-    
     @IBOutlet var boutonSuivi: UIBarButtonItem!
-    
     @IBOutlet var boutonAll: UIBarButtonItem!
+    
+    
+    var usersID = [""]
+    var followedInfo = [String : PFObject]()
+    var error = ""
+    var searchBar = UISearchBar()
+    
     @IBAction func followingButton(sender: AnyObject) {
         
         boutonSuivi.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
@@ -35,42 +39,38 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     @IBAction func allButton(sender: AnyObject) {
         boutonSuivi.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
         boutonAll.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
-        loadAllUser()
+        loadAllUser(false)
     }
     
     
-    
-    var users = [""]
-    var profilePictures = [UIImage]()
-    var profilePicturesFiles = [PFUser.currentUser()?.objectForKey("profilePicture")!]
-    var error = ""
-    
-    var searchBar = UISearchBar()
-    
-    func loadAllUser(){
-        
+    func loadAllUser(doSearch : Bool){
+        var actualRow = 0
         if isConnectedToNetwork() == false {
             error = "noInternet"
         }else{
             var query = PFUser.query()
+            query?.orderByAscending("username")
+            
+            if doSearch == true{
+                let searchDown =  searchBar.text.lowercaseString
+                query?.whereKey("username", containsString: searchDown)
+            }
+            
             query?.findObjectsInBackgroundWithBlock({ (objects , findError : NSError?) -> Void in
                 
                 if objects != nil{
-                    self.users.removeAll(keepCapacity: true)
-                    self.profilePictures.removeAll(keepCapacity: true)
-                    self.profilePicturesFiles.removeAll(keepCapacity: true)
-                    
+                    self.usersID.removeAll(keepCapacity: true)
+                    self.followedInfo.removeAll(keepCapacity: true)
                     for object in objects! {
                         var user:PFUser = object as! PFUser
+                        self.usersID.append((object.valueForKey("objectId") as? String)!)
+                        var userPosition : String = "\(actualRow)"
+                        self.followedInfo.updateValue(user, forKey: userPosition)
+                        actualRow = actualRow + 1
                         
-                        if user.username != PFUser.currentUser()?.username{
-                            self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
-                            self.users.append(user.username!)
-                        }
                         
                     }
                     
-                    self.tableUsers.reloadData()
                 }else{
                     self.error = "noUsers"
                     showError(self, self.error, self.erreurBar)
@@ -78,9 +78,10 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
                     timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
                 }
                 
+                self.tableUsers.reloadData()
+                
             })
         }
-        
         
         if error != ""{
             showError(self, self.error, self.erreurBar)
@@ -91,27 +92,24 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     }
     
     func loadFollowedUser(){
-        
         if isConnectedToNetwork() == false {
             error = "noInternet"
         }else{
-            var currentUser = PFUser.currentUser()!.username
+            var currentUser = PFUser.currentUser()!.objectId!
             var query = PFQuery(className: "Followers")
-            query.whereKey("follower", equalTo: currentUser! )
+            query.whereKey("follower", equalTo: currentUser )
             
             query.findObjectsInBackgroundWithBlock {
                 (objects: [AnyObject]?, error: NSError?) -> Void in
                 
                 if error == nil {
                     
-                    self.users.removeAll(keepCapacity: true)
-                    self.profilePictures.removeAll(keepCapacity: true)
-                    self.profilePicturesFiles.removeAll(keepCapacity: true)
+                    self.usersID.removeAll(keepCapacity: true)
                     if let objects = objects as? [PFObject] {
                         for object in objects {
                             
-                            var followed: AnyObject? = object.valueForKey("following")
-                            self.getUserInfos(followed! as! String)
+                            self.usersID.append((object.valueForKey("following") as? String)!)
+                            
                         }
                     }
                     
@@ -119,6 +117,8 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
                     // Log details of the failure
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
+                self.tableUsers.reloadData()
+                self.getUserInfos()
             }
         }
         
@@ -130,59 +130,82 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
     }
     
-    func getUserInfos(username:String){
+    func getUserInfos(){
+        
+        var actualRow = 0
         var query = PFUser.query()
-        query?.whereKey("username", equalTo: username)
+        query!.whereKey("objectId", containedIn: usersID)
         query!.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if error == nil {
                 if let objects = objects as? [PFObject] {
                     for object in objects {
-                        var user:PFUser = object as! PFUser
-                        self.profilePicturesFiles.append(user.valueForKey("profilePicture") as! PFFile)
-                        self.users.append(user.username!)
-                        println(self.users)
+                        
+                        var userPosition : String = "\(actualRow)"
+                        self.followedInfo.updateValue(object, forKey: userPosition)
+                        actualRow = actualRow + 1
                     }
                 }
-                self.reloadTable(self.tableUsers)
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
             }
+            self.tableUsers.reloadData()
         }
     }
     
     
-    func reloadTable(table : UITableView){
-        table.reloadData()
-        println("done")
+    @IBOutlet var tableUsers: UITableView!
+    
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        loadAllUser(true)
     }
     
-    @IBOutlet var tableUsers: UITableView!
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        
+        
+        if searchBar.text == ""{
+            boutonSuivi.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
+            boutonSuivi.enabled = false;
+            boutonAll.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
+            searchBar.setShowsCancelButton(true, animated: true)
+            loadAllUser(false)
+        }
+        
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.endEditing(true);
+        searchBar.setShowsCancelButton(false, animated: true)
+        boutonSuivi.enabled = true;
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        loadAllUser(true)
+        self.searchBar.endEditing(true);
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationItem.setHidesBackButton(true, animated: true)
-        
         //Mise en place de la barre de recherche dans la bar de navigation
         
         var colorTextSearchBar = searchBar.valueForKey("searchField") as? UITextField
         colorTextSearchBar?.textColor = UIColor.whiteColor()
         searchBar.sizeToFit()
         searchBar.searchBarStyle = UISearchBarStyle.Minimal
-        //searchBar.setShowsCancelButton(true, animated: true)
         searchBar.placeholder = "Rechercher un utilisateur"
         self.navigationItem.titleView = searchBar
         
         //Remplissage du tableau
         
+        searchBar.delegate = self;
+        
+        
         loadFollowedUser()
         
-        
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
@@ -191,18 +214,20 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return users.count
+        return usersID.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! UsersTableViewCell
         
+        var currentIndex = "\(indexPath.row)"
+        var currentUser = followedInfo[currentIndex]
         
         cell.imageCell.layer.cornerRadius = 0.5 * cell.imageCell.bounds.size.width
-        cell.labelCell.text = users[indexPath.row]
+        cell.labelCell.text = currentUser?.valueForKey("username") as? String
         
-        profilePicturesFiles[indexPath.row]!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
+        currentUser?.valueForKey("profilePicture")!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
             
             if imageError == nil{
                 let image = UIImage(data: imageData!)
@@ -226,16 +251,17 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         }
         
         
-        
-        
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.searchBar.endEditing(true);
+    }
+    
     
     
 }

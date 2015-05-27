@@ -32,18 +32,21 @@
 		771D75191AFA75D000C59D82 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D75181AFA75D000C59D82 /* SystemConfiguration.framework */; };
 		771D751B1AFA75D900C59D82 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D751A1AFA75D900C59D82 /* libz.dylib */; };
 		771D751D1AFA75E100C59D82 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D751C1AFA75E100C59D82 /* libsqlite3.dylib */; };
-		771D751F1AFAA01600C59D82 /* 2 - Login.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D751E1AFAA01500C59D82 /* 2 - Login.png */; };
 		771D75231AFAA16C00C59D82 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75211AFAA16C00C59D82 /* background.png */; };
 		771D75241AFAA16C00C59D82 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 771D75221AFAA16C00C59D82 /* logo.png */; };
 		77377D001AFD539700621D2A /* noopf.png in Resources */ = {isa = PBXBuildFile; fileRef = 77377CFF1AFD539700621D2A /* noopf.png */; };
 		77377D021B00258800621D2A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D011B00258700621D2A /* FeedViewController.swift */; };
 		77377D141B01504D00621D2A /* pochette.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77377D131B01504D00621D2A /* pochette.jpg */; };
 		77377D161B01517E00621D2A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77377D151B01517D00621D2A /* MapKit.framework */; };
-		776CB1D41B10922400F26B4E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		773B75D61B12749100EE8C3C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
+		773B75D81B13D3A500EE8C3C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773B75D71B13D3A500EE8C3C /* AVFoundation.framework */; };
+		773B75DE1B13F6E700EE8C3C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B75DD1B13F6E700EE8C3C /* SettingsViewController.swift */; };
+		773B75E01B14850400EE8C3C /* ProfilEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B75DF1B14850400EE8C3C /* ProfilEditViewController.swift */; };
 		776CB1D61B10EE2700F26B4E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776CB1D51B10EE2700F26B4E /* Social.framework */; };
 		776CB1DA1B1103AC00F26B4E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776CB1D71B1103AC00F26B4E /* FBSDKCoreKit.framework */; };
 		776CB1DB1B1103AD00F26B4E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776CB1D81B1103AC00F26B4E /* FBSDKLoginKit.framework */; };
 		776CB1DC1B1103AD00F26B4E /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776CB1D91B1103AC00F26B4E /* FBSDKShareKit.framework */; };
+		776CB1DF1B12661400F26B4E /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776CB1DE1B12661300F26B4E /* PostTableViewCell.swift */; };
 		77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */; };
 		77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */; };
 		77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */; };
@@ -97,18 +100,21 @@
 		771D75181AFA75D000C59D82 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		771D751A1AFA75D900C59D82 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		771D751C1AFA75E100C59D82 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		771D751E1AFAA01500C59D82 /* 2 - Login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2 - Login.png"; sourceTree = "<group>"; };
 		771D75211AFAA16C00C59D82 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		771D75221AFAA16C00C59D82 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		77377CFF1AFD539700621D2A /* noopf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noopf.png; sourceTree = "<group>"; };
 		77377D011B00258700621D2A /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		77377D131B01504D00621D2A /* pochette.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pochette.jpg; sourceTree = "<group>"; };
 		77377D151B01517D00621D2A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		773B75D71B13D3A500EE8C3C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		773B75DD1B13F6E700EE8C3C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		773B75DF1B14850400EE8C3C /* ProfilEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilEditViewController.swift; sourceTree = "<group>"; };
 		776CB1D51B10EE2700F26B4E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		776CB1D71B1103AC00F26B4E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		776CB1D81B1103AC00F26B4E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		776CB1D91B1103AC00F26B4E /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		776CB1DD1B11066100F26B4E /* FacebookSDK-brigde.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FacebookSDK-brigde.h"; sourceTree = "<group>"; };
+		776CB1DE1B12661300F26B4E /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionViewController.swift; sourceTree = "<group>"; };
 		77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
@@ -126,10 +132,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				773B75D81B13D3A500EE8C3C /* AVFoundation.framework in Frameworks */,
+				773B75D61B12749100EE8C3C /* Parse.framework in Frameworks */,
 				776CB1DC1B1103AD00F26B4E /* FBSDKShareKit.framework in Frameworks */,
 				776CB1DA1B1103AC00F26B4E /* FBSDKCoreKit.framework in Frameworks */,
 				776CB1D61B10EE2700F26B4E /* Social.framework in Frameworks */,
-				776CB1D41B10922400F26B4E /* Parse.framework in Frameworks */,
 				77CB43BE1B0CD67600D7A9FA /* MediaPlayer.framework in Frameworks */,
 				77377D161B01517E00621D2A /* MapKit.framework in Frameworks */,
 				771D751D1AFA75E100C59D82 /* libsqlite3.dylib in Frameworks */,
@@ -185,14 +192,17 @@
 			isa = PBXGroup;
 			children = (
 				771D75201AFAA14C00C59D82 /* images */,
+				773B75DD1B13F6E700EE8C3C /* SettingsViewController.swift */,
 				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */,
 				776CB1DD1B11066100F26B4E /* FacebookSDK-brigde.h */,
 				77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */,
 				7708C85A1B024F2B006B1AE9 /* UserSearchViewController.swift */,
 				7708C85F1B0265A8006B1AE9 /* UsersTableViewCell.swift */,
+				776CB1DE1B12661300F26B4E /* PostTableViewCell.swift */,
 				771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
+				773B75DF1B14850400EE8C3C /* ProfilEditViewController.swift */,
 				77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */,
 				77377D011B00258700621D2A /* FeedViewController.swift */,
 				77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */,
@@ -235,6 +245,7 @@
 		771D74FB1AFA74F000C59D82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				773B75D71B13D3A500EE8C3C /* AVFoundation.framework */,
 				776CB1D71B1103AC00F26B4E /* FBSDKCoreKit.framework */,
 				776CB1D81B1103AC00F26B4E /* FBSDKLoginKit.framework */,
 				776CB1D91B1103AC00F26B4E /* FBSDKShareKit.framework */,
@@ -267,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				77377CFF1AFD539700621D2A /* noopf.png */,
-				771D751E1AFAA01500C59D82 /* 2 - Login.png */,
 				771D75211AFAA16C00C59D82 /* background.png */,
 				771D75221AFAA16C00C59D82 /* logo.png */,
 				77377D131B01504D00621D2A /* pochette.jpg */,
@@ -358,7 +368,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				771D751F1AFAA01600C59D82 /* 2 - Login.png in Resources */,
 				771D75231AFAA16C00C59D82 /* background.png in Resources */,
 				771D75241AFAA16C00C59D82 /* logo.png in Resources */,
 				771D74E11AFA63BD00C59D82 /* Main.storyboard in Resources */,
@@ -392,7 +401,10 @@
 				771D74DC1AFA63BD00C59D82 /* AppDelegate.swift in Sources */,
 				77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */,
 				77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */,
+				776CB1DF1B12661400F26B4E /* PostTableViewCell.swift in Sources */,
+				773B75DE1B13F6E700EE8C3C /* SettingsViewController.swift in Sources */,
 				77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */,
+				773B75E01B14850400EE8C3C /* ProfilEditViewController.swift in Sources */,
 				77377D021B00258800621D2A /* FeedViewController.swift in Sources */,
 				77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */,
 				77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */,
@@ -559,6 +571,9 @@
 					a,
 					Tune,
 					/Users/Axel/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -609,6 +624,9 @@
 					a,
 					Tune,
 					/Users/Axel/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

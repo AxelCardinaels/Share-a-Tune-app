@@ -8,6 +8,8 @@
 
 import UIKit
 import Parse
+import Foundation
+import SystemConfiguration
 
 class SignUpSecondViewController: UIViewController, UITextFieldDelegate {
     
@@ -23,7 +25,6 @@ class SignUpSecondViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var senderButton: UIButton!
     
     @IBAction func signUpName(sender: AnyObject) {
-        
         
         var error="";
         var searchTerm = ""
