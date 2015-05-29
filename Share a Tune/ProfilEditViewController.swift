@@ -148,7 +148,12 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                     user?.email = emailLower
                     user?["prenom"] = profilPrenom.text
                     user?["nom"] = profilNom.text
-                    user?["bio"] = profilDescription.text
+                    if actualCount == 120 {
+                        user?["bio"] = "noBio"
+                    }else{
+                      user?["bio"] = profilDescription.text
+                    }
+                    
                     user?["profilePicture"] = imageFile
                     
                     
@@ -167,7 +172,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                             
                             
                         } else {
-                            self.performSegueWithIdentifier("profilEdited", sender: self)
+                            self.performSegueWithIdentifier("ProfilEdited", sender: self)
                         }
                     })
                     
@@ -226,6 +231,8 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        killPlayer()
+        
         profilPicture.layer.cornerRadius = 0.5 * profilPicture.bounds.size.width
         
         profilDescription.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
@@ -244,6 +251,19 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "quitKeyboard:")
         theScrollView.addGestureRecognizer(tap)
         
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+   
+        if segue.identifier == "ProfilEdited" {
+            var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
+            secondView.title = PFUser.currentUser()?.username
+        }
+        if segue.identifier == "ShowUserProfil" {
+            var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
+            secondView.title = PFUser.currentUser()?.username
+            println("done")
+        }
     }
     
  

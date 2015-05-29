@@ -71,6 +71,7 @@ class SignUpSecondViewController: UIViewController, UITextFieldDelegate {
             if currentUser != nil {
                 currentUser?["prenom"] = prenom.text
                 currentUser?["nom"] = nom.text
+                currentUser?["bio"] = "noBio"
                 
                 activityIndicatorButtonMake(senderButton)
                 view.addSubview(activityIndicatorButton)

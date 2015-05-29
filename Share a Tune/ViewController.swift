@@ -10,6 +10,82 @@ import UIKit
 import Parse
 import Foundation
 import SystemConfiguration
+import MediaPlayer
+
+var mediaPlayer: MPMoviePlayerController = MPMoviePlayerController()
+var playerIsPaused = false
+var playerCurrentSong = "Titre du morceau"
+var playerCurrentArtist = "Artiste"
+
+func initialisePlayer(playerView : UIView , songLabel : UILabel, artistLabel : UILabel, indentedView : UITableView){
+    
+    println(playerCurrentSong)
+    if playerCurrentSong != "Titre du morceau"{
+        songLabel.text = playerCurrentSong
+        artistLabel.text = playerCurrentArtist
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            playerView.alpha = 0.6
+            indentedView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+            
+        })
+    }
+    songLabel.text = playerCurrentSong
+    artistLabel.text = playerCurrentArtist
+    
+    
+}
+
+func pausePlayer(pauseButton : UIButton){
+    mediaPlayer.pause()
+    var playImage = UIImage(named: "playIcon")
+    pauseButton.setTitle("Reprendre la Lecture", forState: UIControlState.Normal)
+    pauseButton.setImage(playImage, forState: UIControlState.Normal)
+    playerIsPaused = true;
+    
+}
+
+func playPlayer(playButton : UIButton, songLabel : UILabel, artistLabel : UILabel){
+    songLabel.text = playerCurrentSong
+    artistLabel.text = playerCurrentArtist
+    
+    mediaPlayer.play()
+    var pauseImage = UIImage(named: "pauseIcon")
+    playButton.setTitle("Mettre l'extrait en pause", forState: UIControlState.Normal)
+    playButton.setImage(pauseImage, forState: UIControlState.Normal)
+    playerIsPaused = false
+}
+
+func stopPlayer(playerView : UIView, indentedView : UITableView){
+    
+    mediaPlayer.stop()
+    
+    
+    UIView.animateWithDuration(0.4, animations: { () -> Void in
+        playerView.alpha = 0
+        indentedView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+    })
+    
+    playerCurrentSong = "Titre du morceau"
+    playerCurrentArtist = "Artiste"
+    
+}
+
+func killPlayer(){
+    mediaPlayer.stop()
+    playerCurrentSong = "Titre du morceau"
+    playerCurrentArtist = "Artiste"
+}
+
+func showPlayer(playerView : UIView, indentedView : UITableView){
+    
+    UIView.animateWithDuration(0.4, animations: { () -> Void in
+        playerView.alpha = 0.6
+        indentedView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+        
+    })
+}
+
 
 var errors = [
     "invalidEmail" : "Merci d'entrer une adresse email valide",
@@ -140,6 +216,54 @@ func activityIndicatorButtonKill(button:UIButton){
     
 }
 
+
+func makeDate(postdate : AnyObject) -> String{
+    
+    var finalTime = ""
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "yyyy'-'MM'-'dd'-'HH':'mm':'ss"
+    var postDate = dateFormatter.stringFromDate(postdate as! NSDate)
+    
+    var todaysDate:NSDate = NSDate()
+    var actualDate:String = dateFormatter.stringFromDate(todaysDate)
+    
+    let startDate:NSDate = dateFormatter.dateFromString(postDate)!
+    let endDate:NSDate = dateFormatter.dateFromString(actualDate)!
+    
+    let cal = NSCalendar.currentCalendar()
+    
+    var unit:NSCalendarUnit = NSCalendarUnit.CalendarUnitDay
+    
+    var components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
+    
+    if components.day == 0 {
+        unit = NSCalendarUnit.CalendarUnitHour
+        components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
+        
+        if components.hour == 0{
+            
+            unit = NSCalendarUnit.CalendarUnitMinute
+            components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
+            
+            if components.minute == 0{
+                finalTime = "< 1Min"
+                
+            }else{
+                finalTime = "\(components.minute)Min"
+            }
+            
+        }else{
+            finalTime = "\(components.hour)h"
+        }
+        
+    }else{
+        
+       finalTime = "\(components.day)j"
+    }
+    
+    return finalTime
+
+}
 
 
 

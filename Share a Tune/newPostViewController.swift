@@ -295,7 +295,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         post.saveInBackgroundWithBlock {
                             (success: Bool, error: NSError?) -> Void in
                             if (success) {
-                                println("Done")
+                                self.performSegueWithIdentifier("GoToFeed", sender: self)
                             } else {
                                 println("Shit happens")
                             }
@@ -348,7 +348,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         post.saveInBackgroundWithBlock {
                             (success: Bool, error: NSError?) -> Void in
                             if (success) {
-                                println("Done")
+                                self.performSegueWithIdentifier("GoToFeed", sender: self)
                             }else {
                                 println("Shit happens")
                             }
@@ -406,6 +406,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        killPlayer()
         
         getCurrentSong()
         launchMap()

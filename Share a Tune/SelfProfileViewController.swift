@@ -31,7 +31,6 @@ class SelfProfileViewController: UIViewController {
         var rightBarButtonItem: UIBarButtonItem = UIBarButtonItem(customView: boutonSettings)
         
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        println("Done")
     }
     
     func goToSettings(sender:UIButton!){
@@ -45,6 +44,12 @@ class SelfProfileViewController: UIViewController {
         
         self.title = theUser?.username!
         var profilPictureFile: AnyObject? = theUser?.objectForKey("profilePicture")
+        
+        if theUser?.valueForKey("bio") as! String == "noBio"{
+            ProfilDescription.text = "Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?"
+        }else{
+            ProfilDescription.text = theUser?.valueForKey("bio") as? String
+        }
         
         profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
             

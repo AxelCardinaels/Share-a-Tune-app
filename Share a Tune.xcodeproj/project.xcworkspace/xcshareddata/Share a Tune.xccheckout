@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>53E8C2AB-4705-4874-A275-3D7AA08A5FCB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Share a Tune</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>82E8FC9670A97E5311090A720B71E9CBD6D3C150</key>
 		<string>https://github.com/AxelCardinaels/Share-a-Tune-app.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Share a Tune.xcodeproj</string>
+	<string>Share a Tune.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>82E8FC9670A97E5311090A720B71E9CBD6D3C150</key>

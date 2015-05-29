@@ -10,8 +10,34 @@ import UIKit
 import Parse
 import Foundation
 import SystemConfiguration
+import MediaPlayer
 
 class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDelegate {
+    
+    @IBOutlet var playerView: UIView!
+    @IBOutlet var playerSong: UILabel!
+    @IBOutlet var playerArtist: UILabel!
+    
+    @IBAction func playerPause(sender: AnyObject) {
+        if playerIsPaused == true{
+            playPlayer(sender as! UIButton, playerSong, playerArtist)
+        }else{
+            pausePlayer(sender as! UIButton)
+        }
+        
+    }
+    
+    @IBAction func playerStop(sender: AnyObject) {
+        stopPlayer(playerView, tableUsers)
+    }
+    
+    func hidePlayer(note : NSNotification){
+        stopPlayer(playerView, tableUsers)
+    }
+    
+    
+    
+    
     
     func timeOut(){
         time = true;
@@ -205,6 +231,9 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
         
         loadFollowedUser()
+        initialisePlayer(playerView, playerSong, playerArtist, tableUsers)
+        
+        let playerHasDonePlaying = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
     }
     
@@ -248,6 +277,12 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
             var theNameText: AnyObject? = theName?.valueForKey("text")
             
             secondView.title = theNameText as? String
+        }
+        
+        if segue.identifier == "ShowUserProfilBouton" {
+            var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
+            secondView.title = PFUser.currentUser()?.username
+            println("done")
         }
         
         

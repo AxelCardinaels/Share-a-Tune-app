@@ -38,7 +38,6 @@
 		77377D021B00258800621D2A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77377D011B00258700621D2A /* FeedViewController.swift */; };
 		77377D141B01504D00621D2A /* pochette.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77377D131B01504D00621D2A /* pochette.jpg */; };
 		77377D161B01517E00621D2A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77377D151B01517D00621D2A /* MapKit.framework */; };
-		773B75D61B12749100EE8C3C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		773B75D81B13D3A500EE8C3C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773B75D71B13D3A500EE8C3C /* AVFoundation.framework */; };
 		773B75DE1B13F6E700EE8C3C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B75DD1B13F6E700EE8C3C /* SettingsViewController.swift */; };
 		773B75E01B14850400EE8C3C /* ProfilEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B75DF1B14850400EE8C3C /* ProfilEditViewController.swift */; };
@@ -57,6 +56,7 @@
 		77CB43BE1B0CD67600D7A9FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */; };
 		77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */; };
 		77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */; };
+		77FF32E11B174FDA002F3A53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,8 +132,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FF32E11B174FDA002F3A53 /* Parse.framework in Frameworks */,
 				773B75D81B13D3A500EE8C3C /* AVFoundation.framework in Frameworks */,
-				773B75D61B12749100EE8C3C /* Parse.framework in Frameworks */,
 				776CB1DC1B1103AD00F26B4E /* FBSDKShareKit.framework in Frameworks */,
 				776CB1DA1B1103AC00F26B4E /* FBSDKCoreKit.framework in Frameworks */,
 				776CB1D61B10EE2700F26B4E /* Social.framework in Frameworks */,
@@ -574,6 +574,9 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -624,6 +627,9 @@
 					a,
 					Tune,
 					/Users/Axel/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,

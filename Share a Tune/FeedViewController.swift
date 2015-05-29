@@ -19,7 +19,29 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     var followed = [String]()
     var post = [PFObject]()
     var followedInfo = [String : PFObject]()
-    var mediaPlayer: MPMoviePlayerController = MPMoviePlayerController()
+    
+    @IBOutlet var playerView: UIView!
+    @IBOutlet var playerSong: UILabel!
+    @IBOutlet var playerArtist: UILabel!
+    
+    @IBAction func playerPause(sender: AnyObject) {
+        
+        if playerIsPaused == true{
+            playPlayer(sender as! UIButton, playerSong, playerArtist)
+        }else{
+            pausePlayer(sender as! UIButton)
+        }
+        
+    }
+    
+    @IBAction func playerStop(sender: AnyObject) {
+        stopPlayer(playerView, feedTable)
+    }
+    
+    
+    func hidePlayer(note : NSNotification){
+        stopPlayer(playerView, feedTable)
+    }
     
     func getFollowedList(){
         
@@ -53,7 +75,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     func getOrderedPosts(){
-    
+        
         var query = PFQuery(className:"Post")
         query.whereKey("userID", containedIn: followed)
         query.orderByDescending("createdAt")
@@ -110,28 +132,19 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     func getPreview(sender : AnyObject){
         
-        
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
         var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
         var rowIndex = indexPath!.row
+        var songLink = post[rowIndex].valueForKey("previewLink") as! String
+        let url = NSURL(string: songLink)
+        mediaPlayer.contentURL = url
+        mediaPlayer.play()
         
-        if sender.title == "Mettre l'extrait en pause" {
-            mediaPlayer.pause()
-            sender.setTitle("Jour l'extrait", forState: UIControlState.Normal)
-            var playImage = UIImage(named: "playIcon")
-            sender.setImage(playImage, forState: UIControlState.Normal)
-        }else{
-            var songLink = post[rowIndex].valueForKey("previewLink") as! String
-            let url = NSURL(string: songLink)
-            
-            
-            mediaPlayer.contentURL = url
-            mediaPlayer.play()
-            
-            sender.setTitle("Mettre l'extrait en pause", forState: UIControlState.Normal)
-            var pauseImage = UIImage(named: "pauseIcon")
-            sender.setImage(pauseImage, forState: UIControlState.Normal)
-        }
+        playerSong.text = post[rowIndex].valueForKey("songName") as? String
+        playerArtist.text = post[rowIndex].valueForKey("artistName") as? String
+        playerCurrentSong = (post[rowIndex].valueForKey("songName") as? String)!
+        playerCurrentArtist = (post[rowIndex].valueForKey("artistName") as? String)!
+        showPlayer(playerView, feedTable)
         
     }
     
@@ -149,13 +162,14 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        feedTable.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         
         //On affiche la bar de navigation
         self.navigationController?.navigationBarHidden = false;
-
         
+        initialisePlayer(playerView, playerSong, playerArtist, feedTable)
         getFollowedList()
+        
+        let playerHasDonePlaying = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
         
         // Do any additional setup after loading the view.
@@ -173,55 +187,16 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath) as! PostTableViewCell
-    
+        
         
         var currentCell = indexPath
         var currentPost = post[indexPath.row]
         var currentUser = followedInfo[currentPost.valueForKey("userID") as! String]
         
+        cell.postPlay.tag = currentCell.row
+        
         var lastActive: AnyObject? = currentPost.valueForKey("createdAt")
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'-'HH':'mm':'ss"
-        var postDate = dateFormatter.stringFromDate(lastActive as! NSDate)
-        
-        var todaysDate:NSDate = NSDate()
-        var actualDate:String = dateFormatter.stringFromDate(todaysDate)
-        
-        let startDate:NSDate = dateFormatter.dateFromString(postDate)!
-        let endDate:NSDate = dateFormatter.dateFromString(actualDate)!
-        
-        let cal = NSCalendar.currentCalendar()
-        
-        var unit:NSCalendarUnit = NSCalendarUnit.CalendarUnitDay
-        
-        var components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
-        
-        if components.day == 0 {
-            unit = NSCalendarUnit.CalendarUnitHour
-            components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
-            
-            if components.hour == 0{
-               
-                unit = NSCalendarUnit.CalendarUnitMinute
-                components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
-                
-                if components.minute == 0{
-                    cell.postTime.text = "< 1Min"
-                    
-                }else{
-                   cell.postTime.text = "\(components.minute)Min"
-                }
-                
-            }else{
-                cell.postTime.text = "\(components.hour)h"
-            }
-            
-        }else{
-            
-            cell.postTime.text = "\(components.day)j"
-        }
-        
+        cell.postTime.text = makeDate(lastActive!)
         cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         
         cell.userProfil.layer.cornerRadius = 0.5 * cell.userProfil.bounds.size.width
@@ -238,7 +213,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             cell.postItunes.hidden = false;
             cell.postItunes.addTarget(self, action: "getToStore:", forControlEvents: .TouchUpInside)
         }
-       
+        
         
         if currentPost.valueForKey("previewLink") as? String == "noPreview" {
             cell.postPlay.hidden = true
@@ -295,10 +270,30 @@ class FeedViewController: UIViewController, UITableViewDelegate {
                 })
             }
         }
-    
+        
         return cell;
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showUserProfilFeed" {
+            var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            
+            var theName: AnyObject = sender?.currentTitle! as! AnyObject
+            
+            println(theName)
+            secondView.title = theName as! String
+            println("done")
+        }
+        
+        if segue.identifier == "ShowUserProfil" {
+            var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
+            secondView.title = PFUser.currentUser()?.username
+            println("done")
+        }
+    }
     
     
     
@@ -312,6 +307,8 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.setHidesBackButton(true, animated: true)
     }
+    
+    
     
     
     /*
