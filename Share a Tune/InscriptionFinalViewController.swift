@@ -23,7 +23,7 @@ class InscriptionFinalViewController: UIViewController {
             var currentUser = PFUser.currentUser()
             
         } else {
-            println("Should Be Done")
+            println("error")
         }
 
         

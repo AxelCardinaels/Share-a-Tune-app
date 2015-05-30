@@ -14,6 +14,19 @@ import MediaPlayer
 
 class FeedViewController: UIViewController, UITableViewDelegate {
     
+    
+    
+    //-------------- Gestion du rafraichissement -----------------//
+    
+    var refresher : UIRefreshControl = UIRefreshControl()
+    
+    func refreshData(){
+
+        getFollowedList()
+        self.refresher.endRefreshing()
+    }
+    
+    
 //-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
     
     @IBOutlet var erreurBar: UILabel!
@@ -149,8 +162,10 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         query.orderByDescending("createdAt")
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
-            
+        
             if error == nil {
+                
+                self.post.removeAll(keepCapacity: true)
                 if let objects = objects as? [PFObject] {
                     
                     if objects.count == 0{
@@ -224,6 +239,10 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         //Lancement de la fonction pour récupérer la liste des Users à afficher + leurs posts
         
         getFollowedList()
+        
+        //Mise en place du refresh
+        refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
+        feedTable.addSubview(refresher)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{

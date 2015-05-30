@@ -14,6 +14,18 @@ import MediaPlayer
 
 class UserProfilViewController: UIViewController, UITableViewDelegate {
     
+    
+//-------------- Gestion du rafraichissement -----------------//
+    
+    var refresher : UIRefreshControl = UIRefreshControl()
+    
+    func refreshData(){
+        
+        getOrderedPosts()
+        self.refresher.endRefreshing()
+    }
+    
+    
 //-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
     
     @IBOutlet var erreurBar: UILabel!
@@ -210,7 +222,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 }
                 
             } else {
-                println("Fail")
+                println("Fail Check follow")
             }
         }
     }
@@ -242,7 +254,6 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             if let objects = objects as? [PFObject] {
                 for object in objects {
                     object.deleteInBackground()
-                    println("Hello")
                     self.makeFollowButton()
                 }
             }
@@ -289,9 +300,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                // The find succeeded.
-                println("Successfully retrieved Posts")
-                // Do something with the found objects
+                self.post.removeAll(keepCapacity: true)
                 if let objects = objects as? [PFObject] {
                     
                     if objects.count == 0{
@@ -423,6 +432,10 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         initialisePlayer(playerView, playerSong, playerArtist, feedTable)
         
         let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        
+        //Mise en place du refresh
+        refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
+        feedTable.addSubview(refresher)
         
         
     }

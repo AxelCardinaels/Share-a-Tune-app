@@ -163,7 +163,6 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
     
     //Photo envoyé par l'utilisateur est utilisée
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        println("image")
         self.dismissViewControllerAnimated(true, completion: nil)
         boutonPhoto.setImage(image, forState: UIControlState.Normal)
         boutonPhoto.titleLabel?.text = "Votre Photo"

@@ -14,6 +14,23 @@ import MediaPlayer
 
 class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDelegate {
     
+
+//-------------- Gestion du rafraichissement -----------------//    
+    
+    var refresher : UIRefreshControl = UIRefreshControl()
+    
+    func refreshData(){
+        
+        if currentButton == "boutonSuivi"{
+            loadFollowedUser()
+        }else{
+            loadAllUser(false)
+        }
+        
+        self.refresher.endRefreshing()
+    }
+    
+    
 //-------------- Gestion du player  -----------------//
     
     @IBOutlet var playerView: UIView!
@@ -54,19 +71,21 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     
 //-------------- Mise en place des actions pour les boutons Suivi / Tous -----------------//
     
+    var currentButton = "boutonSuivi"
     
     @IBOutlet var boutonSuivi: UIBarButtonItem!
     @IBOutlet var boutonAll: UIBarButtonItem!
     
     
     @IBAction func followingButton(sender: AnyObject) {
-        
+        currentButton = "boutonSuivi"
         boutonSuivi.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
         boutonAll.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
         loadFollowedUser()
     }
     
     @IBAction func allButton(sender: AnyObject) {
+        currentButton = "boutonAll"
         boutonSuivi.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
         boutonAll.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
         loadAllUser(false)
@@ -124,7 +143,7 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
         if error != ""{
             showError(self, self.error, self.erreurBar)
-            tableUsers.alpha = 0
+            tableUsers.alpha = 0.7
             var timer = NSTimer()
             timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
         }
@@ -154,7 +173,7 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
                     if let objects = objects as? [PFObject] {
                         
                         if objects.count == 0{
-                            self.tableUsers.alpha = 0
+                            self.tableUsers.alpha = 0.7
                             self.noUserLabel.alpha = 1
                         }
                         for object in objects {
@@ -229,6 +248,7 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
             boutonAll.tintColor = UIColor(red: 114.0/255, green: 0.0/255, blue: 53.0/255, alpha: 1.0)
             searchBar.setShowsCancelButton(true, animated: true)
             loadAllUser(false)
+            currentButton = "boutonAll"
         }
         
     }
@@ -280,6 +300,11 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         initialisePlayer(playerView, playerSong, playerArtist, tableUsers)
         let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
+        //Mise en place du refresh
+        refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
+        tableUsers.addSubview(refresher)
+        
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
@@ -327,7 +352,6 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         if segue.identifier == "ShowUserProfilBouton" {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             secondView.title = PFUser.currentUser()?.username
-            println("done")
         }
         
         

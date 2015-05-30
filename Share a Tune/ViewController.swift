@@ -22,7 +22,6 @@ var playerCurrentArtist = "Artiste"
 
 func initialisePlayer(playerView : UIView , songLabel : UILabel, artistLabel : UILabel, indentedView : UITableView){
     
-    println(playerCurrentSong)
     if playerCurrentSong != "Titre du morceau"{
         songLabel.text = playerCurrentSong
         artistLabel.text = playerCurrentArtist

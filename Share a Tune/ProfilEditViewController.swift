@@ -298,7 +298,6 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         if segue.identifier == "ShowUserProfil" {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             secondView.title = PFUser.currentUser()?.username
-            println("done")
         }
     }
     
