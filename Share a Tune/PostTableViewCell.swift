@@ -30,4 +30,7 @@ class PostTableViewCell: UITableViewCell {
     
     @IBOutlet var postDescription: UILabel!
     
+    @IBOutlet var postDelete: UIButton!
+    
+    
 }

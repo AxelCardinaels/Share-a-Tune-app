@@ -26,6 +26,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var erreurBar: UILabel!
     @IBOutlet var senderButton: UIButton!
     
+    @IBOutlet var theScrollView: UIScrollView!
+    
+    
 //-------------- Gestion du login -----------------//
     
     @IBAction func login(sender: AnyObject) {
@@ -90,6 +93,46 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    
+    //-------------- Gestion du clavier -----------------//
+    
+    
+    
+    
+    
+    //Cache le clavier à la fin de l'édition
+    
+    func quitKeyboard(sender: AnyObject){
+        theScrollView.endEditing(true)
+    }
+    
+    //Ajout d'événement pour le clavier ( Apparait , disparait)
+    
+    func registerForKeyboardNotifications() {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self,selector: "keyboardWillBeShown:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    // La vue remonte quand le clavier apparait
+    func keyboardWillBeShown(sender: NSNotification) {
+        let info: NSDictionary = sender.userInfo!
+        let value: NSValue = info.valueForKey(UIKeyboardFrameBeginUserInfoKey) as! NSValue
+        let keyboardSize: CGSize = value.CGRectValue().size
+        let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
+        theScrollView.contentInset = contentInsets
+        theScrollView.scrollIndicatorInsets = contentInsets
+        
+    }
+    
+    // la vue se remet en place quand le clavier disparait
+    func keyboardWillBeHidden(sender: NSNotification) {
+        let contentInsets: UIEdgeInsets = UIEdgeInsetsZero
+        theScrollView.contentInset = contentInsets
+        theScrollView.scrollIndicatorInsets = contentInsets
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

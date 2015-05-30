@@ -320,6 +320,50 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    
+    
+//-------------- Suppression d'un post -----------------//
+    
+    @IBAction func PostDeleteAlert(sender: AnyObject) {
+        
+        var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
+        var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+        var rowIndex = indexPath!.row
+        var postId = post[rowIndex].valueForKey("objectId") as! String
+
+        
+        var alert = UIAlertController(title: nil, message: "Êtres vous sur de vouloir supprimer cette publication ?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        
+        alert.addAction(UIAlertAction(title: "Supprimer la publication", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+            var query = PFQuery(className:"Post")
+            query.whereKey("objectId", equalTo: postId)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                if let objects = objects as? [PFObject] {
+                    for object in objects {
+                        object.deleteInBackground()
+                        
+                    }
+                }
+                self.getOrderedPosts()
+            }
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    
 //-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
     
     func getPreview(sender : AnyObject){
@@ -480,7 +524,6 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
         cell.postArtist.text = currentPost.valueForKey("artistName") as? String
         cell.postDescription.text = currentPost.valueForKey("postDescription") as? String
-        cell.postDescription.sizeToFit()
         cell.postTitle.text = currentPost.valueForKey("songName") as? String
         
         //On récupère l'image du post
@@ -556,6 +599,12 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 var theImage = UIImage(data: imageData!)
                 cell.userProfil.image = theImage
             })
+        }
+        
+        //Si l'id d'utilisateur actuelle correspond à celle de l'utilisateur loggé, on affiche l'option pour supprimer un post
+        
+        if PFUser.currentUser()?.objectId == currentUser.objectId {
+            cell.postDelete.alpha = 1
         }
         
 
