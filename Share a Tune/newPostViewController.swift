@@ -16,11 +16,10 @@ import Social
 
 class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate{
     
-    var manager:CLLocationManager!
+//-------------- Variables générales pour le controller actuel  -----------------//
     
     
     @IBOutlet var facebookButton: UIButton!
-    
     @IBOutlet var localisationText: UILabel!
     @IBOutlet var descriptionPost: UITextView!
     @IBOutlet var photoPost: UIButton!
@@ -43,6 +42,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var actualCount = Int()
     var gotLocation = false
     
+//-------------- Variables pour l'affichage des erreurs -----------------//
+    
     @IBOutlet var erreurBar: UILabel!
     var error = ""
     
@@ -51,13 +52,73 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         errorFade(time, self.erreurBar)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
-        photoPost.titleLabel?.text = "Photo du morceau"
-        pochetteMorceau.image = image;
-        canSaveImage = true;
+    
+//-------------- Gestion de la carte -----------------//
+    
+        var manager:CLLocationManager!
+    
+    func launchMap(){
+        
+        localisationText.text = "Localisation désactivée"
+        manager = CLLocationManager();
+        manager.delegate = self;
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
     }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        var userLocation:CLLocation = locations[0] as! CLLocation
+        
+        var latitude = userLocation.coordinate.latitude
+        var longitude = userLocation.coordinate.longitude
+        
+        
+        var latDelta:CLLocationDegrees = 0.001 //Zoom
+        var lonDelta:CLLocationDegrees = 0.001
+        
+        
+        var span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        
+        var location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        
+        var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        
+        self.localisationMap.setRegion(region, animated: true)
+        
+        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: { (placemarks, error) -> Void in
+            if error != nil{
+                println(error);
+            }else{
+                if let p = CLPlacemark(placemark: placemarks?[0] as! CLPlacemark){
+                    
+                    self.gotLocation = true;
+                    
+                    var subThoroughfare:String = ""
+                    
+                    if p.subThoroughfare != nil{
+                        subThoroughfare = p.subThoroughfare
+                    }
+                    
+                    if p.subLocality == nil{
+                        self.localisationText.text = "Depuis \(p.locality)"
+                    }else{
+                        self.localisationText.text = "Depuis \(p.subLocality)"
+                    }
+                    
+                }
+            }
+        })
+        
+        
+    }
+    
+
+//-------------- Gestion de l'upload de photo -----------------//
+    
+    
+    //Choix du mode d'importation via le système d'alert
     
     @IBAction func ChoixPhoto(sender: AnyObject) {
         var alert = UIAlertController(title: nil, message: "Choisissez la source de votre photo", preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -93,6 +154,22 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
+    
+    
+    //Une fois la photo choisie, on l'utilise la ou l'on veut.
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
+        photoPost.titleLabel?.text = "Photo du morceau"
+        pochetteMorceau.image = image;
+        canSaveImage = true;
+    }
+    
+    
+    
+    
+//-------------- Récupération de la chanson actuelle -----------------//
     
     
     func getCurrentSong(){
@@ -138,43 +215,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
     }
     
-    func launchMap(){
-        
-        localisationText.text = "Localisation désactivée"
-        manager = CLLocationManager();
-        manager.delegate = self;
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
-    }
-    
-    
-    func updateInfos(info : AnyObject){
-        
-        var stringImage = info["artworkUrl100"] as! String
-        var urlImage = stringImage.stringByReplacingOccurrencesOfString("100x100-75.jpg", withString: "600x600-75.jpg")
-        var finalURL = NSURL(string: urlImage)
-        
-        let request: NSURLRequest = NSURLRequest(URL: finalURL!)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-            if error == nil {
-                var image = UIImage(data: data)
-                
-                // Stocker l'image dans notre cache.
-                
-                self.pochetteMorceau.image = image
-                self.photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
-                self.descriptionPost.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
-                
-                
-                
-            }
-            else {
-                println("Error: \(error.localizedDescription)")
-            }
-        })
-        
-    }
+//-------------- Trouver les infos pour la chanson actuelle -----------------//
     
     func findSongInfo(searchURL : String){
         
@@ -207,43 +248,42 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         task.resume()
         
+    }
+    
+//-------------- Mise à jour des informations pour le titre trouvé par l'API  -----------------//
+    
+    func updateInfos(info : AnyObject){
         
+        var stringImage = info["artworkUrl100"] as! String
+        var urlImage = stringImage.stringByReplacingOccurrencesOfString("100x100-75.jpg", withString: "600x600-75.jpg")
+        var finalURL = NSURL(string: urlImage)
         
-    }
-    
-    func makePostButton(){
-        var postButton : UIBarButtonItem = UIBarButtonItem(title: "Publier", style: UIBarButtonItemStyle.Plain, target: self, action: "savePost")
-        self.navigationItem.rightBarButtonItem = postButton
-    }
-    
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == "Dites quelque chose de sympa à propos de votre coup de coeur..." || textView.text == "Impossible de trouver des informations pour ce titre... Mais n'hésitez pas à le partager quand même !" {
-            textView.text = nil
-        }
-    }
-    
-    func textViewDidChange(textView: UITextView) { //Handle the text changes here
-        var actualText : Int = count(textView.text) as Int
-        actualCount = 120 - actualText
-        characterCount.text = "\(actualCount)"
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if textView.text.isEmpty {
-            
-            if songExist == false{
-                textView.text = "Impossible de trouver des informations pour ce titre... Mais n'hésitez pas à le partager quand même !"
-            }else{
-                textView.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
+        let request: NSURLRequest = NSURLRequest(URL: finalURL!)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+            if error == nil {
+                var image = UIImage(data: data)
+                
+                // Stocker l'image dans notre cache.
+                
+                self.pochetteMorceau.image = image
+                self.photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
+                self.descriptionPost.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
+                
+                
+                
             }
-        }
+            else {
+                println("Error: \(error.localizedDescription)")
+            }
+        })
+        
     }
+
+//-------------- Envoie du post sur le serveur  -----------------//
     
     
     
     func savePost(){
-        
-        println(error)
         
         if error == ""{
             
@@ -368,12 +408,50 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
         }
         
-        
-        
-        
-        
     }
     
+    
+    
+    
+//-------------- Gestion du UITexView ( Placeholder + limite de caractères)  -----------------//
+
+ 
+    //Si la valeur du texte équivaut au placeholder, on vide le textfield
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == "Dites quelque chose de sympa à propos de votre coup de coeur..." || textView.text == "Impossible de trouver des informations pour ce titre... Mais n'hésitez pas à le partager quand même !" {
+            textView.text = nil
+        }
+    }
+    
+    //Comptage du nombre de caractères
+    
+    func textViewDidChange(textView: UITextView) { //Handle the text changes here
+        var actualText : Int = count(textView.text) as Int
+        actualCount = 120 - actualText
+        characterCount.text = "\(actualCount)"
+    }
+    
+    //Check pour remettre le placeholder en place ou pas
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.isEmpty {
+            
+            if songExist == false{
+                textView.text = "Impossible de trouver des informations pour ce titre... Mais n'hésitez pas à le partager quand même !"
+            }else{
+                textView.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
+            }
+        }
+    }
+    
+
+//-------------- Création des boutons utilitaires -----------------//
+    
+    func makePostButton(){
+        var postButton : UIBarButtonItem = UIBarButtonItem(title: "Publier", style: UIBarButtonItemStyle.Plain, target: self, action: "savePost")
+        self.navigationItem.rightBarButtonItem = postButton
+    }
     
     func makeFacebookButton(){
         let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
@@ -432,63 +510,6 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
-        var userLocation:CLLocation = locations[0] as! CLLocation
-        
-        var latitude = userLocation.coordinate.latitude
-        var longitude = userLocation.coordinate.longitude
-        
-        
-        var latDelta:CLLocationDegrees = 0.001 //Zoom
-        var lonDelta:CLLocationDegrees = 0.001
-        
-        
-        var span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-        
-        var location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-        
-        var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-        
-        self.localisationMap.setRegion(region, animated: true)
-        
-        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: { (placemarks, error) -> Void in
-            if error != nil{
-                println(error);
-            }else{
-                if let p = CLPlacemark(placemark: placemarks?[0] as! CLPlacemark){
-                    
-                    self.gotLocation = true;
-                    
-                    var subThoroughfare:String = ""
-                    
-                    if p.subThoroughfare != nil{
-                        subThoroughfare = p.subThoroughfare
-                    }
-                    
-                    if p.subLocality == nil{
-                        self.localisationText.text = "Depuis \(p.locality)"
-                    }else{
-                        self.localisationText.text = "Depuis \(p.subLocality)"
-                    }
-                    
-                }
-            }
-        })
-        
-        
-    }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
+
     
 }

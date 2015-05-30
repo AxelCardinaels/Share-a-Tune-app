@@ -14,9 +14,10 @@ import MediaPlayer
 
 class SettingsViewController: UIViewController, UITableViewDelegate {
     
+//-------------- Déclarations + Gestions du player Musical -----------------//
+    
     @IBOutlet var settingsTable: UITableView!
     @IBOutlet var playerView: UIView!
-    
     @IBOutlet var playerSong: UILabel!
     @IBOutlet var playerArtist: UILabel!
     
@@ -38,19 +39,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
     }
 
     
-
-    
+//-------------- Tableau contenant les settings à afficher -----------------//
     
     var settingsContainer = ["Se déconnecter","Visiter le site de Share a Tune"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //On cache le bouton Back
         self.navigationItem.setHidesBackButton(true, animated: true)
         
-        initialisePlayer(playerView, playerSong, playerArtist, settingsTable)
         
-        let playerHasDonePlaying = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        //Initialisation du player
+        
+        initialisePlayer(playerView, playerSong, playerArtist, settingsTable)
+        let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
         
     }
@@ -82,7 +85,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         let indexPath = tableView.indexPathForSelectedRow();
-        
         let currentCell = tableView.cellForRowAtIndexPath(indexPath!)
         var cellTitle = currentCell?.textLabel!.text
         

@@ -20,10 +20,8 @@ class SignUpSecondViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var prenom: UITextField!
     @IBOutlet var nom: UITextField!
-    
     @IBOutlet var erreurBar: UILabel!
     @IBOutlet var senderButton: UIButton!
-    
     @IBAction func signUpName(sender: AnyObject) {
         
         var error="";
@@ -91,8 +89,6 @@ class SignUpSecondViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
         
         self.prenom.delegate = self;
         self.nom.delegate = self;

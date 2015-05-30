@@ -54,7 +54,6 @@
 		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
 		77CB43BC1B0CD54700D7A9FA /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */; };
 		77CB43BE1B0CD67600D7A9FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */; };
-		77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */; };
 		77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */; };
 		77FF32E11B174FDA002F3A53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 /* End PBXBuildFile section */
@@ -123,7 +122,6 @@
 		77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFirstViewController.swift; sourceTree = "<group>"; };
 		77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfProfileViewController.swift; sourceTree = "<group>"; };
 		77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,7 +194,6 @@
 				771D74DD1AFA63BD00C59D82 /* ViewController.swift */,
 				77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */,
 				776CB1DD1B11066100F26B4E /* FacebookSDK-brigde.h */,
-				77DF0BFA1B02D2F000A7E2BF /* SelfProfileViewController.swift */,
 				7708C85A1B024F2B006B1AE9 /* UserSearchViewController.swift */,
 				7708C85F1B0265A8006B1AE9 /* UsersTableViewCell.swift */,
 				776CB1DE1B12661300F26B4E /* PostTableViewCell.swift */,
@@ -394,7 +391,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77DF0BFB1B02D2F000A7E2BF /* SelfProfileViewController.swift in Sources */,
 				77CB43BC1B0CD54700D7A9FA /* NewPostViewController.swift in Sources */,
 				77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */,
 				771D74DE1AFA63BD00C59D82 /* ViewController.swift in Sources */,

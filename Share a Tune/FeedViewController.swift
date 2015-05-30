@@ -14,11 +14,30 @@ import MediaPlayer
 
 class FeedViewController: UIViewController, UITableViewDelegate {
     
+//-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
+    
+    @IBOutlet var erreurBar: UILabel!
+    @IBOutlet var noInternetLabel: UILabel!
+    @IBOutlet var noPostLabel: UILabel!
+    
+    
+    func timeOut(){
+        time = true;
+        errorFade(time, self.erreurBar)
+    }
+    
+    
+//-------------- Déclarations des variables utiles pour followers, posts (feed en somme) -----------------//
+    
     @IBOutlet var feedTable: UITableView!
     
     var followed = [String]()
     var post = [PFObject]()
     var followedInfo = [String : PFObject]()
+    
+    
+//-------------- Déclarations + Gestions du player Musical -----------------//
+    
     
     @IBOutlet var playerView: UIView!
     @IBOutlet var playerSong: UILabel!
@@ -43,62 +62,55 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         stopPlayer(playerView, feedTable)
     }
     
+    
+    
+//-------------- Récupération des followers -----------------//
+    
     func getFollowedList(){
         
+        var error = ""
         
-        var currentUser = PFUser.currentUser()!.objectId!
-        var query = PFQuery(className: "Followers")
-        query.whereKey("follower", equalTo: currentUser)
-        
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                
-                self.followed.removeAll(keepCapacity: true)
-                self.followed.append(currentUser)
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        var followedUser: AnyObject? = object.valueForKey("following")
-                        self.getFollowedInfos(object.valueForKey("following") as! String)
-                        self.followed.append(followedUser! as! String)
-                    }
-                }
-                self.getFollowedInfos(currentUser)
-                self.getOrderedPosts()
-                
-            } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
-            }
+        if isConnectedToNetwork() == false{
+            error = "noInternet"
         }
+        
+        if error == ""{
+            var currentUser = PFUser.currentUser()!.objectId!
+            var query = PFQuery(className: "Followers")
+            query.whereKey("follower", equalTo: currentUser)
+            
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    self.followed.removeAll(keepCapacity: true)
+                    self.followed.append(currentUser)
+                    if let objects = objects as? [PFObject] {
+                        for object in objects {
+                            var followedUser: AnyObject? = object.valueForKey("following")
+                            self.getFollowedInfos(object.valueForKey("following") as! String)
+                            self.followed.append(followedUser! as! String)
+                        }
+                    }
+                    self.getFollowedInfos(currentUser)
+                    self.getOrderedPosts()
+                    
+                } else {
+                    println("Error: \(error!) \(error!.userInfo!)")
+                }
+            }
+        }else{
+            showError(self,error,erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+            noInternetLabel.alpha = 1
+        }
+        
     }
     
-    func getOrderedPosts(){
-        
-        var query = PFQuery(className:"Post")
-        query.whereKey("userID", containedIn: followed)
-        query.orderByDescending("createdAt")
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                // The find succeeded.
-                println("Successfully retrieved Posts")
-                // Do something with the found objects
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        self.post.append(object)
-                    }
-                }
-                
-                self.feedTable.reloadData()
-            } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
-            }
-        }
-    }
+    
+    
+//-------------- Récupération des infos des followers -----------------//
     
     func getFollowedInfos(userID : String){
         
@@ -112,9 +124,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         query!.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
-                // The find succeeded.
-                println("Successfully retrieved \(objects!.count) scores.")
-                // Do something with the found objects
                 if let objects = objects as? [PFObject] {
                     for object in objects {
                         
@@ -123,12 +132,46 @@ class FeedViewController: UIViewController, UITableViewDelegate {
                 }
                 
             } else {
-                // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
         
     }
+    
+    
+    
+//-------------- Récupération de la liste des posts par ordre chronologique -----------------//
+    
+    func getOrderedPosts(){
+        
+        var query = PFQuery(className:"Post")
+        query.whereKey("userID", containedIn: followed)
+        query.orderByDescending("createdAt")
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    
+                    if objects.count == 0{
+                        self.noPostLabel.alpha = 1
+                    }
+                    
+                    for object in objects {
+                        self.post.append(object)
+                    }
+                }
+                
+                self.feedTable.reloadData()
+            } else {
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    
+    
+//-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
     
     func getPreview(sender : AnyObject){
         
@@ -148,6 +191,10 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
     }
     
+    
+    
+//-------------- Récupération du lien iTunes Store + ouverture sur le store -----------------//
+    
     func getToStore(sender : AnyObject){
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
         var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
@@ -160,19 +207,23 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //On affiche la bar de navigation
         self.navigationController?.navigationBarHidden = false;
         
+        //Initialisation du player
+        
         initialisePlayer(playerView, playerSong, playerArtist, feedTable)
+        
+        let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        
+        //Lancement de la fonction pour récupérer la liste des Users à afficher + leurs posts
+        
         getFollowedList()
-        
-        let playerHasDonePlaying = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
@@ -189,53 +240,30 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         var cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath) as! PostTableViewCell
         
         
+        //On récupère le post en fonction de l'index de la céllule actuelle
+        
         var currentCell = indexPath
         var currentPost = post[indexPath.row]
         var currentUser = followedInfo[currentPost.valueForKey("userID") as! String]
         
-        cell.postPlay.tag = currentCell.row
+        //Affiche du nom de l'utilisateur
+        cell.username.setTitle(currentUser?.valueForKey("username") as? String, forState: UIControlState.Normal)
+        cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        
+        
+        //On calcul la durée entre la date du post et la date actuelle
         
         var lastActive: AnyObject? = currentPost.valueForKey("createdAt")
         cell.postTime.text = makeDate(lastActive!)
-        cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         
-        cell.userProfil.layer.cornerRadius = 0.5 * cell.userProfil.bounds.size.width
+        // On rempli les informations du Post
         
         cell.postArtist.text = currentPost.valueForKey("artistName") as? String
         cell.postDescription.text = currentPost.valueForKey("postDescription") as? String
-        cell.postTitle.text = currentPost.valueForKey("songName") as? String
         cell.postDescription.sizeToFit()
-        cell.username.setTitle(currentUser?.valueForKey("username") as? String, forState: UIControlState.Normal)
+        cell.postTitle.text = currentPost.valueForKey("songName") as? String
         
-        if currentPost.valueForKey("itunesLink") as? String == "noLink" {
-            cell.postItunes.hidden = true;
-        }else{
-            cell.postItunes.hidden = false;
-            cell.postItunes.addTarget(self, action: "getToStore:", forControlEvents: .TouchUpInside)
-        }
-        
-        
-        if currentPost.valueForKey("previewLink") as? String == "noPreview" {
-            cell.postPlay.hidden = true
-        }else{
-            cell.postPlay.hidden = false;
-            cell.postPlay.addTarget(self, action: "getPreview:", forControlEvents: .TouchUpInside)
-        }
-        
-        if currentPost.valueForKey("location") as? String == "noLocalisation" {
-            cell.postLocation.text = "Inconnu"
-        }else{
-            cell.postLocation.text = currentPost.valueForKey("location") as? String
-        }
-        
-        
-        if currentUser?.valueForKey("profilePicture")! != nil{
-            var pictureFile: AnyObject? = currentUser?.valueForKey("profilePicture")!
-            pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
-                var theImage = UIImage(data: imageData!)
-                cell.userProfil.image = theImage
-            })
-        }
+        //On récupère l'image du post
         
         if currentPost.valueForKey("coverLink") as? String == "customImage" {
             var profilPictureFile: AnyObject? = currentPost.valueForKey("postImage")
@@ -271,10 +299,58 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             }
         }
         
+        //On check si le post à un lien itunes, si oui, on affiche le bouton
+        
+        if currentPost.valueForKey("itunesLink") as? String == "noLink" {
+            cell.postItunes.hidden = true;
+        }else{
+            cell.postItunes.hidden = false;
+            cell.postItunes.addTarget(self, action: "getToStore:", forControlEvents: .TouchUpInside)
+        }
+        
+        //On check si le post à un lien de preview, si oui, on affiche le bouton
+        
+        if currentPost.valueForKey("previewLink") as? String == "noPreview" {
+            cell.postPlay.hidden = true
+        }else{
+            cell.postPlay.hidden = false;
+            cell.postPlay.addTarget(self, action: "getPreview:", forControlEvents: .TouchUpInside)
+        }
+        
+        //On check si le post à une localisation , si oui, on l'affiche
+        
+        if currentPost.valueForKey("location") as? String == "noLocalisation" {
+            cell.postLocation.text = "Inconnu"
+        }else{
+            cell.postLocation.text = currentPost.valueForKey("location") as? String
+        }
+        
+        
+        
+        //On récupère la photo de l'utilisateur et on la rend ronde
+        
+        
+        
+        cell.userProfil.layer.cornerRadius = 0.5 * cell.userProfil.bounds.size.width
+        if currentUser?.valueForKey("profilePicture")! != nil{
+            var pictureFile: AnyObject? = currentUser?.valueForKey("profilePicture")!
+            pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
+                var theImage = UIImage(data: imageData!)
+                cell.userProfil.image = theImage
+            })
+        }
+        
+        
+        
+
+        
         return cell;
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        //On récupère le bouton clické et sa valeur ( pseudo de l'utilisateur ). On le passe comme titre de la vue de profil
+        
         if segue.identifier == "showUserProfilFeed" {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
@@ -283,15 +359,14 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             
             var theName: AnyObject = sender?.currentTitle! as! AnyObject
             
-            println(theName)
-            secondView.title = theName as! String
-            println("done")
+            secondView.title = theName as? String
         }
+        
+        //Si on clique sur l'icone du profil, le titre du profil est l'username de l'utilisateur actual
         
         if segue.identifier == "ShowUserProfil" {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             secondView.title = PFUser.currentUser()?.username
-            println("done")
         }
     }
     
@@ -309,16 +384,5 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
+
 }

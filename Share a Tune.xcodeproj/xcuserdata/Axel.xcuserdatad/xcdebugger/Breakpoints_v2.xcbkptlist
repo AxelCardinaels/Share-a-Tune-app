@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Share a Tune/SignUpFirstViewController.swift"
-            timestampString = "452984534.126668"
+            timestampString = "454642361.303189"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "signUp(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Share a Tune/SignUpFirstViewController.swift"
-            timestampString = "454432072.010195"
+            timestampString = "454642361.303189"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "signUp(_:)"
             landmarkType = "5">
          </BreakpointContent>

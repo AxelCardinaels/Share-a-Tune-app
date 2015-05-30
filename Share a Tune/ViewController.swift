@@ -12,6 +12,9 @@ import Foundation
 import SystemConfiguration
 import MediaPlayer
 
+//-------------- Déclarations + Gestions du player Musical pour les fonctions globales -----------------//
+
+
 var mediaPlayer: MPMoviePlayerController = MPMoviePlayerController()
 var playerIsPaused = false
 var playerCurrentSong = "Titre du morceau"
@@ -86,6 +89,8 @@ func showPlayer(playerView : UIView, indentedView : UITableView){
     })
 }
 
+//-------------- Gestion des erreurs de façon globale -----------------//
+
 
 var errors = [
     "invalidEmail" : "Merci d'entrer une adresse email valide",
@@ -104,67 +109,42 @@ var errors = [
     "descriptionTooLong" : "La description est trop longue"
 ]
 
-var isCamera = UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice(rawValue: 0)!)
-
-//Fonction pour checker si internet est présent
-
-func isConnectedToNetwork() -> Bool {
-    
-    var Status:Bool = false
-    let url = NSURL(string: "http://google.com/")
-    let request = NSMutableURLRequest(URL: url!)
-    request.HTTPMethod = "HEAD"
-    request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData
-    request.timeoutInterval = 10.0
-    
-    var response: NSURLResponse?
-    
-    var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: nil) as NSData?
-    
-    if let httpResponse = response as? NSHTTPURLResponse {
-        if httpResponse.statusCode == 200 {
-            Status = true
-        }
-    }
-    
-    return Status
-}
 
 //Fonctions pour afficher les erreurs
 
-func showError(vc:UIViewController, error:String, bar:UILabel){    
+func showError(vc:UIViewController, error:String, bar:UILabel){
     
     bar.adjustsFontSizeToFitWidth = true;
     
     switch error {
-        case "101":
-            bar.text = errors["badLogin"]
-        case "125":
-            bar.text = errors["invalidEmail"]
-        case "203":
-            bar.text = errors["takenEmail"]
-        case "202":
-            bar.text = errors["takenUser"]
-        case "empty":
-            bar.text = errors["empty"]
-        case "noInternet":
-            bar.text = errors["noInternet"]
-        case "noSpec":
-            bar.text = errors["noSpec"]
-        case "noSpecUser":
-            bar.text = errors["noSpecUser"]
-        case "shortPassword":
-            bar.text = errors["shortPassword"]
-        case "shortUsername":
-            bar.text = errors["shortUsername"]
-        case "noVerif":
-            bar.text = errors["noVerif"]
-        case "noSong":
-            bar.text = errors["noSong"]
-        case "noUser":
-            bar.text = errors["noUser"]
-        case "descriptionTooLong":
-            bar.text = errors["descriptionTooLong"]
+    case "101":
+        bar.text = errors["badLogin"]
+    case "125":
+        bar.text = errors["invalidEmail"]
+    case "203":
+        bar.text = errors["takenEmail"]
+    case "202":
+        bar.text = errors["takenUser"]
+    case "empty":
+        bar.text = errors["empty"]
+    case "noInternet":
+        bar.text = errors["noInternet"]
+    case "noSpec":
+        bar.text = errors["noSpec"]
+    case "noSpecUser":
+        bar.text = errors["noSpecUser"]
+    case "shortPassword":
+        bar.text = errors["shortPassword"]
+    case "shortUsername":
+        bar.text = errors["shortUsername"]
+    case "noVerif":
+        bar.text = errors["noVerif"]
+    case "noSong":
+        bar.text = errors["noSong"]
+    case "noUser":
+        bar.text = errors["noUser"]
+    case "descriptionTooLong":
+        bar.text = errors["descriptionTooLong"]
         
         
     default:
@@ -193,7 +173,39 @@ func errorFade(time : Bool, bar : UILabel){
     
 }
 
-//Gestion du loader
+//-------------- Check divers -----------------//
+
+
+// check pour savoir si un appareil photo est dispo
+
+var isCamera = UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice(rawValue: 0)!)
+
+//Fonction pour checker si internet est présent
+
+func isConnectedToNetwork() -> Bool {
+    
+    var Status:Bool = false
+    let url = NSURL(string: "http://google.com/")
+    let request = NSMutableURLRequest(URL: url!)
+    request.HTTPMethod = "HEAD"
+    request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData
+    request.timeoutInterval = 10.0
+    
+    var response: NSURLResponse?
+    
+    var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: nil) as NSData?
+    
+    if let httpResponse = response as? NSHTTPURLResponse {
+        if httpResponse.statusCode == 200 {
+            Status = true
+        }
+    }
+    
+    return Status
+}
+
+
+//-------------- Gestion du loading sign pour un bouton -----------------//
 
 var activityIndicatorButton = UIActivityIndicatorView()
 var activityButtonText = "";
@@ -215,6 +227,8 @@ func activityIndicatorButtonKill(button:UIButton){
     UIApplication.sharedApplication().endIgnoringInteractionEvents()
     
 }
+
+//-------------- Gestion du calcul de temps entre la date d'un post et la date actuelle -----------------//
 
 
 func makeDate(postdate : AnyObject) -> String{

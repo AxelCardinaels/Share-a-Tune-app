@@ -21,9 +21,9 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     var user = PFUser.currentUser()
     var profilPictureStock = UIImageView(image: UIImage(named: "noopf.png"))
     
+//-------------- gestion de l'importation de photo -----------------//
     
     @IBOutlet var profilPicture: UIButton!
-    
     @IBAction func updatePicture(sender: AnyObject){
         
         var alert = UIAlertController(title: nil, message: "Choisissez la source de votre photo", preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -65,6 +65,9 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         profilPictureStock.image = image
     }
     
+    
+//-------------- Variables générales pour la vue -----------------//
+    
     @IBOutlet var theScrollView: UIScrollView!
     @IBOutlet var characterCount: UILabel!
     @IBOutlet var erreurBar: UILabel!
@@ -75,6 +78,10 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     var actualCount = Int()
     var kbHeight = CGFloat()
     
+    
+//-------------- Création du profil -----------------//
+    
+    
     func doProfil(){
         
         profilPrenom.text = user?.valueForKey("prenom") as? String
@@ -83,12 +90,23 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         profilDescription.text = user?.valueForKey("bio") as? String
         
         var pictureFile: AnyObject? = user!.valueForKey("profilePicture")!
-        pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
-            var theImage = UIImage(data: imageData!)
-            self.profilPicture.setImage(theImage, forState: UIControlState.Normal)
-            self.profilPictureStock.image = theImage
-        })
+        
+        if isConnectedToNetwork() == true{
+            pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
+                var theImage = UIImage(data: imageData!)
+                self.profilPicture.setImage(theImage, forState: UIControlState.Normal)
+                self.profilPictureStock.image = theImage
+            })
+        }else{
+            var error = "noInternet"
+            showError(self,error,erreurBar )
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+        }
+    
     }
+    
+//-------------- Check + enregistrement du profil sur le serveur -----------------//
     
     func updateProfil(){
         var error="";
@@ -98,7 +116,6 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         if profilPrenom.text == "" || profilNom.text == "" || profilEmail.text == ""{
             error = "empty"
         }else{
-            
             
             searchTerm = profilPrenom!.text
             termCount = count(searchTerm)
@@ -122,9 +139,6 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         if isConnectedToNetwork() == false{
             error="noInternet"
         }
-        
-        
-        
         
         if error != ""{
             
@@ -197,9 +211,16 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         self.navigationItem.rightBarButtonItem = saveButton
     }
     
+    
+//-------------- Gestion du clavier -----------------//
+    
+    //Cache le clavier à la fin de l'édition
+    
     func quitKeyboard(sender: AnyObject){
         theScrollView.endEditing(true)
     }
+    
+    //Ajout d'événement pour le clavier ( Apparait , disparait)
 
     func registerForKeyboardNotifications() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -207,7 +228,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         notificationCenter.addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    // Called when the UIKeyboardDidShowNotification is sent.
+    // La vue remonte quand le clavier apparait
     func keyboardWillBeShown(sender: NSNotification) {
         let info: NSDictionary = sender.userInfo!
         let value: NSValue = info.valueForKey(UIKeyboardFrameBeginUserInfoKey) as! NSValue
@@ -218,11 +239,26 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
 
     }
     
-    // Called when the UIKeyboardWillHideNotification is sent
+    // la vue se remet en place quand le clavier disparait
     func keyboardWillBeHidden(sender: NSNotification) {
         let contentInsets: UIEdgeInsets = UIEdgeInsetsZero
         theScrollView.contentInset = contentInsets
         theScrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+    
+    //Gestion du compteur de caractères
+    
+    func textViewDidChange(textView: UITextView) { //Handle the text changes here
+        var actualText : Int = count(textView.text) as Int
+        actualCount = 120 - actualText
+        characterCount.text = "\(actualCount)"
+    }
+    
+    //Gestion de la disparition du clavier en cliquant sur le bouton "retour"
+    func textFieldShouldReturn(textField : UITextField ) -> Bool{
+        textField.resignFirstResponder()
+        return true
     }
     
     
@@ -280,16 +316,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     
     
     
-    func textFieldShouldReturn(textField : UITextField ) -> Bool{
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textViewDidChange(textView: UITextView) { //Handle the text changes here
-        var actualText : Int = count(textView.text) as Int
-        actualCount = 120 - actualText
-        characterCount.text = "\(actualCount)"
-    }
+
     
     
     

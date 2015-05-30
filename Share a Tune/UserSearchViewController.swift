@@ -14,6 +14,8 @@ import MediaPlayer
 
 class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDelegate {
     
+//-------------- Gestion du player  -----------------//
+    
     @IBOutlet var playerView: UIView!
     @IBOutlet var playerSong: UILabel!
     @IBOutlet var playerArtist: UILabel!
@@ -36,8 +38,8 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     }
     
     
-    
-    
+//-------------- Mise en places des variables pour les erreurs  -----------------//
+    var error = ""
     
     func timeOut(){
         time = true;
@@ -46,14 +48,16 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     
     
     @IBOutlet var erreurBar: UILabel!
+    @IBOutlet var noInternetLabel: UILabel!
+    @IBOutlet var noUserLabel: UILabel!
+    
+    
+//-------------- Mise en place des actions pour les boutons Suivi / Tous -----------------//
+    
+    
     @IBOutlet var boutonSuivi: UIBarButtonItem!
     @IBOutlet var boutonAll: UIBarButtonItem!
     
-    
-    var usersID = [""]
-    var followedInfo = [String : PFObject]()
-    var error = ""
-    var searchBar = UISearchBar()
     
     @IBAction func followingButton(sender: AnyObject) {
         
@@ -68,11 +72,20 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         loadAllUser(false)
     }
     
+//-------------- Récupération de tous les utilisateurs + Recherche d'utilisateurs -----------------//
+    
+    
+    var usersID = [""]
+    var followedInfo = [String : PFObject]()
     
     func loadAllUser(doSearch : Bool){
+        tableUsers.alpha = 1
+        noInternetLabel.alpha = 0
+        noUserLabel.alpha = 0
         var actualRow = 0
         if isConnectedToNetwork() == false {
             error = "noInternet"
+            noInternetLabel.alpha = 1
         }else{
             var query = PFUser.query()
             query?.orderByAscending("username")
@@ -111,15 +124,22 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
         if error != ""{
             showError(self, self.error, self.erreurBar)
+            tableUsers.alpha = 0
             var timer = NSTimer()
-            timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+            timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
         }
         
     }
     
+//-------------- Récupération des utilisateurs suivis -----------------//
+    
     func loadFollowedUser(){
+        tableUsers.alpha = 1
+        noInternetLabel.alpha = 0
+        noUserLabel.alpha = 0
         if isConnectedToNetwork() == false {
             error = "noInternet"
+            noInternetLabel.alpha = 1
         }else{
             var currentUser = PFUser.currentUser()!.objectId!
             var query = PFQuery(className: "Followers")
@@ -132,6 +152,11 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
                     
                     self.usersID.removeAll(keepCapacity: true)
                     if let objects = objects as? [PFObject] {
+                        
+                        if objects.count == 0{
+                            self.tableUsers.alpha = 0
+                            self.noUserLabel.alpha = 1
+                        }
                         for object in objects {
                             
                             self.usersID.append((object.valueForKey("following") as? String)!)
@@ -150,11 +175,14 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
         if error != ""{
             showError(self, self.error, self.erreurBar)
+            tableUsers.alpha = 0
             var timer = NSTimer()
             timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
         }
         
     }
+    
+//-------------- Récupération des infos des utilisateurs -----------------//
     
     func getUserInfos(){
         
@@ -185,12 +213,15 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
     @IBOutlet var tableUsers: UITableView!
     
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        loadAllUser(true)
-    }
+//-------------- Paramètres de la barre de recherche + Fonctions -----------------//
+    
+    var searchBar = UISearchBar()
+    
+
+    
+    //Mise en place de l'interface quand on clique sur la barre de recherche
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        
         
         if searchBar.text == ""{
             boutonSuivi.tintColor = UIColor(red: 143.0/255, green: 143.0/255, blue: 143.0/255, alpha: 1.0)
@@ -202,19 +233,32 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.endEditing(true);
-        searchBar.setShowsCancelButton(false, animated: true)
-        boutonSuivi.enabled = true;
+    
+    //Quand la valeur du champ de recherche change, on lance la rehcerche
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        loadAllUser(true)
     }
+    
+    
+    //On lance la recherche au click sur le bouton "rechercher"
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         loadAllUser(true)
         self.searchBar.endEditing(true);
     }
     
+    //Suppression du bouton cancel + bouton suivi activé de nouveau au click sur le bouton annuler de la bar
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.endEditing(true);
+        searchBar.setShowsCancelButton(false, animated: true)
+        boutonSuivi.enabled = true;
+    }
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationItem.setHidesBackButton(true, animated: true)
         //Mise en place de la barre de recherche dans la bar de navigation
         
@@ -225,15 +269,16 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         searchBar.placeholder = "Rechercher un utilisateur"
         self.navigationItem.titleView = searchBar
         
-        //Remplissage du tableau
         
         searchBar.delegate = self;
         
         
         loadFollowedUser()
-        initialisePlayer(playerView, playerSong, playerArtist, tableUsers)
         
-        let playerHasDonePlaying = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        // Initialisation du player
+        
+        initialisePlayer(playerView, playerSong, playerArtist, tableUsers)
+        let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
     }
     

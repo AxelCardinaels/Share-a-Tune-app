@@ -14,7 +14,19 @@ import MediaPlayer
 
 class UserProfilViewController: UIViewController, UITableViewDelegate {
     
+//-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
     
+    @IBOutlet var erreurBar: UILabel!
+    @IBOutlet var noInternetLabel: UILabel!
+    @IBOutlet var noPostLabel: UILabel!
+    
+    func timeOut(){
+        time = true;
+        errorFade(time, self.erreurBar)
+    }
+    
+    
+//-------------- Déclarations des variables pour les informations d'utilisateurs + Posts -----------------//
     
     @IBOutlet var followingCount: UIButton!
     @IBOutlet var followerCount: UIButton!
@@ -28,18 +40,27 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     var post = [PFObject]()
     var userStock = [PFObject]()
     
+    
+//-------------- Déclaration de la fonction générant le profil -----------------//
+    
     func doProfil(myself : Bool){
+        
+        var error = ""
+        
+        if isConnectedToNetwork() == false{
+            noInternetLabel.alpha = 1
+            error = "noInternet"
+            showError(self,error,erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+            
+        }
         
         if myself == true{
             var me = PFUser.currentUser()
             actualUserID = (me!.valueForKey("objectId") as? String)!
             userStock.append(me!)
             makeSettingsButton()
-            getFollowers()
-            getFollowing()
-            getOrderedPosts()
-            
-            
             
             var profilPictureFile: AnyObject? = me!.objectForKey("profilePicture")
             
@@ -49,60 +70,72 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 profilDescription.text = me!.valueForKey("bio") as? String
             }
             
-            profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
+            if error == ""{
+                getFollowers()
+                getFollowing()
+                getOrderedPosts()
                 
-                if imageError == nil{
-                    let image = UIImage(data: imageData!)
-                    self.profilPicture.image = image
-                }
-            }
-            
-            
-        }else{
-            
-            var query = PFUser.query()
-            query?.whereKey("username", equalTo: self.title!)
-            query!.findObjectsInBackgroundWithBlock {
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        
-                        self.actualUserID = object.objectId! as String
-                        self.userStock.append(object)
-                        self.checkIfFollow()
-                        self.getFollowers()
-                        self.getFollowing()
-                        self.getOrderedPosts()
-                        
-                        
-                        var me = object
-                        
-                        var profilPictureFile: AnyObject? = me.objectForKey("profilePicture")
-                        
-                        if me.valueForKey("bio") as! String == "noBio"{
-                            self.profilDescription.text = "Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?"
-                        }else{
-                            self.profilDescription.text = me.valueForKey("bio") as? String
-                        }
-                        
-                        profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
-                            
-                            if imageError == nil{
-                                let image = UIImage(data: imageData!)
-                                self.profilPicture.image = image
-                            }
-                        }
-                        
-                        
+                profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
+                    
+                    if imageError == nil{
+                        let image = UIImage(data: imageData!)
+                        self.profilPicture.image = image
                     }
                 }
             }
+
             
+        }else{
             
-        }
+            if error == ""{
+                var query = PFUser.query()
+                query?.whereKey("username", equalTo: self.title!)
+                query!.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    
+                    if let objects = objects as? [PFObject] {
+                        for object in objects {
+                            
+                            self.actualUserID = object.objectId! as String
+                            self.userStock.append(object)
+                            self.checkIfFollow()
+                            self.getFollowers()
+                            self.getFollowing()
+                            self.getOrderedPosts()
+                            
+                            
+                            var me = object
+                            
+                            var profilPictureFile: AnyObject? = me.objectForKey("profilePicture")
+                            
+                            if me.valueForKey("bio") as! String == "noBio"{
+                                self.profilDescription.text = "Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?"
+                            }else{
+                                self.profilDescription.text = me.valueForKey("bio") as? String
+                            }
+                            
+                            profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
+                                
+                                if imageError == nil{
+                                    let image = UIImage(data: imageData!)
+                                    self.profilPicture.image = image
+                                }
+                            }
+                            
+                            
+                        }
+                    }
+                }
+                
+                
+            }
+            }
+            
+   
         
     }
+    
+//-------------- Function pour trouver les followers de l'utilisateur -----------------//
     
     func getFollowers(){
         var query = PFQuery(className: "Followers")
@@ -126,6 +159,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
     }
     
+//-------------- Function pour trouver les abonnements de l'utilisateur -----------------//
+    
     func getFollowing(){
         var query = PFQuery(className: "Followers")
         query.whereKey("follower", equalTo: actualUserID)
@@ -148,25 +183,15 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
     }
     
-    func makeSettingsButton(){
-        
-        var boutonSettings: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        boutonSettings.frame = CGRectMake(0, 0, 35, 35)
-        boutonSettings.setImage(UIImage(named:"Parametres"), forState: UIControlState.Normal)
-        boutonSettings.addTarget(self, action: "goToSettings:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        var rightBarButtonItem: UIBarButtonItem = UIBarButtonItem(customView: boutonSettings)
-        
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
     
-    func goToSettings(sender:UIButton!){
-        performSegueWithIdentifier("EditionProfil", sender: self)
-    }
     
+    
+    
+//-------------- Check si l'utilisateur follow l'utilisateur actual + Boutons de follow/unfollow -----------------//
+    
+    //-------------- Check si l'utilisateur connecté si l'utilisateur affiché -----------------//
     
     func checkIfFollow(){
-        
         makeLoadingButton()
         
         var currentUser = PFUser.currentUser()?.objectId!
@@ -191,6 +216,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     
+//-------------- Function pour suivre un utilisateur -----------------//
+    
     func followUser(){
         var following = PFObject(className: "Followers")
         following["follower"] = PFUser.currentUser()?.objectId
@@ -201,9 +228,11 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         makeUnfollowButton()
     }
     
+//-------------- Function pour ne plus suivre un utilisateur -----------------//
+    
     func unfollowUser(){
         
-        var currentUser = PFUser.currentUser()?.username
+        var currentUser = PFUser.currentUser()?.objectId
         var query = PFQuery(className:"Followers")
         query.whereKey("follower", equalTo: currentUser!)
         query.whereKey("following", equalTo: actualUserID)
@@ -213,7 +242,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             if let objects = objects as? [PFObject] {
                 for object in objects {
                     object.deleteInBackground()
-                    
+                    println("Hello")
                     self.makeFollowButton()
                 }
             }
@@ -221,15 +250,21 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
     }
     
+    //Bouton "Chargement"
+    
     func makeLoadingButton(){
         var loadingButton : UIBarButtonItem = UIBarButtonItem(title: "Chargement", style: UIBarButtonItemStyle.Plain, target: self, action: "fakeFollow")
         self.navigationItem.rightBarButtonItem = loadingButton
     }
     
+    //Bouton "Suivre"
+    
     func makeFollowButton(){
         var followButton : UIBarButtonItem = UIBarButtonItem(title: "Suivre", style: UIBarButtonItemStyle.Plain, target: self, action: "followUser")
         self.navigationItem.rightBarButtonItem = followButton
     }
+    
+    //Bouton "Suivi"
     
     func makeUnfollowButton(){
         var unfollowButton : UIBarButtonItem = UIBarButtonItem(title: "Suivi", style: UIBarButtonItemStyle.Plain, target: self, action: "unfollowUser")
@@ -237,9 +272,13 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         self.navigationItem.rightBarButtonItem!.tintColor = UIColor.greenColor();
     }
     
+    //fonction fake durant le chargement
+    
     func fakeFollow(){
         println("Gotcha")
     }
+    
+//-------------- Récupération de la liste des posts par ordre chronologique -----------------//
     
     func getOrderedPosts(){
         
@@ -254,6 +293,11 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 println("Successfully retrieved Posts")
                 // Do something with the found objects
                 if let objects = objects as? [PFObject] {
+                    
+                    if objects.count == 0{
+                        self.noPostLabel.alpha = 1
+                    }
+                    
                     for object in objects {
                         self.post.append(object)
                     }
@@ -267,6 +311,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+//-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
+    
     func getPreview(sender : AnyObject){
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
         var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
@@ -276,7 +322,19 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         mediaPlayer.contentURL = url
         mediaPlayer.play()
         
+        playerSong.text = post[rowIndex].valueForKey("songName") as? String
+        playerArtist.text = post[rowIndex].valueForKey("artistName") as? String
+        playerCurrentSong = (post[rowIndex].valueForKey("songName") as? String)!
+        playerCurrentArtist = (post[rowIndex].valueForKey("artistName") as? String)!
+        showPlayer(playerView, feedTable)
+        
+        
     }
+    
+    
+//-------------- Récupération du lien iTunes Store + ouverture sur le store -----------------//
+    
+    
     
     func getToStore(sender : AnyObject){
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
@@ -289,8 +347,27 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         UIApplication.sharedApplication().openURL(url!)
     }
     
+//-------------- Créations du bouton + fonction pour modifier le profil -----------------//
     
-    //FONCTIONS ET DECLARATIONS POUR LE MEDIA PLAYER
+    func makeSettingsButton(){
+        
+        var boutonSettings: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        boutonSettings.frame = CGRectMake(0, 0, 35, 35)
+        boutonSettings.setImage(UIImage(named:"Parametres"), forState: UIControlState.Normal)
+        boutonSettings.addTarget(self, action: "goToSettings:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var rightBarButtonItem: UIBarButtonItem = UIBarButtonItem(customView: boutonSettings)
+        
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    func goToSettings(sender:UIButton!){
+        performSegueWithIdentifier("EditionProfil", sender: self)
+    }
+    
+    
+    
+//-------------- Déclarations + Gestions du player Musical -----------------//
     
     @IBOutlet var playerView: UIView!
     @IBOutlet var playerSong: UILabel!
@@ -305,7 +382,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBAction func playerStop(sender: AnyObject) {
-      stopPlayer(playerView, feedTable)
+        stopPlayer(playerView, feedTable)
     }
     
     func hidePlayer(note : NSNotification){
@@ -314,10 +391,10 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Si l'utilisateur affiché = utilisateur connecté, on supprime le bouton back
         
         if self.title == PFUser.currentUser()?.username {
             self.navigationItem.hidesBackButton = true;
@@ -327,9 +404,13 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         profilPicture.layer.cornerRadius = 0.5 * profilPicture.bounds.size.width
         self.profilPicture.layer.borderWidth = 3.0;
         self.profilPicture.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        //alignement des boutons de comptage followers et following
         followerCount.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
         followingCount.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         
+        
+        //Détermine quel type de profil à afficher en fonction de l'utilisateur chargé
         
         if self.title == PFUser.currentUser()?.username{
             doProfil(true)
@@ -337,9 +418,11 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             doProfil(false)
         }
         
+        //Initialisation du player
+        
         initialisePlayer(playerView, playerSong, playerArtist, feedTable)
         
-        let playerHasDonePlaying = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
         
     }
@@ -362,53 +445,32 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         var cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath) as! PostTableViewCell
+        
+        //On récupère le post en fonction de l'index de la céllule actuelle
+        
         var currentCell = indexPath
         var currentPost = post[indexPath.row]
         var currentUser = userStock[0]
         
-        cell.postPlay.tag = currentCell.row
+        //Affiche du nom de l'utilisateur
+        
+        cell.username.setTitle(currentUser.valueForKey("username") as? String, forState: UIControlState.Normal)
+        cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        
+        
+        //On calcul la durée entre la date du post et la date actuelle
         
         var lastActive: AnyObject? = currentPost.valueForKey("createdAt")
         cell.postTime.text = makeDate(lastActive!)
-        cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         
-        cell.userProfil.layer.cornerRadius = 0.5 * cell.userProfil.bounds.size.width
+        // On rempli les informations du Post
         
         cell.postArtist.text = currentPost.valueForKey("artistName") as? String
         cell.postDescription.text = currentPost.valueForKey("postDescription") as? String
-        cell.postTitle.text = currentPost.valueForKey("songName") as? String
         cell.postDescription.sizeToFit()
-        cell.username.setTitle(currentUser.valueForKey("username") as? String, forState: UIControlState.Normal)
+        cell.postTitle.text = currentPost.valueForKey("songName") as? String
         
-        if currentPost.valueForKey("itunesLink") as? String == "noLink" {
-            cell.postItunes.hidden = true;
-        }else{
-            cell.postItunes.hidden = false;
-            cell.postItunes.addTarget(self, action: "getToStore:", forControlEvents: .TouchUpInside)
-        }
-        
-        
-        if currentPost.valueForKey("previewLink") as? String == "noPreview" {
-            cell.postPlay.hidden = true
-        }else{
-            cell.postPlay.hidden = false;
-            cell.postPlay.addTarget(self, action: "getPreview:", forControlEvents: .TouchUpInside)
-        }
-        
-        if currentPost.valueForKey("location") as? String == "noLocalisation" {
-            cell.postLocation.text = "Inconnu"
-        }else{
-            cell.postLocation.text = currentPost.valueForKey("location") as? String
-        }
-        
-        
-        if currentUser.valueForKey("profilePicture") != nil{
-            var pictureFile: AnyObject? = currentUser.valueForKey("profilePicture")!
-            pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
-                var theImage = UIImage(data: imageData!)
-                cell.userProfil.image = theImage
-            })
-        }
+        //On récupère l'image du post
         
         if currentPost.valueForKey("coverLink") as? String == "customImage" {
             var profilPictureFile: AnyObject? = currentPost.valueForKey("postImage")
@@ -443,6 +505,46 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 })
             }
         }
+        
+        //On check si le post à un lien itunes, si oui, on affiche le bouton
+        
+        if currentPost.valueForKey("itunesLink") as? String == "noLink" {
+            cell.postItunes.hidden = true;
+        }else{
+            cell.postItunes.hidden = false;
+            cell.postItunes.addTarget(self, action: "getToStore:", forControlEvents: .TouchUpInside)
+        }
+        
+        
+        //On check si le post à un lien de preview, si oui, on affiche le bouton
+        
+        if currentPost.valueForKey("previewLink") as? String == "noPreview" {
+            cell.postPlay.hidden = true
+        }else{
+            cell.postPlay.hidden = false;
+            cell.postPlay.addTarget(self, action: "getPreview:", forControlEvents: .TouchUpInside)
+        }
+        
+        //On check si le post à une localisation , si oui, on l'affiche
+        
+        if currentPost.valueForKey("location") as? String == "noLocalisation" {
+            cell.postLocation.text = "Inconnu"
+        }else{
+            cell.postLocation.text = currentPost.valueForKey("location") as? String
+        }
+        
+        
+        //On récupère la photo de l'utilisateur et on la rend ronde
+        
+        cell.userProfil.layer.cornerRadius = 0.5 * cell.userProfil.bounds.size.width
+        if currentUser.valueForKey("profilePicture") != nil{
+            var pictureFile: AnyObject? = currentUser.valueForKey("profilePicture")!
+            pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
+                var theImage = UIImage(data: imageData!)
+                cell.userProfil.image = theImage
+            })
+        }
+        
 
         
         return cell;

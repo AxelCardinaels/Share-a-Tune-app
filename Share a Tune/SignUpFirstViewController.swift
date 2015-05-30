@@ -13,37 +13,25 @@ import SystemConfiguration
 
 class SignUpFirstViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate{
 
-    
+//-------------- Gestion des erreurs -----------------//
     
     func timeOut(){
         time = true;
         errorFade(time, self.erreurBar)
     }
     
+//-------------- Gestion de l'inscription -----------------//
+    
+    
     @IBOutlet var boutonPhoto: UIButton!
-    var profilPicture = UIImageView(image: UIImage(named: "noopf.png"))
-    
-    
-
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        println("image")
-        self.dismissViewControllerAnimated(true, completion: nil)
-        boutonPhoto.setImage(image, forState: UIControlState.Normal)
-        boutonPhoto.titleLabel?.text = "Votre Photo"
-        profilPicture.image = image;
-    }
-
-    
     @IBOutlet var email: UITextField!
     @IBOutlet var username: UITextField!
     @IBOutlet var password: UITextField!
-    
     @IBOutlet var erreurBar: UILabel!
-    
     @IBOutlet var senderButton: UIButton!
+    var profilPicture = UIImageView(image: UIImage(named: "noopf.png"))
     
-    //Formulaire de login
+    //Inscription
     @IBAction func signUp(sender: AnyObject) {
         
         var error="";
@@ -80,9 +68,6 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         }
         
        
-        
-        
-        
         if error != ""{
             
             showError(self,error,erreurBar )
@@ -136,6 +121,8 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         }
     }
     
+//-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
+    
     //Présentation du choix de l'importation de photo
     
     @IBAction func choixMode(sender: AnyObject) {
@@ -172,6 +159,18 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    
+    //Photo envoyé par l'utilisateur est utilisée
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        println("image")
+        self.dismissViewControllerAnimated(true, completion: nil)
+        boutonPhoto.setImage(image, forState: UIControlState.Normal)
+        boutonPhoto.titleLabel?.text = "Votre Photo"
+        profilPicture.image = image;
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -210,15 +209,6 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         return true
     }
     
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
+
     
 }

@@ -12,6 +12,9 @@ import Foundation
 import SystemConfiguration
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
+
+//-------------- Gestion des erreurs -----------------//
+    
     
     func timeOut(){
         time = true;
@@ -19,18 +22,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBOutlet var username: UITextField!
-    
     @IBOutlet var password: UITextField!
-    
     @IBOutlet var erreurBar: UILabel!
-    
     @IBOutlet var senderButton: UIButton!
     
+//-------------- Gestion du login -----------------//
     
     @IBAction func login(sender: AnyObject) {
-        
-        
         var error="";
+
         var currentUser = PFUser.currentUser()
         currentUser?.fetch()
         
@@ -97,12 +97,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         
-        // Do any additional setup after loading the view.
         username.attributedPlaceholder = NSAttributedString(string:"Votre nom d'utilisateur",
-            attributes:[NSForegroundColorAttributeName: UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)])
+        attributes:[NSForegroundColorAttributeName: UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)])
         
         password.attributedPlaceholder = NSAttributedString(string:"Votre mot de passe",
-            attributes:[NSForegroundColorAttributeName: UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)])
+        attributes:[NSForegroundColorAttributeName: UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)])
         
         self.username.delegate = self;
         self.password.delegate = self;
