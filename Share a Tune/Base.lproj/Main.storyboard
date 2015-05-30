@@ -215,7 +215,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fCe-1J-YFm" id="8G9-T5-90Y">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noopf.png" translatesAutoresizingMaskIntoConstraints="NO" id="F5l-DR-dqX">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noopf.png" translatesAutoresizingMaskIntoConstraints="NO" id="F5l-DR-dqX">
                                                     <rect key="frame" x="10" y="15" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="29k-VX-oZp"/>
@@ -255,8 +255,9 @@
                                                         <constraint firstAttribute="width" constant="18" id="pm8-A8-afo"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noCover" translatesAutoresizingMaskIntoConstraints="NO" id="bLH-X7-Ywp">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noCover" translatesAutoresizingMaskIntoConstraints="NO" id="bLH-X7-Ywp">
                                                     <rect key="frame" x="0.0" y="65" width="320" height="320"/>
+                                                    <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="bLH-X7-Ywp" secondAttribute="height" multiplier="1:1" id="9iz-no-7O6"/>
                                                     </constraints>
@@ -822,6 +823,7 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="noCover" translatesAutoresizingMaskIntoConstraints="NO" id="y55-GV-hrK">
                                 <rect key="frame" x="15" y="81" width="75" height="75"/>
+                                <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="bV0-dE-nSR"/>
                                     <constraint firstAttribute="width" secondItem="y55-GV-hrK" secondAttribute="height" multiplier="1:1" id="c2B-fJ-9iJ"/>
@@ -849,12 +851,12 @@
                                     <outlet property="delegate" destination="JR4-se-5T3" id="kge-8s-aHQ"/>
                                 </connections>
                             </textView>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLp-uP-Xgv">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLp-uP-Xgv">
                                 <rect key="frame" x="160" y="408" width="160" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MLp-uP-Xgv" secondAttribute="height" multiplier="1:1" id="Lb8-Q4-i1p"/>
                                 </constraints>
-                                <state key="normal" title="Ajouter une photo" backgroundImage="noCover">
+                                <state key="normal" title="Ajouter une photo" image="noCover">
                                     <color key="titleColor" red="1" green="1" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -889,7 +891,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mIs-8o-PRI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mIs-8o-PRI">
                                 <rect key="frame" x="160" y="408" width="160" height="160"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -903,7 +905,7 @@
                                     <constraint firstAttribute="width" secondItem="LLK-7W-IXH" secondAttribute="height" multiplier="1:1" id="0fx-Ps-Fi3"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addphoto.png" translatesAutoresizingMaskIntoConstraints="NO" id="c7B-Ah-wP2">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addphoto.png" translatesAutoresizingMaskIntoConstraints="NO" id="c7B-Ah-wP2">
                                 <rect key="frame" x="265" y="527" width="45" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="Uzo-hZ-ryE"/>
@@ -935,6 +937,20 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYP-82-KXO">
+                                <rect key="frame" x="170" y="418" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Lfh-MX-hdO"/>
+                                    <constraint firstAttribute="width" constant="35" id="sDy-YG-erK"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Supprimer L'image" image="closeIcon">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deletePicture:" destination="JR4-se-5T3" eventType="touchUpInside" id="ezg-T0-yNG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -955,6 +971,7 @@
                             <constraint firstItem="Xxk-6X-9W5" firstAttribute="top" secondItem="nL2-BS-jLs" secondAttribute="bottom" id="GRD-Cy-qjk"/>
                             <constraint firstItem="MLp-uP-Xgv" firstAttribute="top" secondItem="9ah-cD-q5A" secondAttribute="bottom" id="Ger-J3-NG2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="c7B-Ah-wP2" secondAttribute="trailing" constant="-6" id="HFe-Oj-Sjb"/>
+                            <constraint firstItem="iYP-82-KXO" firstAttribute="leading" secondItem="LLK-7W-IXH" secondAttribute="trailing" constant="10" id="Ide-xu-YLL"/>
                             <constraint firstItem="Xxk-6X-9W5" firstAttribute="top" secondItem="c7B-Ah-wP2" secondAttribute="bottom" constant="10" id="JlJ-Nt-ct5"/>
                             <constraint firstItem="I8I-A8-66L" firstAttribute="leading" secondItem="wZv-b5-bkn" secondAttribute="leadingMargin" constant="-1" id="MLY-G7-GJ7"/>
                             <constraint firstItem="oNE-A3-nTU" firstAttribute="leading" secondItem="wZv-b5-bkn" secondAttribute="leadingMargin" constant="-6" id="Ma5-0c-gUR"/>
@@ -971,6 +988,7 @@
                             <constraint firstItem="Xxk-6X-9W5" firstAttribute="top" secondItem="MLp-uP-Xgv" secondAttribute="bottom" id="Yop-2A-hgu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Fsl-a9-R3N" secondAttribute="trailing" constant="-1" id="YrH-2v-RaF"/>
                             <constraint firstItem="y55-GV-hrK" firstAttribute="leading" secondItem="wZv-b5-bkn" secondAttribute="leadingMargin" constant="-1" id="YyX-EW-QS1"/>
+                            <constraint firstItem="iYP-82-KXO" firstAttribute="top" secondItem="9ah-cD-q5A" secondAttribute="bottom" constant="10" id="ZYF-3k-gnc"/>
                             <constraint firstItem="OVf-AL-59F" firstAttribute="top" secondItem="bDP-6A-kDZ" secondAttribute="bottom" constant="29" id="ctO-wa-M9L"/>
                             <constraint firstItem="90Z-8F-nQp" firstAttribute="top" secondItem="I8I-A8-66L" secondAttribute="bottom" constant="16" id="d9I-ZN-BcN"/>
                             <constraint firstItem="Fsl-a9-R3N" firstAttribute="leading" secondItem="y55-GV-hrK" secondAttribute="trailing" constant="15" id="dt9-ej-Kgx"/>
@@ -996,6 +1014,7 @@
                     <connections>
                         <outlet property="artisteMorceau" destination="bDP-6A-kDZ" id="yP2-ma-hS2"/>
                         <outlet property="characterCount" destination="OVf-AL-59F" id="UZD-Hb-D6X"/>
+                        <outlet property="deletePictureBouton" destination="iYP-82-KXO" id="f7L-U4-HiY"/>
                         <outlet property="descriptionPost" destination="I8I-A8-66L" id="Hzq-5p-Me3"/>
                         <outlet property="erreurBar" destination="kPw-Zr-ffa" id="HUf-Yj-M86"/>
                         <outlet property="facebookButton" destination="90Z-8F-nQp" id="dMf-U9-9TC"/>
@@ -1434,8 +1453,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="263"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noopf.png" translatesAutoresizingMaskIntoConstraints="NO" id="oRw-X6-eYL">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noopf.png" translatesAutoresizingMaskIntoConstraints="NO" id="oRw-X6-eYL">
                                             <rect key="frame" x="115" y="20" width="90" height="90"/>
+                                            <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="90" id="DDI-1h-67N"/>
                                                 <constraint firstAttribute="width" constant="90" id="VG2-aw-y91"/>
@@ -1515,7 +1535,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="erL-xu-ZR7" id="dgT-W1-zy4">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noopf.png" translatesAutoresizingMaskIntoConstraints="NO" id="SEO-7W-Kan">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noopf.png" translatesAutoresizingMaskIntoConstraints="NO" id="SEO-7W-Kan">
                                                     <rect key="frame" x="10" y="15" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="4VA-Mm-UbK"/>
@@ -1555,8 +1575,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                         <constraint firstAttribute="width" constant="18" id="Yq3-j9-Wd6"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noCover" translatesAutoresizingMaskIntoConstraints="NO" id="dd0-VF-eZd">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noCover" translatesAutoresizingMaskIntoConstraints="NO" id="dd0-VF-eZd">
                                                     <rect key="frame" x="0.0" y="65" width="320" height="320"/>
+                                                    <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="dd0-VF-eZd" secondAttribute="height" multiplier="1:1" id="2iz-5d-UHL"/>
                                                     </constraints>
@@ -1849,11 +1870,11 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                         <rect key="frame" x="0.0" y="0.0" width="320" height="610"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vQh-7W-oUS">
-                                <rect key="frame" x="0.0" y="64" width="320" height="502"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQh-7W-oUS">
+                                <rect key="frame" x="0.0" y="20" width="320" height="546"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAh-Ye-ulR">
-                                        <rect key="frame" x="251" y="145" width="34" height="22"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAh-Ye-ulR">
+                                        <rect key="frame" x="251" y="142" width="34" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="586-dy-30T"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="34" id="ngK-hB-YSn"/>
@@ -1863,12 +1884,12 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="U5o-Kp-oGi">
-                                        <rect key="frame" x="122" y="20" width="75" height="75"/>
+                                        <rect key="frame" x="123" y="20" width="75" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="JGo-fR-xh0"/>
                                             <constraint firstAttribute="height" constant="75" id="y7g-PE-omC"/>
                                         </constraints>
-                                        <state key="normal" title="Votre Photo" backgroundImage="noopf.png">
+                                        <state key="normal" title="Votre Photo" image="noopf.png">
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1883,38 +1904,38 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                             <action selector="updatePicture:" destination="Eto-Ve-Hcc" eventType="touchUpInside" id="Lp0-bj-aSv"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre prénom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C1D-2F-K89">
-                                        <rect key="frame" x="35" y="350" width="250" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre prénom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C1D-2F-K89">
+                                        <rect key="frame" x="35" y="346" width="250" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="2mL-WU-Z4c"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="alphabet"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WoJ-Nk-4Ag">
-                                        <rect key="frame" x="35" y="390" width="250" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WoJ-Nk-4Ag">
+                                        <rect key="frame" x="35" y="386" width="250" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="t5B-fl-OsS"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="alphabet"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre adresse email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ToJ-gc-BTX">
-                                        <rect key="frame" x="35" y="430" width="250" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre adresse email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ToJ-gc-BTX">
+                                        <rect key="frame" x="35" y="426" width="250" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="rto-TR-ePX"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="alphabet"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Votre description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i55-cS-wGd">
-                                        <rect key="frame" x="83" y="120" width="154" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Votre description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i55-cS-wGd">
+                                        <rect key="frame" x="83" y="120" width="154" height="24"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Vos informations du monde véritable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBw-Ty-Ywt">
-                                        <rect key="frame" x="83" y="282" width="154" height="48"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vos informations du monde véritable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBw-Ty-Ywt">
+                                        <rect key="frame" x="83" y="279" width="154" height="47"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="154" id="Qf5-Ev-7ay"/>
                                         </constraints>
@@ -1922,8 +1943,8 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                         <color key="textColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?" translatesAutoresizingMaskIntoConstraints="NO" id="Cyo-rV-VnZ">
-                                        <rect key="frame" x="35" y="167" width="250" height="90"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?" translatesAutoresizingMaskIntoConstraints="NO" id="Cyo-rV-VnZ">
+                                        <rect key="frame" x="35" y="164" width="250" height="90"/>
                                         <color key="tintColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="90" id="5DT-xR-EWi"/>
@@ -1936,8 +1957,8 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                             <outlet property="delegate" destination="JR4-se-5T3" id="rEk-Ng-Tlj"/>
                                         </connections>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOW-R2-8Wn">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOW-R2-8Wn">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
                                         <color key="backgroundColor" red="0.74901960779999999" green="0.15686274510000001" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="n6W-Xm-f3D"/>
@@ -2230,6 +2251,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
         <image name="Recherche" width="27" height="27"/>
         <image name="addphoto.png" width="251" height="183"/>
         <image name="background.png" width="1242" height="2205"/>
+        <image name="closeIcon" width="514" height="514"/>
         <image name="commentIcon" width="322" height="263"/>
         <image name="facebook.png" width="249" height="249"/>
         <image name="itunesIcon" width="1000" height="363"/>
@@ -2244,11 +2266,11 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
         <image name="timeIcon" width="300" height="301"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="X7f-ft-r1t"/>
-        <segue reference="oO2-Ox-3cx"/>
-        <segue reference="Ewy-h6-6OJ"/>
-        <segue reference="VL4-x3-n0j"/>
-        <segue reference="Ud0-xe-eE9"/>
+        <segue reference="ZF1-8c-ghE"/>
+        <segue reference="PKS-kh-goe"/>
+        <segue reference="IqH-dX-lhb"/>
         <segue reference="CkK-gt-Nw8"/>
+        <segue reference="ZaT-Yd-lwB"/>
+        <segue reference="7Hh-W0-gGI"/>
     </inferredMetricsTieBreakers>
 </document>

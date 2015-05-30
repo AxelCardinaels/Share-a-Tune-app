@@ -220,12 +220,26 @@ func activityIndicatorButtonMake(button:UIButton){
     UIApplication.sharedApplication().beginIgnoringInteractionEvents()
 }
 
+func activityIndicatorHeaderMake() -> UIActivityIndicatorView{
+    
+    activityIndicatorButton = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+    activityIndicatorButton.hidesWhenStopped = true
+    activityIndicatorButton.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+    activityIndicatorButton.startAnimating()
+    UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+    return activityIndicatorButton
+}
+
+
+
 func activityIndicatorButtonKill(button:UIButton){
     button.setTitle(activityButtonText, forState: UIControlState.Normal)
     activityIndicatorButton.stopAnimating()
     UIApplication.sharedApplication().endIgnoringInteractionEvents()
-    
 }
+
+
+
 
 //-------------- Gestion du calcul de temps entre la date d'un post et la date actuelle -----------------//
 

@@ -12,15 +12,15 @@ import Foundation
 import SystemConfiguration
 
 class SignUpFirstViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate{
-
-//-------------- Gestion des erreurs -----------------//
+    
+    //-------------- Gestion des erreurs -----------------//
     
     func timeOut(){
         time = true;
         errorFade(time, self.erreurBar)
     }
     
-//-------------- Gestion de l'inscription -----------------//
+    //-------------- Gestion de l'inscription -----------------//
     
     
     @IBOutlet var boutonPhoto: UIButton!
@@ -58,7 +58,7 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
                         error="shortPassword"
                     }
                 }
-            
+                
                 
             }
         }
@@ -67,7 +67,7 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
             error="noInternet"
         }
         
-       
+        
         if error != ""{
             
             showError(self,error,erreurBar )
@@ -110,7 +110,7 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
                     var timer = NSTimer()
                     timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
                     
-                
+                    
                 } else {
                     self.performSegueWithIdentifier("secondSignUp", sender: self)
                 }
@@ -121,7 +121,7 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         }
     }
     
-//-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
+    //-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
     
     //Présentation du choix de l'importation de photo
     
@@ -208,6 +208,6 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         return true
     }
     
-
+    
     
 }

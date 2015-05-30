@@ -40,8 +40,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         }else{
             
-            
-            
             if currentUser?.objectForKey("emailVerified")?.boolValue == false{
                 error = "noVerif"
             }

@@ -16,9 +16,11 @@ import Social
 
 class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate{
     
-//-------------- Variables générales pour le controller actuel  -----------------//
+    //-------------- Variables générales pour le controller actuel  -----------------//
     
     
+    
+    @IBOutlet var deletePictureBouton: UIButton!
     @IBOutlet var facebookButton: UIButton!
     @IBOutlet var localisationText: UILabel!
     @IBOutlet var descriptionPost: UITextView!
@@ -41,8 +43,14 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var canPost = ""
     var actualCount = Int()
     var gotLocation = false
+    var noCoverImage : UIImage = UIImage(named: "noCover")!
+    var hasCoverImage : UIImage = UIImage(named: "noCover")!
+    var hasCustomImage : UIImage = UIImage(named: "noCover")!
+    var doHaveCover = false
+    var doHaveCustom = false
+    var actualImageType = ""
     
-//-------------- Variables pour l'affichage des erreurs -----------------//
+    //-------------- Variables pour l'affichage des erreurs -----------------//
     
     @IBOutlet var erreurBar: UILabel!
     var error = ""
@@ -53,9 +61,9 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     
-//-------------- Gestion de la carte -----------------//
+    //-------------- Gestion de la carte -----------------//
     
-        var manager:CLLocationManager!
+    var manager:CLLocationManager!
     
     func launchMap(){
         
@@ -114,8 +122,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
     }
     
-
-//-------------- Gestion de l'upload de photo -----------------//
+    
+    //-------------- Gestion de l'upload de photo -----------------//
     
     
     //Choix du mode d'importation via le système d'alert
@@ -160,16 +168,69 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
+        photoPost.setImage(image, forState: UIControlState.Normal)
+        photoPost.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         photoPost.titleLabel?.text = "Photo du morceau"
         pochetteMorceau.image = image;
+        hasCustomImage = image
         canSaveImage = true;
+        doHaveCustom = true;
+        actualImageType = "custom"
+        showDeletePictureButton()
+    }
+    
+    
+    func showDeletePictureButton(){
+        deletePictureBouton.alpha = 1
+    }
+    
+    func hideDeletePictureButton(){
+        deletePictureBouton.alpha = 0
+    }
+    
+    @IBAction func deletePicture(sender: AnyObject) {
+        
+        if actualImageType == "cover"{
+            photoPost.setImage(noCoverImage, forState: UIControlState.Normal)
+            photoPost.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+            pochetteMorceau.image = noCoverImage
+            canSaveImage = true
+            doHaveCover = false
+            actualImageType = ""
+            
+            hideDeletePictureButton()
+        }
+        
+        
+        if actualImageType == "custom"{
+            if doHaveCover == true{
+                
+                photoPost.setImage(hasCoverImage, forState: UIControlState.Normal)
+                pochetteMorceau.image = hasCoverImage
+                canSaveImage = false
+                actualImageType = "cover"
+                doHaveCustom = false
+            }else{
+                
+                photoPost.setImage(noCoverImage, forState: UIControlState.Normal)
+                photoPost.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+                pochetteMorceau.image = noCoverImage
+                canSaveImage = false
+                actualImageType = ""
+                hideDeletePictureButton()
+            }
+        }
+        
+        
+        
+        
     }
     
     
     
     
-//-------------- Récupération de la chanson actuelle -----------------//
+    
+    //-------------- Récupération de la chanson actuelle -----------------//
     
     
     func getCurrentSong(){
@@ -215,7 +276,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
     }
     
-//-------------- Trouver les infos pour la chanson actuelle -----------------//
+    //-------------- Trouver les infos pour la chanson actuelle -----------------//
     
     func findSongInfo(searchURL : String){
         
@@ -250,7 +311,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
     }
     
-//-------------- Mise à jour des informations pour le titre trouvé par l'API  -----------------//
+    //-------------- Mise à jour des informations pour le titre trouvé par l'API  -----------------//
     
     func updateInfos(info : AnyObject){
         
@@ -266,9 +327,13 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 // Stocker l'image dans notre cache.
                 
                 self.pochetteMorceau.image = image
-                self.photoPost.setBackgroundImage(image, forState: UIControlState.Normal)
+                self.photoPost.setImage(image, forState: UIControlState.Normal)
+                self.photoPost.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
                 self.descriptionPost.text = "Dites quelque chose de sympa à propos de votre coup de coeur..."
-                
+                self.hasCoverImage = UIImage(data: data)!
+                self.doHaveCover = true
+                self.showDeletePictureButton()
+                self.actualImageType = "cover"
                 
                 
             }
@@ -278,8 +343,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         })
         
     }
-
-//-------------- Envoie du post sur le serveur  -----------------//
+    
+    //-------------- Envoie du post sur le serveur  -----------------//
     
     
     
@@ -299,6 +364,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                     
                     if actualCount >= 0 {
                         
+                        var spinner = activityIndicatorHeaderMake()
+                        var ButtonSpinner : UIBarButtonItem = UIBarButtonItem(customView: spinner)
+                        self.navigationItem.rightBarButtonItem = nil
+                        self.navigationItem.rightBarButtonItem = ButtonSpinner
                         
                         var post = PFObject(className:"Post")
                         
@@ -335,6 +404,12 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         post.saveInBackgroundWithBlock {
                             (success: Bool, error: NSError?) -> Void in
                             if (success) {
+                                activityIndicatorButton.stopAnimating()
+                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                self.navigationItem.rightBarButtonItem = nil
+                                self.makePostButton()
+
+                                
                                 self.performSegueWithIdentifier("GoToFeed", sender: self)
                             } else {
                                 println("Shit happens")
@@ -349,6 +424,11 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 }else{
                     if actualCount >= 0 {
                         
+                        
+                        var spinner = activityIndicatorHeaderMake()
+                        var ButtonSpinner : UIBarButtonItem = UIBarButtonItem(customView: spinner)
+                        self.navigationItem.rightBarButtonItem = nil
+                        self.navigationItem.rightBarButtonItem = ButtonSpinner
                         
                         var post = PFObject(className:"Post")
                         
@@ -388,6 +468,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         post.saveInBackgroundWithBlock {
                             (success: Bool, error: NSError?) -> Void in
                             if (success) {
+                                activityIndicatorButton.stopAnimating()
+                                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                self.navigationItem.rightBarButtonItem = nil
+                                self.makePostButton()
                                 self.performSegueWithIdentifier("GoToFeed", sender: self)
                             }else {
                                 println("Shit happens")
@@ -413,9 +497,9 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     
     
-//-------------- Gestion du UITexView ( Placeholder + limite de caractères)  -----------------//
-
- 
+    //-------------- Gestion du UITexView ( Placeholder + limite de caractères)  -----------------//
+    
+    
     //Si la valeur du texte équivaut au placeholder, on vide le textfield
     
     func textViewDidBeginEditing(textView: UITextView) {
@@ -445,8 +529,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }
     }
     
-
-//-------------- Création des boutons utilitaires -----------------//
+    
+    //-------------- Création des boutons utilitaires -----------------//
     
     func makePostButton(){
         var postButton : UIBarButtonItem = UIBarButtonItem(title: "Publier", style: UIBarButtonItemStyle.Plain, target: self, action: "savePost")
@@ -510,6 +594,6 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     
-
+    
     
 }

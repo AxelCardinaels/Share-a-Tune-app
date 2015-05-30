@@ -62,6 +62,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         profilPicture.setImage(image, forState: UIControlState.Normal)
+        profilPicture.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
         profilPictureStock.image = image
     }
     
@@ -95,6 +96,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
             pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
                 var theImage = UIImage(data: imageData!)
                 self.profilPicture.setImage(theImage, forState: UIControlState.Normal)
+                self.profilPicture.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
                 self.profilPictureStock.image = theImage
             })
         }else{
@@ -147,11 +149,19 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
             timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
             
         }else{
-            
+             var senderButton = self.navigationItem.rightBarButtonItem
             if actualCount >= 0{
                 
                 
                 if user != nil {
+                    
+                   
+                    var spinner = activityIndicatorHeaderMake()
+                    var ButtonSpinner : UIBarButtonItem = UIBarButtonItem(customView: spinner)
+                    self.navigationItem.rightBarButtonItem = nil
+                    self.navigationItem.rightBarButtonItem = ButtonSpinner
+                    
+                    
                     
                     var imageData = UIImagePNGRepresentation(self.profilPictureStock.image)
                     var imageFile = PFFile(name:"ProfilPicture", data: imageData)
@@ -171,6 +181,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                     user?["profilePicture"] = imageFile
                     
                     
+                    
                     user?.saveInBackgroundWithBlock({ (saved, saveError) -> Void in
                         if let saveError = saveError {
                             let errorString = saveError.userInfo?["error"] as? NSString
@@ -186,6 +197,11 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                             
                             
                         } else {
+
+                            activityIndicatorButton.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            self.navigationItem.rightBarButtonItem = nil
+                            self.makeSaveButton()
                             self.performSegueWithIdentifier("ProfilEdited", sender: self)
                         }
                     })
