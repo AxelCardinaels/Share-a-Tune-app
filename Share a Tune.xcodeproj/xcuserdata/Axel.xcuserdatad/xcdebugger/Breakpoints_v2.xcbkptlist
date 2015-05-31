@@ -9,14 +9,107 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Share a Tune/InscriptionViewController.swift"
-            timestampString = "452646131.651249"
+            filePath = "Share a Tune/SelfProfileViewController.swift"
+            timestampString = "454345302.17227"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "makeSettingsButton()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Share a Tune/UserSearchViewController.swift"
+            timestampString = "454642945.902252"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "UserSearchViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Share_a_Tune.UserSearchViewController.playerSong.getter : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UILabel&gt;"
+                  moduleName = "Share a Tune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Axel/Desktop/Stuff/Swift/Share%20a%20Tune/Share%20a%20Tune/UserSearchViewController.swift"
+                  timestampString = "454642765.833345"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Share_a_Tune.UserSearchViewController.playerSong.setter : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UILabel&gt;"
+                  moduleName = "Share a Tune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Axel/Desktop/Stuff/Swift/Share%20a%20Tune/Share%20a%20Tune/UserSearchViewController.swift"
+                  timestampString = "454642765.833544"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Share_a_Tune.UserSearchViewController.playerSong.materializeForSet : Swift.ImplicitlyUnwrappedOptional&lt;ObjectiveC.UILabel&gt;"
+                  moduleName = "Share a Tune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Axel/Desktop/Stuff/Swift/Share%20a%20Tune/Share%20a%20Tune/UserSearchViewController.swift"
+                  timestampString = "454642765.833674"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Share_a_Tune.UserSearchViewController.init (Share_a_Tune.UserSearchViewController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;ObjectiveC.NSBundle&gt;) -&gt; Share_a_Tune.UserSearchViewController"
+                  moduleName = "Share a Tune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Axel/Desktop/Stuff/Swift/Share%20a%20Tune/Share%20a%20Tune/UserSearchViewController.swift"
+                  timestampString = "454642765.833799"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Share_a_Tune.UserSearchViewController.init (Share_a_Tune.UserSearchViewController.Type)(coder : ObjectiveC.NSCoder) -&gt; Share_a_Tune.UserSearchViewController"
+                  moduleName = "Share a Tune"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Axel/Desktop/Stuff/Swift/Share%20a%20Tune/Share%20a%20Tune/UserSearchViewController.swift"
+                  timestampString = "454642765.833922"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -25,13 +118,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Share a Tune/ViewController.swift"
-            timestampString = "452735361.271917"
+            filePath = "Share a Tune/InscriptionFinalViewController.swift"
+            timestampString = "454644461.081141"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "touchesBegan(_:withEvent:)"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

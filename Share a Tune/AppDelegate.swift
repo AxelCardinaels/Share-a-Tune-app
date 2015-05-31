@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import Bolts
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Parse.
         Parse.setApplicationId("y0UzYss12VtjaV2HsN7JWBEPKc6xFTOt2Vkcb7tk",
             clientKey: "MXGuwEvFEYnF9zfckPACCEnIEmWMyaFcB23s5Jgp")
+        
+        PFUser.enableRevocableSessionInBackground()
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
