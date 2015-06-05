@@ -21,13 +21,13 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     var refresher : UIRefreshControl = UIRefreshControl()
     
     func refreshData(){
-
+        
         getFollowedList()
         self.refresher.endRefreshing()
     }
     
     
-//-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
+    //-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
     
     @IBOutlet var erreurBar: UILabel!
     @IBOutlet var noInternetLabel: UILabel!
@@ -40,7 +40,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Déclarations des variables utiles pour followers, posts (feed en somme) -----------------//
+    //-------------- Déclarations des variables utiles pour followers, posts (feed en somme) -----------------//
     
     @IBOutlet var feedTable: UITableView!
     
@@ -49,7 +49,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     var followedInfo = [String : PFObject]()
     
     
-//-------------- Déclarations + Gestions du player Musical -----------------//
+    //-------------- Déclarations + Gestions du player Musical -----------------//
     
     
     @IBOutlet var playerView: UIView!
@@ -77,7 +77,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     
     
-//-------------- Récupération des followers -----------------//
+    //-------------- Récupération des followers -----------------//
     
     func getFollowedList(){
         
@@ -123,7 +123,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     
     
-//-------------- Récupération des infos des followers -----------------//
+    //-------------- Récupération des infos des followers -----------------//
     
     func getFollowedInfos(userID : String){
         
@@ -153,7 +153,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     
     
-//-------------- Récupération de la liste des posts par ordre chronologique -----------------//
+    //-------------- Récupération de la liste des posts par ordre chronologique -----------------//
     
     func getOrderedPosts(){
         
@@ -162,7 +162,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         query.orderByDescending("createdAt")
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
-        
+            
             if error == nil {
                 
                 self.post.removeAll(keepCapacity: true)
@@ -185,7 +185,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Suppression d'un post -----------------//
+    //-------------- Suppression d'un post -----------------//
     
     @IBAction func deletePostAlert(sender: AnyObject) {
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
@@ -222,13 +222,13 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
-
+        
     }
     
     
     
     
-//-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
+    //-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
     
     func getPreview(sender : AnyObject){
         
@@ -250,7 +250,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     
     
-//-------------- Récupération du lien iTunes Store + ouverture sur le store -----------------//
+    //-------------- Récupération du lien iTunes Store + ouverture sur le store -----------------//
     
     func getToStore(sender : AnyObject){
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
@@ -262,8 +262,8 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         UIApplication.sharedApplication().openURL(url!)
     }
-
-
+    
+    
     
     
     override func viewDidLoad() {
@@ -316,13 +316,17 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         var lastActive: AnyObject? = currentPost.valueForKey("createdAt")
         cell.postTime.text = makeDate(lastActive!)
+        cell.postTime.accessibilityLabel = "Publié il y a \(cell.postTime.text!)"
         
         // On rempli les informations du Post
         
         cell.postArtist.text = currentPost.valueForKey("artistName") as? String
+        cell.postArtist.accessibilityLabel = "Artiste : \(cell.postArtist.text!)"
         cell.postDescription.text = currentPost.valueForKey("postDescription") as? String
         cell.postDescription.sizeToFit()
+        cell.postDescription.accessibilityLabel = "Description de la publication : \(cell.postDescription.text!)"
         cell.postTitle.text = currentPost.valueForKey("songName") as? String
+        cell.postTitle.accessibilityLabel = "Chanson : \(cell.postTitle.text!)"
         
         //On récupère l'image du post
         
@@ -382,8 +386,10 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         if currentPost.valueForKey("location") as? String == "noLocalisation" {
             cell.postLocation.text = "Inconnu"
+            cell.postLocation.text = "Publié depuis une localisation inconnue"
         }else{
             cell.postLocation.text = currentPost.valueForKey("location") as? String
+            cell.postLocation.accessibilityLabel = "Publié depuis \(cell.postLocation.text!)"
         }
         
         
@@ -406,10 +412,12 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         if PFUser.currentUser()?.objectId == currentUser?.objectId {
             cell.postDelete.alpha = 1
+        }else{
+            cell.postDelete.alpha = 0
         }
         
         
-
+        
         
         return cell;
     }
@@ -451,5 +459,5 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     
-
+    
 }

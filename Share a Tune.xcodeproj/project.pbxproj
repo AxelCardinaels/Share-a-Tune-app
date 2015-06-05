@@ -52,10 +52,10 @@
 		77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */; };
 		77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B965E31AFB7CBF00CE1145 /* addphoto.png */; };
 		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
+		77C2397F1B1BF0B8001F0599 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		77CB43BC1B0CD54700D7A9FA /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */; };
 		77CB43BE1B0CD67600D7A9FA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CB43BD1B0CD67600D7A9FA /* MediaPlayer.framework */; };
 		77DF0BFD1B0558C100A7E2BF /* UserProfilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF0BFC1B0558C100A7E2BF /* UserProfilViewController.swift */; };
-		77FF32E21B1A8970002F3A53 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,7 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77FF32E21B1A8970002F3A53 /* Parse.framework in Frameworks */,
+				77C2397F1B1BF0B8001F0599 /* Parse.framework in Frameworks */,
 				773B75D81B13D3A500EE8C3C /* AVFoundation.framework in Frameworks */,
 				776CB1DC1B1103AD00F26B4E /* FBSDKShareKit.framework in Frameworks */,
 				776CB1DA1B1103AC00F26B4E /* FBSDKCoreKit.framework in Frameworks */,
@@ -577,6 +577,12 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -628,6 +634,12 @@
 					a,
 					Tune,
 					/Users/Axel/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,

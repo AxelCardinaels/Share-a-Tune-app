@@ -70,16 +70,21 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
         if myself == true{
             var me = PFUser.currentUser()
+            var username = me?.valueForKey("username") as! String
             actualUserID = (me!.valueForKey("objectId") as? String)!
             userStock.append(me!)
             makeSettingsButton()
             
             var profilPictureFile: AnyObject? = me!.objectForKey("profilePicture")
             
-            if me!.valueForKey("bio") as! String == "noBio"{
+            if me!.valueForKey("bio") as! String == "noBio" || me!.valueForKey("bio") as! String == "" {
                 profilDescription.text = "Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?"
+                profilDescription.accessibilityLabel = "Description de l'utilisateur : Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?"
             }else{
-                profilDescription.text = me!.valueForKey("bio") as? String
+                var bio = me!.valueForKey("bio") as! String
+                profilDescription.text = bio
+                profilDescription.accessibilityLabel = "Description de l'utilisateur : \(bio)"
+                
             }
             
             if error == ""{
@@ -92,6 +97,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                     if imageError == nil{
                         let image = UIImage(data: imageData!)
                         self.profilPicture.image = image
+                        self.profilPicture.accessibilityLabel = "Photo de profil de l'utilisateur \(username)"
                     }
                 }
             }
@@ -117,13 +123,16 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                             
                             
                             var me = object
+                            var username = me.valueForKey("username") as! String
                             
                             var profilPictureFile: AnyObject? = me.objectForKey("profilePicture")
                             
-                            if me.valueForKey("bio") as! String == "noBio"{
+                            if me.valueForKey("bio") as! String == "noBio" || me.valueForKey("bio") as! String == "" {
                                 self.profilDescription.text = "Cet utilisateur n'a pas encore de description... Il aime peut être sembler mystérieux ?"
                             }else{
-                                self.profilDescription.text = me.valueForKey("bio") as? String
+                                var bio = me.valueForKey("bio") as! String
+                                self.profilDescription.text = bio
+                                self.profilDescription.accessibilityLabel = "Description de l'utilisateur : \(bio)"
                             }
                             
                             profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
@@ -131,6 +140,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                                 if imageError == nil{
                                     let image = UIImage(data: imageData!)
                                     self.profilPicture.image = image
+                                    self.profilPicture.accessibilityLabel = "Photo de profil de l'utilisateur \(username)"
                                 }
                             }
                             
@@ -511,20 +521,27 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
         //Affiche du nom de l'utilisateur
         
-        cell.username.setTitle(currentUser.valueForKey("username") as? String, forState: UIControlState.Normal)
+        var daUser = currentUser.valueForKey("username") as? String
+        
+        cell.username.setTitle(daUser!, forState: UIControlState.Normal)
         cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        cell.username.accessibilityLabel = "Publié par \(daUser!)"
         
         
         //On calcul la durée entre la date du post et la date actuelle
         
         var lastActive: AnyObject? = currentPost.valueForKey("createdAt")
         cell.postTime.text = makeDate(lastActive!)
+        cell.postTime.accessibilityLabel = "Publié il y a \(cell.postTime.text!)"
         
         // On rempli les informations du Post
         
         cell.postArtist.text = currentPost.valueForKey("artistName") as? String
+        cell.postArtist.accessibilityLabel = "Artiste : \(cell.postArtist.text!)"
         cell.postDescription.text = currentPost.valueForKey("postDescription") as? String
+        cell.postDescription.accessibilityLabel = "Description de la publication : \(cell.postDescription.text!)"
         cell.postTitle.text = currentPost.valueForKey("songName") as? String
+        cell.postTitle.accessibilityLabel = "Chanson : \(cell.postTitle.text!)"
         
         //On récupère l'image du post
         
@@ -585,8 +602,10 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
         if currentPost.valueForKey("location") as? String == "noLocalisation" {
             cell.postLocation.text = "Inconnu"
+            cell.postLocation.accessibilityLabel = "Publié depuis une position inconnue"
         }else{
             cell.postLocation.text = currentPost.valueForKey("location") as? String
+            cell.postLocation.accessibilityLabel = "Publié depuis \(cell.postLocation.text!)"
         }
         
         

@@ -88,7 +88,13 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         profilPrenom.text = user?.valueForKey("prenom") as? String
         profilNom.text = user?.valueForKey("nom") as? String
         profilEmail.text = user?.valueForKey("email") as? String
-        profilDescription.text = user?.valueForKey("bio") as? String
+        
+        if user?.valueForKey("bio") as? String == "noBio" {
+            profilDescription.text = ""
+        }else{
+         profilDescription.text = user?.valueForKey("bio") as? String   
+        }
+        
         
         var pictureFile: AnyObject? = user!.valueForKey("profilePicture")!
         
@@ -98,6 +104,9 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                 self.profilPicture.setImage(theImage, forState: UIControlState.Normal)
                 self.profilPicture.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
                 self.profilPictureStock.image = theImage
+                
+                var username : String = self.user?.valueForKey("username") as! String
+                
             })
         }else{
             var error = "noInternet"

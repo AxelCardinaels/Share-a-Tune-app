@@ -244,7 +244,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             trackAlbum = nowPlaying.valueForProperty(MPMediaItemPropertyAlbumTitle) as! String
             
             titreMorceau.text = trackName
+            titreMorceau.accessibilityLabel = "Chanson : \(trackName)"
             artisteMorceau.text = trackArtist
+            artisteMorceau.accessibilityLabel = "Artiste : \(artisteMorceau)"
+            
             
             var nameArray = trackName.componentsSeparatedByString(" ") as NSArray
             var artistArray = trackArtist.componentsSeparatedByString(" ") as NSArray
@@ -514,6 +517,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         var actualText : Int = count(textView.text) as Int
         actualCount = 120 - actualText
         characterCount.text = "\(actualCount)"
+        characterCount.accessibilityLabel = "\(actualCount) caractères restants"
     }
     
     //Check pour remettre le placeholder en place ou pas

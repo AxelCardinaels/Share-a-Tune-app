@@ -250,15 +250,11 @@ func makeDate(postdate : AnyObject) -> String{
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "yyyy'-'MM'-'dd'-'HH':'mm':'ss"
     var postDate = dateFormatter.stringFromDate(postdate as! NSDate)
-    
     var todaysDate:NSDate = NSDate()
     var actualDate:String = dateFormatter.stringFromDate(todaysDate)
-    
     let startDate:NSDate = dateFormatter.dateFromString(postDate)!
     let endDate:NSDate = dateFormatter.dateFromString(actualDate)!
-    
     let cal = NSCalendar.currentCalendar()
-    
     var unit:NSCalendarUnit = NSCalendarUnit.CalendarUnitDay
     
     var components = cal.components(unit, fromDate: startDate, toDate: endDate, options: nil)
@@ -284,12 +280,9 @@ func makeDate(postdate : AnyObject) -> String{
         }
         
     }else{
-        
        finalTime = "\(components.day)j"
     }
-    
     return finalTime
-
 }
 
 
