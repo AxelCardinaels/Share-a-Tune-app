@@ -386,7 +386,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         if currentPost.valueForKey("location") as? String == "noLocalisation" {
             cell.postLocation.text = "Inconnu"
-            cell.postLocation.text = "Publié depuis une localisation inconnue"
+            cell.postLocation.accessibilityLabel = "Publié depuis une localisation inconnue"
         }else{
             cell.postLocation.text = currentPost.valueForKey("location") as? String
             cell.postLocation.accessibilityLabel = "Publié depuis \(cell.postLocation.text!)"

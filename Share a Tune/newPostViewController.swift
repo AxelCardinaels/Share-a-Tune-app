@@ -49,6 +49,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var doHaveCover = false
     var doHaveCustom = false
     var actualImageType = ""
+    var hasAlbum = true
+    var hasArtist = true;
     
     //-------------- Variables pour l'affichage des erreurs -----------------//
     
@@ -238,31 +240,80 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         if var nowPlaying = MPMusicPlayerController.systemMusicPlayer().nowPlayingItem {
             
             var track = MPMusicPlayerController.systemMusicPlayer().nowPlayingItem
-            trackName = nowPlaying.valueForProperty(MPMediaItemPropertyTitle) as! String
-            
-            trackArtist = nowPlaying.valueForProperty(MPMediaItemPropertyArtist) as! String
-            trackAlbum = nowPlaying.valueForProperty(MPMediaItemPropertyAlbumTitle) as! String
-            
-            titreMorceau.text = trackName
-            titreMorceau.accessibilityLabel = "Chanson : \(trackName)"
-            artisteMorceau.text = trackArtist
-            artisteMorceau.accessibilityLabel = "Artiste : \(artisteMorceau)"
             
             
-            var nameArray = trackName.componentsSeparatedByString(" ") as NSArray
-            var artistArray = trackArtist.componentsSeparatedByString(" ") as NSArray
-            var albumArray = trackAlbum.componentsSeparatedByString(" ") as NSArray
+            if nowPlaying.valueForProperty(MPMediaItemPropertyTitle) == nil{
+               trackName = "Morceau inconnu"
+                self.error = "noSong"
+                showError(self, self.error, self.erreurBar)
+                var timer = NSTimer()
+                timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+                titreMorceau.text = "Pas de morceau"
+                artisteMorceau.text = "Pas d'artiste"
+                descriptionPost.text = "Il faut au moins le titre pour trouver !"
+                canPost = "noSong"
+                
+
+            }else{
+                
+                trackName = nowPlaying.valueForProperty(MPMediaItemPropertyTitle) as! String
+                if nowPlaying.valueForProperty(MPMediaItemPropertyArtist) == nil {
+                    trackArtist = "Artiste Inconnu"
+                    hasArtist = false;
+                    
+                }else{
+                    trackArtist = nowPlaying.valueForProperty(MPMediaItemPropertyArtist) as! String
+                }
+                
+                if nowPlaying.valueForProperty(MPMediaItemPropertyAlbumTitle) == nil {
+                    trackAlbum = "Album Inconnu"
+                    hasAlbum = false;
+                }else{
+                    trackAlbum = nowPlaying.valueForProperty(MPMediaItemPropertyAlbumTitle) as! String
+                }
+                
+                
+                
+                titreMorceau.text = trackName
+                titreMorceau.accessibilityLabel = "Chanson : \(trackName)"
+                artisteMorceau.text = trackArtist
+                artisteMorceau.accessibilityLabel = "Artiste : \(artisteMorceau)"
+                
+                
+                var nameArray = trackName.componentsSeparatedByString(" ") as NSArray
+                var artistArray = trackArtist.componentsSeparatedByString(" ") as NSArray
+                var albumArray = trackAlbum.componentsSeparatedByString(" ") as NSArray
+                
+                
+                trackNameURL = nameArray.componentsJoinedByString("+") as String
+                trackArtistURL = artistArray.componentsJoinedByString("+") as String
+                trackAlbumURL = albumArray.componentsJoinedByString("+")
+                
+                if hasArtist == true && hasAlbum == true {
+                  searchString = "https://itunes.apple.com/search?term=\(trackNameURL)+\(trackArtistURL)+\(trackAlbumURL)&entity=song"
+                }
+                
+                if hasArtist == false && hasAlbum == true {
+                    searchString = "https://itunes.apple.com/search?term=\(trackNameURL)+\(trackAlbumURL)&entity=song"
+                }
+                
+                if hasArtist == true && hasAlbum == false {
+                    searchString = "https://itunes.apple.com/search?term=\(trackNameURL)+\(trackArtistURL)&entity=song"
+                }
+                
+                if hasArtist == false && hasAlbum == false {
+                    searchString = "https://itunes.apple.com/search?term=\(trackNameURL)&entity=song"
+                }
+                
+                
+                println(searchString)
+                
+                
+                findSongInfo(searchString)
+
+            }
             
             
-            trackNameURL = nameArray.componentsJoinedByString("+") as String
-            trackArtistURL = artistArray.componentsJoinedByString("+") as String
-            trackAlbumURL = albumArray.componentsJoinedByString("+")
-            
-            
-            searchString = "https://itunes.apple.com/search?term=\(trackNameURL)+\(trackArtistURL)+\(trackAlbumURL)&entity=song"
-            
-            
-            findSongInfo(searchString)
             
             
         } else {
@@ -411,7 +462,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 self.navigationItem.rightBarButtonItem = nil
                                 self.makePostButton()
-
+                                
                                 
                                 self.performSegueWithIdentifier("GoToFeed", sender: self)
                             } else {
