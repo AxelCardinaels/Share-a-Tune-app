@@ -40,6 +40,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     
 //-------------- Déclarations des variables pour les informations d'utilisateurs + Posts -----------------//
     
+    
+    @IBOutlet var notificationIcon: UIBarButtonItem!
     @IBOutlet var followingCount: UIButton!
     @IBOutlet var followerCount: UIButton!
     @IBOutlet var feedTable: UITableView!
@@ -51,6 +53,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     var followers = [String]()
     var post = [PFObject]()
     var userStock = [PFObject]()
+    var likes = [String : String]()
+    var comments = [String: String]()
     
     
 //-------------- Déclaration de la fonction générant le profil -----------------//
@@ -58,6 +62,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     func doProfil(myself : Bool){
         
         var error = ""
+        
         
         if isConnectedToNetwork() == false{
             noInternetLabel.alpha = 1
@@ -69,6 +74,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }
         
         if myself == true{
+            noPostLabel.alpha = 0
+            noInternetLabel.alpha = 0
             var me = PFUser.currentUser()
             var username = me?.valueForKey("username") as! String
             actualUserID = (me!.valueForKey("objectId") as? String)!
@@ -91,6 +98,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 getFollowers()
                 getFollowing()
                 getOrderedPosts()
+                noPostLabel.alpha = 0
+                noInternetLabel.alpha = 0
                 
                 profilPictureFile!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
                     
@@ -106,6 +115,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }else{
             
             if error == ""{
+                noPostLabel.alpha = 0
+                noInternetLabel.alpha = 0
                 var query = PFUser.query()
                 query?.whereKey("username", equalTo: self.title!)
                 query!.findObjectsInBackgroundWithBlock {
@@ -245,9 +256,26 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         following["follower"] = PFUser.currentUser()?.objectId
         following["following"] = actualUserID
         following.saveInBackground()
+        following.saveInBackgroundWithBlock { (saved, error) -> Void in
+            if saved != false{
+                self.getFollowers()
+                self.makeUnfollowButton()
+            }
+        }
         
         
-        makeUnfollowButton()
+        
+        var notification = PFObject(className: "Notifications")
+        notification["postId"] = "follow"
+        notification["authorId"] = actualUserID
+        notification["likerId"] = PFUser.currentUser()?.objectId
+        notification["notificationType"] = "follow"
+        notification["sawNotif"] = false
+        notification["clickNotif"] = false
+        notification.saveInBackground()
+         
+        
+
     }
     
 //-------------- Function pour ne plus suivre un utilisateur -----------------//
@@ -265,6 +293,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 for object in objects {
                     object.deleteInBackground()
                     self.makeFollowButton()
+                    self.getFollowers()
                 }
             }
         }
@@ -311,6 +340,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             
             if error == nil {
                 self.post.removeAll(keepCapacity: true)
+                self.likes.removeAll(keepCapacity: true)
+                self.comments.removeAll(keepCapacity: true)
                 if let objects = objects as? [PFObject] {
                     
                     if objects.count == 0{
@@ -319,6 +350,9 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                     
                     for object in objects {
                         self.post.append(object)
+                        var idToFind = object.objectId
+                        self.getLikes(idToFind!)
+                        self.getComments(idToFind!)
                     }
                 }
                 
@@ -330,7 +364,47 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+//-------------- Récupération du nombre de j'aime d'un post -----------------//
     
+    func getLikes(idToFind : String){
+        
+        var query = PFQuery(className: "Likes")
+        query.whereKey("postId", equalTo:idToFind)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    
+                    self.likes.updateValue("\(objects.count) j'aime", forKey: idToFind)
+                }
+                
+                self.feedTable.reloadData()
+            } else {
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    //-------------- Récupération du nombre de commentaires d'un post -----------------//
+    
+    func getComments(idToFind : String){
+        
+        var query = PFQuery(className: "Comments")
+        query.whereKey("postId", equalTo:idToFind)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    
+                    self.comments.updateValue("\(objects.count) avis", forKey: idToFind)
+                }
+                
+                self.feedTable.reloadData()
+            } else {
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
     
 //-------------- Suppression d'un post -----------------//
     
@@ -425,7 +499,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     func goToSettings(sender:UIButton!){
-        performSegueWithIdentifier("EditionProfil", sender: self)
+        performSegueWithIdentifier("userSettings", sender: self)
     }
     
     
@@ -491,7 +565,15 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
         feedTable.addSubview(refresher)
         
+        makeNotifLabel(self, notificationIcon)
+        getNotif()
         
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        initialisePlayer(playerView, playerSong, playerArtist, feedTable)
+        getNotif()
     }
     
     
@@ -518,6 +600,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         var currentCell = indexPath
         var currentPost = post[indexPath.row]
         var currentUser = userStock[0]
+        var currentLikeNumber = likes[currentPost.objectId!]
+        var currentCommentNumber = comments[currentPost.objectId!]
         
         //Affiche du nom de l'utilisateur
         
@@ -542,6 +626,9 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         cell.postDescription.accessibilityLabel = "Description de la publication : \(cell.postDescription.text!)"
         cell.postTitle.text = currentPost.valueForKey("songName") as? String
         cell.postTitle.accessibilityLabel = "Chanson : \(cell.postTitle.text!)"
+        
+        cell.likesButton.setTitle(currentLikeNumber, forState: UIControlState.Normal)
+        cell.commentsButton.setTitle(currentCommentNumber, forState: UIControlState.Normal)
         
         //On récupère l'image du post
         
@@ -592,9 +679,13 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         //On check si le post à un lien de preview, si oui, on affiche le bouton
         
         if currentPost.valueForKey("previewLink") as? String == "noPreview" {
-            cell.postPlay.hidden = true
+            cell.postPlay.hidden = false
+            cell.postPlay.enabled = false
+            cell.postPlay.alpha = 0.7
         }else{
             cell.postPlay.hidden = false;
+            cell.postPlay.enabled = true
+            cell.postPlay.alpha = 1
             cell.postPlay.addTarget(self, action: "getPreview:", forControlEvents: .TouchUpInside)
         }
         
@@ -638,6 +729,65 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             secondView.title = PFUser.currentUser()?.username
         }
+        
+        if segue.identifier == "showDetailPublication"{
+            
+            var secondView: SingleProjectViewController = segue.destinationViewController as! SingleProjectViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            var imageContainer = theCell?.valueForKey("postPicture") as? UIImageView
+            var profilContainer = theCell?.valueForKey("userProfil") as? UIImageView
+            
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            
+            if imageContainer != nil {
+                secondView.imageToShow = imageContainer!
+                secondView.imageProfilToShow = profilContainer!
+            }
+            
+            
+        }
+        
+        if segue.identifier == "showComments"{
+            var secondView: CommentairesViewController = segue.destinationViewController as! CommentairesViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            
+        }
+        
+        if segue.identifier == "ShowLikes"{
+            
+            var secondView: UserCountViewController = segue.destinationViewController as! UserCountViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            secondView.typeToGet = "likes"
+            
+        }
+        
+        if segue.identifier == "ShowFollowers" {
+            var secondView: UserCountViewController = segue.destinationViewController as! UserCountViewController
+            secondView.idToFind = actualUserID
+            secondView.typeToGet = "followers"
+            secondView.title = "Abonné à \(self.title!)"
+        }
+        
+        if segue.identifier == "ShowFollowing" {
+            var secondView: UserCountViewController = segue.destinationViewController as! UserCountViewController
+            secondView.idToFind = actualUserID
+            secondView.typeToGet = "following"
+            secondView.title = "Suivi par \(self.title!)"
+        }
+        
+        
     }
     
     

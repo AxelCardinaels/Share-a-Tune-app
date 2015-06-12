@@ -92,6 +92,13 @@ class SignUpSecondViewController: UIViewController, UITextFieldDelegate {
         
         self.prenom.delegate = self;
         self.nom.delegate = self;
+        
+        prenom.layer.borderWidth = 0.85
+        prenom.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+        nom.layer.borderWidth = 0.85
+        nom.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+        
+        
         self.navigationItem.hidesBackButton = true;
         
         

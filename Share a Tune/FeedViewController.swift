@@ -15,6 +15,7 @@ import MediaPlayer
 class FeedViewController: UIViewController, UITableViewDelegate {
     
     
+    @IBOutlet var notificationIcon: UIBarButtonItem!
     
     //-------------- Gestion du rafraichissement -----------------//
     
@@ -47,6 +48,8 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     var followed = [String]()
     var post = [PFObject]()
     var followedInfo = [String : PFObject]()
+    var likes = [String : String]()
+    var comments = [String : String]()
     
     
     //-------------- Déclarations + Gestions du player Musical -----------------//
@@ -88,6 +91,8 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         }
         
         if error == ""{
+            self.noPostLabel.alpha = 0
+            self.noInternetLabel.alpha = 0
             var currentUser = PFUser.currentUser()!.objectId!
             var query = PFQuery(className: "Followers")
             query.whereKey("follower", equalTo: currentUser)
@@ -166,6 +171,8 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             if error == nil {
                 
                 self.post.removeAll(keepCapacity: true)
+                self.likes.removeAll(keepCapacity: true)
+                self.comments.removeAll(keepCapacity: true)
                 if let objects = objects as? [PFObject] {
                     
                     if objects.count == 0{
@@ -174,6 +181,12 @@ class FeedViewController: UIViewController, UITableViewDelegate {
                     
                     for object in objects {
                         self.post.append(object)
+                        
+                        var idToFind = object.objectId
+                        self.getLikes(idToFind!)
+                        self.getComments(idToFind!)
+                        
+                        
                     }
                 }
                 
@@ -184,6 +197,45 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    //-------------- Récupération du nombre de j'aime d'un post -----------------//
+    
+    func getLikes(idToFind : String){
+        
+        var query = PFQuery(className: "Likes")
+        query.whereKey("postId", equalTo:idToFind)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    
+                    self.likes.updateValue("\(objects.count) j'aime", forKey: idToFind)
+                }
+                
+                self.feedTable.reloadData()
+            } else {
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    func getComments(idToFind : String){
+        
+        var query = PFQuery(className: "Comments")
+        query.whereKey("postId", equalTo:idToFind)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFObject] {
+                    
+                    self.comments.updateValue("\(objects.count) avis", forKey: idToFind)
+                }
+                
+                self.feedTable.reloadData()
+            } else {
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
     
     //-------------- Suppression d'un post -----------------//
     
@@ -285,6 +337,14 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         //Mise en place du refresh
         refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
         feedTable.addSubview(refresher)
+        
+        makeNotifLabel(self, notificationIcon)
+        getNotif()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        initialisePlayer(playerView, playerSong, playerArtist, feedTable)
+        getNotif()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
@@ -302,9 +362,10 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         
         //On récupère le post en fonction de l'index de la céllule actuelle
-        
         var currentCell = indexPath
         var currentPost = post[indexPath.row]
+        var currentLikeNumber = likes[currentPost.objectId!]
+        var currentCommentNumber = comments[currentPost.objectId!]
         var currentUser = followedInfo[currentPost.valueForKey("userID") as! String]
         
         //Affiche du nom de l'utilisateur
@@ -327,6 +388,9 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         cell.postDescription.accessibilityLabel = "Description de la publication : \(cell.postDescription.text!)"
         cell.postTitle.text = currentPost.valueForKey("songName") as? String
         cell.postTitle.accessibilityLabel = "Chanson : \(cell.postTitle.text!)"
+        
+        cell.likesButton.setTitle(currentLikeNumber, forState: UIControlState.Normal)
+        cell.commentsButton.setTitle(currentCommentNumber, forState: UIControlState.Normal)
         
         //On récupère l'image du post
         
@@ -376,9 +440,11 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         //On check si le post à un lien de preview, si oui, on affiche le bouton
         
         if currentPost.valueForKey("previewLink") as? String == "noPreview" {
-            cell.postPlay.hidden = true
+            cell.postPlay.enabled = false
+            cell.postPlay.alpha = 0.7
         }else{
-            cell.postPlay.hidden = false;
+            cell.postPlay.enabled = true
+            cell.postPlay.alpha = 1
             cell.postPlay.addTarget(self, action: "getPreview:", forControlEvents: .TouchUpInside)
         }
         
@@ -418,7 +484,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         
         
-        
         return cell;
     }
     
@@ -443,6 +508,50 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             secondView.title = PFUser.currentUser()?.username
         }
+        
+        if segue.identifier == "showDetailPublication"{
+            
+            var secondView: SingleProjectViewController = segue.destinationViewController as! SingleProjectViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            var imageContainer = theCell?.valueForKey("postPicture") as? UIImageView
+            var profilContainer = theCell?.valueForKey("userProfil") as? UIImageView
+            
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            
+            if imageContainer != nil {
+                secondView.imageToShow = imageContainer!
+                secondView.imageProfilToShow = profilContainer!
+            }
+            
+            
+        }
+        
+        if segue.identifier == "showComments"{
+            var secondView: CommentairesViewController = segue.destinationViewController as! CommentairesViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+ 
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            
+        }
+        
+        if segue.identifier == "ShowLikes"{
+            
+            var secondView: UserCountViewController = segue.destinationViewController as! UserCountViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            secondView.typeToGet = "likes"
+
+        }
+        
     }
     
     

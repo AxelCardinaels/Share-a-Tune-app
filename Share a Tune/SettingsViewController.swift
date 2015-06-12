@@ -13,6 +13,10 @@ import SystemConfiguration
 import MediaPlayer
 
 class SettingsViewController: UIViewController, UITableViewDelegate {
+
+    
+    @IBOutlet var notificationIcon: UIBarButtonItem!
+    
     
 //-------------- Déclarations + Gestions du player Musical -----------------//
     
@@ -41,19 +45,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
     
 //-------------- Tableau contenant les settings à afficher -----------------//
     
-    var settingsContainer = ["Se déconnecter","Visiter le site de Share a Tune"]
+    var settingsContainer = ["Se déconnecter","Visiter le site de Share a Tune","Editer mon profil"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //On cache le bouton Back
-        self.navigationItem.setHidesBackButton(true, animated: true)
         
         
         //Initialisation du player
         
         initialisePlayer(playerView, playerSong, playerArtist, settingsTable)
         let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        
+        makeNotifLabel(self, notificationIcon)
+        getNotif()
         
         
     }
@@ -94,8 +98,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
             var currentUser = PFUser.currentUser()
             performSegueWithIdentifier("logout", sender: self)
             
-        }else{
+        }
+        
+        if cellTitle! == "Visiter le site de Share a Tune"{
             UIApplication.sharedApplication().openURL(NSURL(string: "http://www.axelcardinaels.be/shareatuneapp")!)
+        }
+        
+        if cellTitle! == "Editer mon profil"{
+            performSegueWithIdentifier("editProfil", sender: self)
         }
         
     }

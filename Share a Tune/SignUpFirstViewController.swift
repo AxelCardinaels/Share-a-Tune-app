@@ -189,6 +189,18 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
         self.email.delegate = self;
         self.username.delegate = self;
         
+        //apparance des champs de texte
+        
+        password.layer.borderWidth = 0.85
+        password.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+
+        username.layer.borderWidth = 0.85
+        username.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+
+        email.layer.borderWidth = 0.85
+        email.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+       
+        
     }
     
     override func didReceiveMemoryWarning() {

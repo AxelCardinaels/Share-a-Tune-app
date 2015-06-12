@@ -17,6 +17,7 @@ import MediaPlayer
 
 var mediaPlayer: MPMoviePlayerController = MPMoviePlayerController()
 var playerIsPaused = false
+var playerIsPlaying = false
 var playerCurrentSong = "Titre du morceau"
 var playerCurrentArtist = "Artiste"
 
@@ -55,11 +56,14 @@ func playPlayer(playButton : UIButton, songLabel : UILabel, artistLabel : UILabe
     playButton.setTitle("Mettre l'extrait en pause", forState: UIControlState.Normal)
     playButton.setImage(pauseImage, forState: UIControlState.Normal)
     playerIsPaused = false
+    playerIsPlaying = true;
 }
 
 func stopPlayer(playerView : UIView, indentedView : UITableView){
     
     mediaPlayer.stop()
+    playerIsPlaying = false;
+    playerIsPaused = false;
     
     
     UIView.animateWithDuration(0.4, animations: { () -> Void in
@@ -77,6 +81,7 @@ func killPlayer(){
     mediaPlayer.stop()
     playerCurrentSong = "Titre du morceau"
     playerCurrentArtist = "Artiste"
+    playerIsPlaying = false
 }
 
 func showPlayer(playerView : UIView, indentedView : UITableView){
@@ -280,12 +285,72 @@ func makeDate(postdate : AnyObject) -> String{
         }
         
     }else{
-       finalTime = "\(components.day)j"
+        finalTime = "\(components.day)j"
     }
     return finalTime
 }
 
 
+//-------------- Gestion de la pastille de notification -----------------//
+
+
+
+var notifNumber : Int = 0
+var actualNotifNumber : Int = 0
+var notifLabel = UILabel()
+
+func makeNotifLabel(vc : UIViewController, icon : UIBarButtonItem){
+    var view: AnyObject? = icon.valueForKey("view")
+    notifLabel = UILabel(frame : CGRect(x: view!.frame.origin.x, y: view!.frame.origin.y, width: 25,height: 25))
+    notifLabel.center = CGPointMake(view!.frame.origin.x + 20 , vc.view.frame.height - 40 )
+    notifLabel.textColor = UIColor.whiteColor()
+    notifLabel.backgroundColor = UIColor(red:203/255, green:20/255,blue:82/255,alpha:1.0)
+    notifLabel.textAlignment = NSTextAlignment.Center
+    notifLabel.font = UIFont(name: "Avenir Book", size: 15)
+    notifLabel.text = "\(notifNumber)"
+    notifLabel.clipsToBounds = true;
+    notifLabel.layer.cornerRadius = notifLabel.font.pointSize * 1.5 / 2
+    notifLabel.alpha = 0;
+    
+    vc.view.addSubview(notifLabel)
+
+}
+
+func getNotif(){
+    
+    var myself = PFUser.currentUser()?.objectId
+    
+    var query = PFQuery(className: "Notifications")
+    query.whereKey("authorId", equalTo: myself! )
+    query.whereKey("sawNotif", equalTo: false)
+    query.findObjectsInBackgroundWithBlock {
+        (objects: [AnyObject]?, error: NSError?) -> Void in
+        
+        if error == nil {
+            // The find succeeded.
+            notifNumber = objects!.count
+            
+            if notifNumber != 0 {
+                notifLabel.alpha = 1
+            }
+            
+            if notifNumber != actualNotifNumber{
+                if notifNumber != 0{
+                    actualNotifNumber = notifNumber
+                    notifLabel.text = "\(notifNumber)"
+                }
+                
+            }
+            
+            
+        } else {
+            // Log details of the failure
+            println("Error: \(error!) \(error!.userInfo!)")
+        }
+    }
+    
+    
+}
 
 
 

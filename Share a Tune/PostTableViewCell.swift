@@ -32,5 +32,8 @@ class PostTableViewCell: UITableViewCell {
     
     @IBOutlet var postDelete: UIButton!
     
+    @IBOutlet var likesButton: UIButton!
+    
+    @IBOutlet var commentsButton: UIButton!
     
 }

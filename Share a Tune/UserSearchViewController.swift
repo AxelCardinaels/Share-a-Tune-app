@@ -14,6 +14,10 @@ import MediaPlayer
 
 class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDelegate {
     
+    
+    
+    
+    @IBOutlet var notificationIcon: UIBarButtonItem!
 
 //-------------- Gestion du rafraichissement -----------------//    
     
@@ -303,6 +307,9 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         //Mise en place du refresh
         refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
         tableUsers.addSubview(refresher)
+        
+        makeNotifLabel(self, notificationIcon)
+        getNotif()
         
         
     }

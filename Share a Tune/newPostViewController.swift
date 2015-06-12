@@ -236,6 +236,27 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     
     func getCurrentSong(){
+        trackName = ""
+        trackNameURL = ""
+        trackArtist = ""
+        trackArtistURL = ""
+        trackAlbum = ""
+        trackAlbumURL = ""
+        searchString = ""
+        finalObject = ""
+        canSaveImage = false
+        songExist = false
+        canPost = ""
+        gotLocation = false
+        noCoverImage = UIImage(named: "noCover")!
+        hasCoverImage = UIImage(named: "noCover")!
+        hasCustomImage = UIImage(named: "noCover")!
+        doHaveCover = false
+        doHaveCustom = false
+        actualImageType = ""
+        hasAlbum = true
+        hasArtist = true;
+        error=""
         
         if var nowPlaying = MPMusicPlayerController.systemMusicPlayer().nowPlayingItem {
             
@@ -619,7 +640,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     
     
-    
+    func applicationCameBackFromBackground(note : NSNotification){
+        getCurrentSong()
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -634,6 +658,9 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         self.pochetteMorceau.layer.borderColor = UIColor.whiteColor().CGColor
         descriptionPost.delegate = self
         
+        let applicationCameBackFromBackground: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "applicationCameBackFromBackground:" , name: UIApplicationDidBecomeActiveNotification , object: nil)
+        
+        
         // Do any additional setup after loading the view.
         
     }
@@ -646,6 +673,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true);
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        getCurrentSong()
     }
     
     

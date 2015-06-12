@@ -13,6 +13,10 @@ import SystemConfiguration
 
 class ProfilEditViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
+    
+    @IBOutlet var notificationIcon: UIBarButtonItem!
+    
+    
     func timeOut(){
         time = true;
         errorFade(time, self.erreurBar)
@@ -21,7 +25,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     var user = PFUser.currentUser()
     var profilPictureStock = UIImageView(image: UIImage(named: "noopf.png"))
     
-//-------------- gestion de l'importation de photo -----------------//
+    //-------------- gestion de l'importation de photo -----------------//
     
     @IBOutlet var profilPicture: UIButton!
     @IBAction func updatePicture(sender: AnyObject){
@@ -67,7 +71,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     }
     
     
-//-------------- Variables générales pour la vue -----------------//
+    //-------------- Variables générales pour la vue -----------------//
     
     @IBOutlet var theScrollView: UIScrollView!
     @IBOutlet var characterCount: UILabel!
@@ -80,7 +84,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     var kbHeight = CGFloat()
     
     
-//-------------- Création du profil -----------------//
+    //-------------- Création du profil -----------------//
     
     
     func doProfil(){
@@ -92,7 +96,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         if user?.valueForKey("bio") as? String == "noBio" {
             profilDescription.text = ""
         }else{
-         profilDescription.text = user?.valueForKey("bio") as? String   
+            profilDescription.text = user?.valueForKey("bio") as? String
         }
         
         
@@ -114,10 +118,10 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
             var timer = NSTimer()
             timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
         }
-    
+        
     }
     
-//-------------- Check + enregistrement du profil sur le serveur -----------------//
+    //-------------- Check + enregistrement du profil sur le serveur -----------------//
     
     func updateProfil(){
         var error="";
@@ -158,13 +162,13 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
             timer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
             
         }else{
-             var senderButton = self.navigationItem.rightBarButtonItem
+            var senderButton = self.navigationItem.rightBarButtonItem
             if actualCount >= 0{
                 
                 
                 if user != nil {
                     
-                   
+                    
                     var spinner = activityIndicatorHeaderMake()
                     var ButtonSpinner : UIBarButtonItem = UIBarButtonItem(customView: spinner)
                     self.navigationItem.rightBarButtonItem = nil
@@ -184,7 +188,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                     if actualCount == 120 {
                         user?["bio"] = "noBio"
                     }else{
-                      user?["bio"] = profilDescription.text
+                        user?["bio"] = profilDescription.text
                     }
                     
                     user?["profilePicture"] = imageFile
@@ -206,7 +210,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                             
                             
                         } else {
-
+                            
                             activityIndicatorButton.stopAnimating()
                             UIApplication.sharedApplication().endIgnoringInteractionEvents()
                             self.navigationItem.rightBarButtonItem = nil
@@ -237,7 +241,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     }
     
     
-//-------------- Gestion du clavier -----------------//
+    //-------------- Gestion du clavier -----------------//
     
     //Cache le clavier à la fin de l'édition
     
@@ -246,7 +250,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     }
     
     //Ajout d'événement pour le clavier ( Apparait , disparait)
-
+    
     func registerForKeyboardNotifications() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self,selector: "keyboardWillBeShown:", name: UIKeyboardWillShowNotification, object: nil)
@@ -261,7 +265,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
         theScrollView.contentInset = contentInsets
         theScrollView.scrollIndicatorInsets = contentInsets
-
+        
     }
     
     // la vue se remet en place quand le clavier disparait
@@ -296,9 +300,19 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         
         profilPicture.layer.cornerRadius = 0.5 * profilPicture.bounds.size.width
         
-        profilDescription.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
-        profilDescription.layer.borderWidth = 1.0
-        profilDescription.layer.cornerRadius = 5
+        profilDescription.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+        profilDescription.layer.borderWidth = 0.85
+        profilEmail.layer.borderWidth = 0.85
+        profilEmail.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+        profilNom.layer.borderWidth = 0.85
+        profilNom.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+        profilPrenom.layer.borderWidth = 0.85
+        profilPrenom.layer.borderColor = UIColor(red: 203/255, green: 20/255, blue: 102/255, alpha: 0.8).CGColor
+        
+        
+        
+        
+        
         
         makeSaveButton()
         doProfil()
@@ -312,10 +326,15 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "quitKeyboard:")
         theScrollView.addGestureRecognizer(tap)
         
+        makeNotifLabel(self, notificationIcon)
+        getNotif()
+        
     }
     
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-   
+        
         if segue.identifier == "ProfilEdited" {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
             secondView.title = PFUser.currentUser()?.username
@@ -326,10 +345,10 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         }
     }
     
- 
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -340,7 +359,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     
     
     
-
+    
     
     
     
