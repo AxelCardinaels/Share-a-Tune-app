@@ -163,8 +163,14 @@ class UserCountViewController: UIViewController, UITableViewDelegate {
         var cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! UsersTableViewCell
         
         var currentUser = users[indexPath.row]
+        var username = currentUser!.valueForKey("username") as? String
         
-        cell.labelCell.text = currentUser!.valueForKey("username") as? String
+        if username != nil{
+            cell.labelCell.text = username!
+            cell.labelCell.accessibilityLabel = "\(username!) à aimé cette publication. Appuyez pour Afficher son profil "
+        }
+        
+        
         cell.imageCell.layer.cornerRadius = 0.5 * cell.imageCell.bounds.size.width
         currentUser?.valueForKey("profilePicture")!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
             

@@ -171,6 +171,7 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
                 if let objects = objects as? [PFObject] {
                     
                     self.likeNumber.setTitle("\(objects.count) j'aime", forState: UIControlState.Normal)
+                    self.likeNumber.accessibilityLabel = "Afficher les \(objects.count) mentions j'aime pour cette publication"
                     for object in objects {
                         var likerId = object.valueForKey("likerId") as? String
                         var currentId = PFUser.currentUser()?.valueForKey("objectId") as? String
@@ -198,6 +199,7 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
                 if let objects = objects as? [PFObject] {
                     
                     self.commentNumber.setTitle("\(objects.count) avis", forState: UIControlState.Normal)
+                    self.commentNumber.accessibilityLabel = "Afficher les \(objects.count) commentaires pour cette publication"
                 }
                 
             } else {

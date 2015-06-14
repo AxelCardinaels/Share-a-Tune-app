@@ -283,14 +283,26 @@ class CommentairesViewController: UIViewController, UITextViewDelegate {
         var actualUser = commentsUser[(actualComment.valueForKey("posterId") as? String)!]
         
         var username = actualUser?.valueForKey("username") as? String
+        var comment = actualComment.valueForKey("comment") as? String
         
         if username != nil {
-           cell.cellName.setTitle("\(username!)", forState: UIControlState.Normal) 
+           cell.cellName.setTitle("\(username!)", forState: UIControlState.Normal)
+            cell.cellName.accessibilityLabel = "Afficher le profil de \(username!)"
+            
+            if comment != nil {
+                cell.cellText.text = comment!
+                cell.accessibilityLabel = "Commentaire posté par \(username!) : \(comment!)"
+                
+
+            }
+            
+            
         }
         
         
         cell.cellName.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        cell.cellText.text = actualComment.valueForKey("comment") as? String
+        
+        
         
         cell.profilPicture.layer.cornerRadius = 0.5 * cell.profilPicture.bounds.size.width
         if actualUser?.valueForKey("profilePicture")! != nil{

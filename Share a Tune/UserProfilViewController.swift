@@ -712,8 +712,18 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         cell.postTitle.text = currentPost.valueForKey("songName") as? String
         cell.postTitle.accessibilityLabel = "Chanson : \(cell.postTitle.text!)"
         
-        cell.likesButton.setTitle(currentLikeNumber, forState: UIControlState.Normal)
-        cell.commentsButton.setTitle(currentCommentNumber, forState: UIControlState.Normal)
+        
+        if currentLikeNumber != nil{
+            cell.likesButton.setTitle(currentLikeNumber, forState: UIControlState.Normal)
+            cell.likesButton.accessibilityLabel = "Afficher les \(currentLikeNumber!) pour cette publication"
+        }
+        
+        
+        
+        if currentCommentNumber != nil{
+            cell.commentsButton.setTitle(currentCommentNumber, forState: UIControlState.Normal)
+            cell.commentsButton.accessibilityLabel = "Afficher les \(currentCommentNumber!) pour cette publication"
+        }
         
         //On récupère l'image du post
         
