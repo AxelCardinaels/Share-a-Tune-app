@@ -15,7 +15,7 @@ import MediaPlayer
 class UserProfilViewController: UIViewController, UITableViewDelegate {
     
     
-//-------------- Gestion du rafraichissement -----------------//
+    //-------------- Gestion du rafraichissement -----------------//
     
     var refresher : UIRefreshControl = UIRefreshControl()
     
@@ -26,7 +26,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
+    //-------------- Déclarations des variables/fonctions pour la gestion des erreurs -----------------//
     
     @IBOutlet var erreurBar: UILabel!
     @IBOutlet var noInternetLabel: UILabel!
@@ -38,7 +38,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Déclarations des variables pour les informations d'utilisateurs + Posts -----------------//
+    //-------------- Déclarations des variables pour les informations d'utilisateurs + Posts -----------------//
     
     
     @IBOutlet var notificationIcon: UIBarButtonItem!
@@ -54,10 +54,11 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     var post = [PFObject]()
     var userStock = [PFObject]()
     var likes = [String : String]()
+    var likeLikes = [String : Bool]()
     var comments = [String: String]()
     
     
-//-------------- Déclaration de la fonction générant le profil -----------------//
+    //-------------- Déclaration de la fonction générant le profil -----------------//
     
     func doProfil(myself : Bool){
         
@@ -110,7 +111,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                     }
                 }
             }
-
+            
             
         }else{
             
@@ -162,13 +163,13 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 
                 
             }
-            }
-            
-   
+        }
+        
+        
         
     }
     
-//-------------- Function pour trouver les followers de l'utilisateur -----------------//
+    //-------------- Function pour trouver les followers de l'utilisateur -----------------//
     
     func getFollowers(){
         var query = PFQuery(className: "Followers")
@@ -182,7 +183,14 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                         var followedUser: AnyObject? = object.valueForKey("follower")
                         self.followers.append(followedUser! as! String)
                     }
-                    self.followerCount.setTitle("\(objects.count) Abonnés", forState: UIControlState.Normal)
+                    
+                    if objects.count > 1{
+                        self.followerCount.setTitle("\(objects.count) Abonnés", forState: UIControlState.Normal)
+                        self.followerCount.accessibilityLabel = "Afficher les personnes suivant cet utilisateur ( \(objects.count) au total )"
+                    }else{
+                        self.followerCount.setTitle("\(objects.count) Abonné", forState: UIControlState.Normal)
+                        self.followerCount.accessibilityLabel = "Afficher la personne suivant cet utilisateur ( \(objects.count) au total )"
+                    }
                 }
             } else {
                 // Log details of the failure
@@ -192,7 +200,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
     }
     
-//-------------- Function pour trouver les abonnements de l'utilisateur -----------------//
+    //-------------- Function pour trouver les abonnements de l'utilisateur -----------------//
     
     func getFollowing(){
         var query = PFQuery(className: "Followers")
@@ -206,7 +214,15 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                         var followedUser: AnyObject? = object.valueForKey("following")
                         self.following.append(followedUser! as! String)
                     }
-                    self.followingCount.setTitle("\(objects.count) Abonnements", forState: UIControlState.Normal)
+                    
+                    if objects.count > 1 {
+                     self.followingCount.setTitle("\(objects.count) Abonnements", forState: UIControlState.Normal)
+                     self.followingCount.accessibilityLabel = "Afficher les personnes auquel l'utilisateur est abonné ( \(objects.count) au total )"
+                    }else{
+                      self.followingCount.setTitle("\(objects.count) Abonnement", forState: UIControlState.Normal)
+                        self.followingCount.accessibilityLabel = "Afficher la personne auquel l'utilisateur est abonné ( \(objects.count) au total )"
+                    }
+                    
                 }
             } else {
                 // Log details of the failure
@@ -220,7 +236,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     
     
     
-//-------------- Check si l'utilisateur follow l'utilisateur actual + Boutons de follow/unfollow -----------------//
+    //-------------- Check si l'utilisateur follow l'utilisateur actual + Boutons de follow/unfollow -----------------//
     
     //-------------- Check si l'utilisateur connecté si l'utilisateur affiché -----------------//
     
@@ -249,7 +265,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Function pour suivre un utilisateur -----------------//
+    //-------------- Function pour suivre un utilisateur -----------------//
     
     func followUser(){
         var following = PFObject(className: "Followers")
@@ -273,12 +289,12 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         notification["sawNotif"] = false
         notification["clickNotif"] = false
         notification.saveInBackground()
-         
         
-
+        
+        
     }
     
-//-------------- Function pour ne plus suivre un utilisateur -----------------//
+    //-------------- Function pour ne plus suivre un utilisateur -----------------//
     
     func unfollowUser(){
         
@@ -328,7 +344,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         println("Gotcha")
     }
     
-//-------------- Récupération de la liste des posts par ordre chronologique -----------------//
+    //-------------- Récupération de la liste des posts par ordre chronologique -----------------//
     
     func getOrderedPosts(){
         
@@ -341,6 +357,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             if error == nil {
                 self.post.removeAll(keepCapacity: true)
                 self.likes.removeAll(keepCapacity: true)
+                self.likeLikes.removeAll(keepCapacity: true)
                 self.comments.removeAll(keepCapacity: true)
                 if let objects = objects as? [PFObject] {
                     
@@ -364,7 +381,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-//-------------- Récupération du nombre de j'aime d'un post -----------------//
+    //-------------- Récupération du nombre de j'aime d'un post -----------------//
     
     func getLikes(idToFind : String){
         
@@ -376,6 +393,16 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 if let objects = objects as? [PFObject] {
                     
                     self.likes.updateValue("\(objects.count) j'aime", forKey: idToFind)
+                    
+                    for object in objects{
+                        
+                        if object.valueForKey("likedId") as? String == PFUser.currentUser()?.objectId{
+                            self.likeLikes.updateValue(true, forKey: idToFind)
+                        }else{
+                            self.likeLikes.updateValue(false, forKey: idToFind)
+                        }
+                        
+                    }
                 }
                 
                 self.feedTable.reloadData()
@@ -406,7 +433,50 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-//-------------- Suppression d'un post -----------------//
+    //-------------- Nettoyage d'un post -----------------//
+    
+    func cleanPost(postId : String){
+        var query = PFQuery(className: "Comments")
+        query.whereKey("postId", equalTo: postId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        query = PFQuery(className: "Likes")
+        query.whereKey("postId", equalTo: postId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        
+        query = PFQuery(className: "Notifications")
+        query.whereKey("postId", equalTo: postId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackgroundWithBlock({ (succes, error) -> Void in
+                        if succes{
+                            
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    //-------------- Suppression d'un post -----------------//
     
     @IBAction func PostDeleteAlert(sender: AnyObject) {
         
@@ -414,12 +484,13 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
         var rowIndex = indexPath!.row
         var postId = post[rowIndex].valueForKey("objectId") as! String
-
+        
         
         var alert = UIAlertController(title: nil, message: "Êtres vous sur de vouloir supprimer cette publication ?", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         
         alert.addAction(UIAlertAction(title: "Supprimer la publication", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+            
             var query = PFQuery(className:"Post")
             query.whereKey("objectId", equalTo: postId)
             query.findObjectsInBackgroundWithBlock {
@@ -427,14 +498,24 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                 
                 if let objects = objects as? [PFObject] {
                     for object in objects {
-                        object.deleteInBackground()
+                        object.deleteInBackgroundWithBlock {
+                            (success: Bool, error: NSError?) -> Void in
+                            if (success) {
+                                self.cleanPost(postId)
+                                self.getOrderedPosts()
+                                alert.dismissViewControllerAnimated(true, completion: nil)
+                            } else {
+                                println("fail")
+                            }
+                        }
+
                         
                     }
                 }
-                self.getOrderedPosts()
             }
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+     
+            
             
             
         }))
@@ -448,7 +529,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
+    //-------------- Récupération de préview de la partie du tableau + lancement du player -----------------//
     
     func getPreview(sender : AnyObject){
         var positionButton = sender.convertPoint(CGPointZero, toView: self.feedTable)
@@ -469,7 +550,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     }
     
     
-//-------------- Récupération du lien iTunes Store + ouverture sur le store -----------------//
+    //-------------- Récupération du lien iTunes Store + ouverture sur le store -----------------//
     
     
     
@@ -484,7 +565,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         UIApplication.sharedApplication().openURL(url!)
     }
     
-//-------------- Créations du bouton + fonction pour modifier le profil -----------------//
+    //-------------- Créations du bouton + fonction pour modifier le profil -----------------//
     
     func makeSettingsButton(){
         
@@ -492,6 +573,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         boutonSettings.frame = CGRectMake(0, 0, 35, 35)
         boutonSettings.setImage(UIImage(named:"Parametres"), forState: UIControlState.Normal)
         boutonSettings.addTarget(self, action: "goToSettings:", forControlEvents: UIControlEvents.TouchUpInside)
+        boutonSettings.accessibilityLabel = "Accèder à la gestion des paramètres personnels"
         
         var rightBarButtonItem: UIBarButtonItem = UIBarButtonItem(customView: boutonSettings)
         
@@ -504,7 +586,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     
     
     
-//-------------- Déclarations + Gestions du player Musical -----------------//
+    //-------------- Déclarations + Gestions du player Musical -----------------//
     
     @IBOutlet var playerView: UIView!
     @IBOutlet var playerSong: UILabel!
@@ -574,6 +656,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     override func viewDidAppear(animated: Bool) {
         initialisePlayer(playerView, playerSong, playerArtist, feedTable)
         getNotif()
+        getOrderedPosts()
     }
     
     
@@ -602,6 +685,8 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         var currentUser = userStock[0]
         var currentLikeNumber = likes[currentPost.objectId!]
         var currentCommentNumber = comments[currentPost.objectId!]
+        var currentLike = likeLikes[currentPost.objectId!]
+        
         
         //Affiche du nom de l'utilisateur
         
@@ -717,7 +802,16 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             cell.postDelete.alpha = 1
         }
         
-
+        if currentLike != nil{
+            cell.unlikeButton.alpha = 1
+            cell.iLikeButton.alpha = 0
+        }else{
+            cell.unlikeButton.alpha = 0
+            cell.iLikeButton.alpha = 1
+        }
+        
+        
+        
         
         return cell;
     }
@@ -785,6 +879,44 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             secondView.idToFind = actualUserID
             secondView.typeToGet = "following"
             secondView.title = "Suivi par \(self.title!)"
+        }
+        
+        if segue.identifier == "ShowDetailLike"{
+            var secondView: SingleProjectViewController = segue.destinationViewController as! SingleProjectViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            var imageContainer = theCell?.valueForKey("postPicture") as? UIImageView
+            var profilContainer = theCell?.valueForKey("userProfil") as? UIImageView
+            
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            
+            if imageContainer != nil {
+                secondView.imageToShow = imageContainer!
+                secondView.imageProfilToShow = profilContainer!
+            }
+            
+            secondView.actionToDo = "like"
+        }
+        
+        if segue.identifier == "ShowDetailUnlike"{
+            var secondView: SingleProjectViewController = segue.destinationViewController as! SingleProjectViewController
+            var positionButton = sender!.convertPoint(CGPointZero, toView: self.feedTable)
+            var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
+            var rowIndex = indexPath?.row
+            var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
+            var imageContainer = theCell?.valueForKey("postPicture") as? UIImageView
+            var profilContainer = theCell?.valueForKey("userProfil") as? UIImageView
+            
+            secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
+            
+            if imageContainer != nil {
+                secondView.imageToShow = imageContainer!
+                secondView.imageProfilToShow = profilContainer!
+            }
+            
+            secondView.actionToDo = "unlike"
         }
         
         

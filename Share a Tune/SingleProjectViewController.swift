@@ -40,6 +40,7 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var deleteButton: UIButton!
     @IBOutlet var unlikeButton: UIButton!
     @IBOutlet var contentView: UIScrollView!
+    var actionToDo : String = ""
     
     
     var error = ""
@@ -140,9 +141,18 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
             if error == nil {
                 if let objects = objects as? [PFObject] {
                     for object in objects {
+                        self.authorId = (object.valueForKey("objectId") as? String)!
                         var username = object.valueForKey("username") as? String
                         self.profilName.setTitle(username, forState: UIControlState.Normal)
+                        self.profilName.accessibilityLabel = "Afficher le profil de \(username!)"
                         self.profilName.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+                        if self.actionToDo == "like"{
+                            self.likePost()
+                        }
+                        
+                        if self.actionToDo == "unlike"{
+                            self.unlikePost()
+                        }
                     }
                 }
                 
@@ -198,22 +208,60 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func likeButtonClick(sender: AnyObject) {
         
+        likePost()
+        likeButton.enabled = false
+    }
+    
+    func likePost(){
+        var like = PFObject(className: "Likes")
+        like["postId"] = idToFind
+        like["likerId"] = PFUser.currentUser()?.objectId
+        like.saveInBackgroundWithBlock { (saved, error) -> Void in
+            if saved != false{
+                println("Like")
+                
+                var icon = UIImage(named: "likeActionIcon")
+                var justLikedIcon = UIImageView(image: icon)
+                justLikedIcon.frame = CGRect(x: self.view!.frame.origin.x, y: self.view!.frame.origin.y, width: 0,height: 0)
+                justLikedIcon.center.x = self.playButton.center.x
+                justLikedIcon.center.y = self.playButton.center.y + 60
+                justLikedIcon.tag = 2
+                
+                
+                UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                    justLikedIcon.frame = CGRect(x: self.view!.frame.origin.x, y: self.view!.frame.origin.y, width: 110,height: 110)
+                    justLikedIcon.center.x = self.playButton.center.x
+                    justLikedIcon.center.y = self.playButton.center.y + 60
+                    }, completion: {
+                        (finished: Bool) -> Void in
+                        
+                        
+                        // Fade in
+                        UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                            justLikedIcon.alpha = 0
+                            
+                            var timer = NSTimer()
+                            timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("deleteHeart"), userInfo: nil, repeats: true)
 
-            var like = PFObject(className: "Likes")
-            like["postId"] = idToFind
-            like["likerId"] = PFUser.currentUser()?.objectId
-            like.saveInBackgroundWithBlock { (saved, error) -> Void in
-                if saved != false{
-                    self.postLiked = true;
-                    self.unlikeButton.alpha = 1
-                    self.likeButton.alpha = 0
-                    self.getLikes()
-                }
+                            
+                            }, completion: nil)
+                })
+                
+                
+                self.view.addSubview(justLikedIcon)
+                self.postLiked = true;
+                self.unlikeButton.alpha = 1
+                self.likeButton.alpha = 0
+                self.getLikes()
+                self.unlikeButton.enabled = true
+                
+            }
         }
         
         
         if PFUser.currentUser()?.objectId != authorId {
             var notification = PFObject(className: "Notifications")
+            println(authorId)
             notification["postId"] = idToFind
             notification["authorId"] = authorId
             notification["likerId"] = PFUser.currentUser()?.objectId
@@ -222,53 +270,63 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
             notification["clickNotif"] = false
             notification.saveInBackground()
         }
-            
-        
         
     }
     
     
+    func deleteHeart(){
+        for subview in self.view.subviews {
+            if (subview.tag == 2) {
+                
+            }
+        }
+    }
+    
+    
     @IBAction func unlikeButtonClicked(sender: AnyObject) {
+        unlikePost()
+        unlikeButton.enabled = false
+    }
+    
+    func unlikePost(){
+        var currentUserId = PFUser.currentUser()?.objectId
+        var query = PFQuery(className:"Likes")
+        query.whereKey("postId", equalTo: idToFind)
+        query.whereKey("likerId", equalTo: currentUserId!)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackgroundWithBlock({ (deleted, error) -> Void in
+                        if deleted != false{
+                            self.getLikes()
+                            self.postLiked = false;
+                            self.unlikeButton.alpha = 0
+                            self.likeButton.alpha = 1
+                            self.likeButton.enabled = true
+                            
+                        }
+                    })
+                    
+                }
+            }
+        }
         
+        query = PFQuery(className:"Notifications")
+        query.whereKey("postId", equalTo: idToFind)
+        query.whereKey("likerId", equalTo: currentUserId!)
+        query.whereKey("authorId", equalTo: authorId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
             
-            
-            var currentUserId = PFUser.currentUser()?.objectId
-            var query = PFQuery(className:"Likes")
-            query.whereKey("postId", equalTo: idToFind)
-            query.whereKey("likerId", equalTo: currentUserId!)
-            query.findObjectsInBackgroundWithBlock {
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        object.deleteInBackgroundWithBlock({ (deleted, error) -> Void in
-                            if deleted != false{
-                                self.getLikes()
-                                self.postLiked = false;
-                                self.unlikeButton.alpha = 0
-                                self.likeButton.alpha = 1
-                                
-                            }
-                        })
-                        
-                    }
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                    
                 }
             }
-            
-            query = PFQuery(className:"Notifications")
-            query.whereKey("postId", equalTo: idToFind)
-            query.whereKey("likerId", equalTo: currentUserId!)
-            query.whereKey("authorId", equalTo: authorId)
-            query.findObjectsInBackgroundWithBlock {
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        object.deleteInBackground()
-                        
-                    }
-                }
-            }
+        }
     }
     
     
@@ -296,6 +354,47 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
         mediaPlayer.currentPlaybackTime = NSTimeInterval(previewSlider.value)
     }
     
+    func cleanPost(postId : String){
+        var query = PFQuery(className: "Comments")
+        query.whereKey("postId", equalTo: postId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        query = PFQuery(className: "Likes")
+        query.whereKey("postId", equalTo: postId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        
+        query = PFQuery(className: "Notifications")
+        query.whereKey("postId", equalTo: postId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackgroundWithBlock({ (succes, error) -> Void in
+                        if succes{
+                            
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
     @IBAction func deletePostAlert(sender: AnyObject) {
         var alert = UIAlertController(title: nil, message: "Êtres vous sur de vouloir supprimer cette publication ?", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -308,21 +407,23 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
                 
                 if let objects = objects as? [PFObject] {
                     for object in objects {
+                        self.cleanPost(self.idToFind)
                         object.deleteInBackground()
-                        
                         
                     }
                 }
                 self.performSegueWithIdentifier("BackHome", sender: AnyObject?())
             }
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            
+            
+            alert.dismissViewControllerAnimated(true, completion: nil)
             
             
         }))
         
         alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismissViewControllerAnimated(true, completion: nil)
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -350,25 +451,33 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
                     if let objects = objects as? [PFObject] {
                         for object in objects {
                             self.songName.text = object.valueForKey("songName") as? String
+                            self.songName.accessibilityLabel = "Chanson : \(self.songName.text!)"
                             self.artistName.text = object.valueForKey("artistName") as? String
+                            self.artistName.accessibilityLabel = "Artiste : \(self.artistName.text!)"
                             self.postDescription.text = object.valueForKey("postDescription") as? String
+                            self.postDescription.accessibilityLabel = "Description de la publication : \(self.postDescription.text!)"
+                            
+                            
                             var place = object.valueForKey("location") as? String
                             if place == "noLocalisation"{
                                 self.postPlace.text = "Inconnu"
+                                self.postPlace.accessibilityLabel = "Publié depuis une position inconnue"
                             }else{
                                 self.postPlace.text = place
+                                self.postPlace.accessibilityLabel = "Publié depuis \(self.postPlace.text!)"
                             }
                             
                             
                             var lastActive: AnyObject? = object.valueForKey("createdAt")
                             self.postDate.text = makeDate(lastActive!)
+                            self.postDate.accessibilityLabel = "Publié il y  \(self.postDate.text!)"
                             self.authorId = (object.valueForKey("userID") as? String)!
                             
                             if self.authorId != PFUser.currentUser()?.objectId{
                                 self.deleteButton.alpha=0
                             }
                             
-                            self.getAuthor()
+                            
                             
                             if object.valueForKey("previewLink") as? String == "noPreview" {
                                 self.playButton.enabled = false
@@ -391,6 +500,7 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
                                     playerIsPlaying = true;
                                 }
                             }
+                            self.getAuthor()
                         }
                     }
                     
@@ -413,7 +523,7 @@ class SingleProjectViewController: UIViewController, UITextViewDelegate {
             postDescription.text = "Erreur réseau, impossible de récupérer les données !"
             
         }
-  
+        
         
         
     }

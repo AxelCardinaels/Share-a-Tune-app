@@ -24,6 +24,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
     
     var user = PFUser.currentUser()
     var profilPictureStock = UIImageView(image: UIImage(named: "noopf.png"))
+    var imageHasChanged = false
     
     //-------------- gestion de l'importation de photo -----------------//
     
@@ -68,6 +69,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
         profilPicture.setImage(image, forState: UIControlState.Normal)
         profilPicture.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
         profilPictureStock.image = image
+        imageHasChanged = true
     }
     
     
@@ -176,8 +178,7 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                     
                     
                     
-                    var imageData = UIImagePNGRepresentation(self.profilPictureStock.image)
-                    var imageFile = PFFile(name:"ProfilPicture", data: imageData)
+                    
                     
                     var emailText = profilEmail.text!
                     var emailLower = emailText.lowercaseString
@@ -191,7 +192,13 @@ class ProfilEditViewController: UIViewController, UINavigationControllerDelegate
                         user?["bio"] = profilDescription.text
                     }
                     
-                    user?["profilePicture"] = imageFile
+                    
+                    if imageHasChanged == true{
+                        var imageData = UIImageJPEGRepresentation(self.profilPictureStock.image, 0.5)
+                        var imageFile = PFFile(name:"ProfilPicture", data: imageData)
+                        user?["profilePicture"] = imageFile
+                    }
+                    
                     
                     
                     

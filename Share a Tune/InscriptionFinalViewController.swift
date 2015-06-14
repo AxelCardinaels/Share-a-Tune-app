@@ -14,17 +14,7 @@ class InscriptionFinalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var currentUser = PFUser.currentUser()
-        
-        if currentUser != nil {
-            PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
-                //Supprime la session automatiquement.
-            })
-            var currentUser = PFUser.currentUser()
-            
-        } else {
-            println("error")
-        }
+       
 
         
         self.navigationItem.hidesBackButton = true;

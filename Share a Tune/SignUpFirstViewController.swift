@@ -76,7 +76,7 @@ class SignUpFirstViewController: UIViewController, UINavigationControllerDelegat
             
         }else{
             
-            var imageData = UIImagePNGRepresentation(self.profilPicture.image)
+            var imageData = UIImageJPEGRepresentation(self.profilPicture.image, 0.5)
             var imageFile = PFFile(name:"ProfilPicture", data: imageData)
             
             var emailText = email.text!

@@ -22,55 +22,91 @@ class UserCountViewController: UIViewController, UITableViewDelegate {
     var users = [Int : PFObject]()
     
     
+    @IBOutlet var erreurBar: UILabel!
+    @IBOutlet var noInternetLabel: UILabel!
+    var error = ""
+    
+   
+    func timeOut(){
+        time = true;
+        errorFade(time, self.erreurBar)
+    }
+    
+    
+    var refresher : UIRefreshControl = UIRefreshControl()
+    
+    func refreshData(){
+        
+        getUsersList()
+        self.refresher.endRefreshing()
+    }
+    
+    
     func getUsersList(){
         
-        var query = PFQuery(className: "Likes")
-        if typeToGet == "likes"{
+        if isConnectedToNetwork(){
+            
+            noInternetLabel.alpha = 0
+            usersTable.alpha = 1
+            
             var query = PFQuery(className: "Likes")
-            query.whereKey("postId", equalTo : idToFind)
-        }
-        
-        if typeToGet == "followers"{
-            query = PFQuery(className: "Followers")
-            query.whereKey("following", equalTo : idToFind)
-        }
-        
-        if typeToGet == "following"{
-            query = PFQuery(className: "Followers")
-            query.whereKey("follower", equalTo : idToFind)
-        }
-        
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            if error == nil {
-                self.usersList.removeAll(keepCapacity: true)
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        
-                        
-                        var likerId: AnyObject? = ""
-                        if self.typeToGet == "likes"{
-                            likerId = object.valueForKey("likerId")
-                        }
-                        
-                        if self.typeToGet == "followers"{
-                            likerId = object.valueForKey("follower")
-                        }
-                        
-                        if self.typeToGet == "following"{
-                            likerId = object.valueForKey("following")
-                        }
-                        
-                        self.usersList.append(likerId! as! String)
-                        
-                    }
-                }
-                self.getUsers()
-            } else {
-                println("Error: \(error!) \(error!.userInfo!)")
+            if typeToGet == "likes"{
+                query = PFQuery(className: "Likes")
+                query.whereKey("postId", equalTo:idToFind)
             }
+            
+            if typeToGet == "followers"{
+                query = PFQuery(className: "Followers")
+                query.whereKey("following", equalTo : idToFind)
+            }
+            
+            if typeToGet == "following"{
+                query = PFQuery(className: "Followers")
+                query.whereKey("follower", equalTo : idToFind)
+            }
+            
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                if error == nil {
+                    self.usersList.removeAll(keepCapacity: true)
+                    if let objects = objects as? [PFObject] {
+                        for object in objects {
+                            
+                            
+                            var likerId: AnyObject? = ""
+                            
+                            if self.typeToGet == "likes"{
+                                likerId = object.valueForKey("likerId")
+                            }
+                            
+                            if self.typeToGet == "followers"{
+                                likerId = object.valueForKey("follower")
+                            }
+                            
+                            if self.typeToGet == "following"{
+                                likerId = object.valueForKey("following")
+                            }
+                            
+                            self.usersList.append(likerId! as! String)
+                            
+                        }
+                    }
+                    self.getUsers()
+                } else {
+                    println("Error: \(error!) \(error!.userInfo!)")
+                }
+            }
+
+        }else{
+            self.error = "noInternet"
+            showError(self,error,erreurBar)
+            var timer = NSTimer()
+            timer = NSTimer.scheduledTimerWithTimeInterval(4.5, target: self, selector: Selector("timeOut"), userInfo: nil, repeats: false)
+            noInternetLabel.alpha = 1
+            usersTable.alpha = 0.5
         }
-    }
+        
+}
     
     func getUsers(){
         var actualCount = 0
@@ -99,6 +135,9 @@ class UserCountViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         getUsersList()
+        
+        refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
+        usersTable.addSubview(refresher)
         
         // Do any additional setup after loading the view.
     }

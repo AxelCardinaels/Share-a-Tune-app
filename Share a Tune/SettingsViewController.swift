@@ -43,9 +43,102 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
     }
 
     
+//-------------- Supression de l'utilisateur -----------------//
+    
+    func cleanUser(userId : String){
+        var query = PFQuery(className: "Post")
+        query.whereKey("userID", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        
+        query = PFQuery(className: "Comments")
+        query.whereKey("PosterId", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        
+        query = PFQuery(className: "Followers")
+        query.whereKey("follower", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        
+        query = PFQuery(className: "Likes")
+        query.whereKey("likerId", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+        
+        query = PFQuery(className: "Notifications")
+        query.whereKey("likerId", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackgroundWithBlock({ (succes, error) -> Void in
+                        if succes{
+                            
+                        }
+                    })
+                }
+            }
+        }
+        
+        query = PFUser.query()!
+        query.whereKey("objectId", equalTo: userId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject] {
+                for object in objects {
+                    object.deleteInBackgroundWithBlock {
+                        (success: Bool, error: NSError?) -> Void in
+                        if (success){
+                            
+                            PFUser.logOut()
+                            var currentUser = PFUser.currentUser()
+                            self.performSegueWithIdentifier("logout", sender: self)
+                        } else {
+                            println("fail")
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+    
 //-------------- Tableau contenant les settings à afficher -----------------//
     
-    var settingsContainer = ["Se déconnecter","Visiter le site de Share a Tune","Editer mon profil"]
+    
+    var settingsContainer = ["Se déconnecter","Visiter le site de Share a Tune","Editer mon profil","Supprimer mon profil"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +199,28 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
         
         if cellTitle! == "Editer mon profil"{
             performSegueWithIdentifier("editProfil", sender: self)
+        }
+        
+        if cellTitle! == "Supprimer mon profil" {
+            var alert = UIAlertController(title: nil, message: "Êtres vous sur de vouloir supprimer votre profil ? Cette action est irrévoquable et vous allez beaucoup manquer à vos amis !", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            
+            alert.addAction(UIAlertAction(title: "Supprimer mon profil", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+            
+                var userId = PFUser.currentUser()?.objectId
+                
+                self.cleanUser(userId!)
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
+                
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
     }

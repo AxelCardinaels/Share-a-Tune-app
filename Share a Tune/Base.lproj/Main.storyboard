@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ude-Sx-S0j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="SA0-oA-die">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -15,7 +15,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="xx3-1d-VYk">
@@ -182,6 +182,9 @@
                                 <items>
                                     <barButtonItem image="Feed" id="5Pk-VD-eu4">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" id="HQz-6h-A27"/>
                                         </connections>
@@ -189,6 +192,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2zU-58-ouK"/>
                                     <barButtonItem image="Recherche" id="lZi-sa-ilL">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="X7f-ft-r1t"/>
                                         </connections>
@@ -196,6 +202,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="e3d-Gn-vpP"/>
                                     <barButtonItem image="Partager" id="IU0-x0-ZRw">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="SHX-zl-8JC"/>
                                         </connections>
@@ -203,6 +212,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="HrI-yM-fWS"/>
                                     <barButtonItem image="Notifications" id="IY6-Zj-GsL">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="gEu-4o-8tv"/>
                                         </connections>
@@ -210,6 +222,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="TdR-nm-NaS"/>
                                     <barButtonItem image="profil" id="fy2-cR-CWL">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfil" id="8p5-1J-Lfb"/>
                                         </connections>
@@ -217,8 +232,8 @@
                                 </items>
                                 <color key="barTintColor" red="0.44705882352941179" green="0.0" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="478" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jbr-Hd-Be3">
-                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="478" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jbr-Hd-Be3">
+                                <rect key="frame" x="0.0" y="20" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="postCell" rowHeight="478" id="fCe-1J-YFm" customClass="PostTableViewCell" customModule="Share_a_Tune" customModuleProvider="target">
@@ -327,6 +342,9 @@
                                                     <state key="normal" title="Jouer l'extrait" image="playIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Jouer l'extrait"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <segue destination="38o-7C-Uql" kind="show" identifier="showDetailPublication" id="U5Y-6v-hwi"/>
                                                     </connections>
@@ -352,7 +370,7 @@
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="69" id="FYV-Qj-yq4"/>
                                                         <constraint firstAttribute="width" constant="69" id="tZU-Ra-ncM"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button" image="itunesIcon">
+                                                    <state key="normal" title="Afficher les informations de ce titre sur iTunes" image="itunesIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -392,10 +410,10 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67o-49-tpi">
-                                                    <rect key="frame" x="275" y="75" width="35" height="36"/>
+                                                    <rect key="frame" x="270" y="175" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="ScT-le-jTn"/>
-                                                        <constraint firstAttribute="height" constant="36" id="aWk-cg-SRe"/>
+                                                        <constraint firstAttribute="width" constant="40" id="ScT-le-jTn"/>
+                                                        <constraint firstAttribute="height" constant="40" id="aWk-cg-SRe"/>
                                                     </constraints>
                                                     <state key="normal" title="Supprimer cette publication" image="closeIcon">
                                                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -427,17 +445,62 @@
                                                         <segue destination="ta0-jj-O1a" kind="show" identifier="showComments" id="N3q-Qy-8ZR"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc5-yL-Dby">
+                                                    <rect key="frame" x="270" y="75" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="iUZ-95-3mh"/>
+                                                        <constraint firstAttribute="height" constant="40" id="s80-Oy-53p"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Ne plus aimer la publication" image="likedIcon">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="38o-7C-Uql" kind="show" identifier="ShowDetailUnlike" id="smq-Gk-HLB"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2A2-1i-TU2">
+                                                    <rect key="frame" x="270" y="75" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="ZaO-Xq-ynX"/>
+                                                        <constraint firstAttribute="height" constant="40" id="c09-Si-1Pc"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Aimer la publication" image="likeIcon">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="38o-7C-Uql" kind="show" identifier="ShowDetailLike" id="nt3-V3-HOC"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G2w-kD-SNX">
+                                                    <rect key="frame" x="270" y="125" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="RjA-Q9-upP"/>
+                                                        <constraint firstAttribute="height" constant="40" id="WYV-SR-136"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Commenter cette publication" image="commentButton">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="ta0-jj-O1a" kind="show" identifier="showComments" id="1DR-ah-SYT"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ujn-i2-WV1" firstAttribute="top" secondItem="8G9-T5-90Y" secondAttribute="topMargin" constant="18" id="0De-ST-Bam"/>
                                                 <constraint firstItem="haG-g0-A2D" firstAttribute="leading" secondItem="8G9-T5-90Y" secondAttribute="leadingMargin" constant="2" id="1Qa-HF-8ov"/>
                                                 <constraint firstItem="SJT-cV-ZzO" firstAttribute="top" secondItem="Vhs-lW-JCP" secondAttribute="bottom" constant="1" id="1fK-E4-faI"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Kc5-yL-Dby" secondAttribute="trailing" constant="2" id="3rv-cp-fhC"/>
                                                 <constraint firstItem="sur-Rf-hh9" firstAttribute="top" secondItem="SJT-cV-ZzO" secondAttribute="bottom" constant="107" id="41P-Wn-B3r"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="bLH-X7-Ywp" secondAttribute="trailing" constant="-8" id="58Q-mx-hJj"/>
                                                 <constraint firstItem="DH7-tr-yQj" firstAttribute="leading" secondItem="8G9-T5-90Y" secondAttribute="leadingMargin" constant="2" id="67K-kr-QUz"/>
                                                 <constraint firstAttribute="centerX" secondItem="bLH-X7-Ywp" secondAttribute="centerX" id="7mW-94-Khs"/>
                                                 <constraint firstItem="bLH-X7-Ywp" firstAttribute="leading" secondItem="8G9-T5-90Y" secondAttribute="leadingMargin" constant="-8" id="9Ke-B8-Vyk"/>
+                                                <constraint firstItem="2A2-1i-TU2" firstAttribute="top" secondItem="ujn-i2-WV1" secondAttribute="bottom" constant="28" id="9rN-d9-KVM"/>
                                                 <constraint firstItem="Fg7-Ui-LeM" firstAttribute="top" secondItem="7Mp-RC-Mry" secondAttribute="bottom" constant="15" id="A5n-N9-FhW"/>
+                                                <constraint firstItem="G2w-kD-SNX" firstAttribute="top" secondItem="2A2-1i-TU2" secondAttribute="bottom" constant="10" id="BKL-i7-Sce"/>
                                                 <constraint firstAttribute="centerX" secondItem="sur-Rf-hh9" secondAttribute="centerX" id="BgZ-cJ-sZK"/>
                                                 <constraint firstItem="HpS-4n-3h3" firstAttribute="centerY" secondItem="Fg7-Ui-LeM" secondAttribute="centerY" id="C7k-I0-63L"/>
                                                 <constraint firstItem="7Mp-RC-Mry" firstAttribute="top" secondItem="qrq-Ub-Brp" secondAttribute="bottom" constant="11" id="D7U-Gv-v1E"/>
@@ -453,6 +516,7 @@
                                                 <constraint firstItem="F5l-DR-dqX" firstAttribute="leading" secondItem="8G9-T5-90Y" secondAttribute="leadingMargin" constant="2" id="JqP-0R-icY"/>
                                                 <constraint firstAttribute="centerX" secondItem="bLH-X7-Ywp" secondAttribute="centerX" id="LZg-uw-Evq"/>
                                                 <constraint firstAttribute="centerX" secondItem="HpS-4n-3h3" secondAttribute="centerX" id="MGA-fG-0BO"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="G2w-kD-SNX" secondAttribute="trailing" constant="2" id="MdF-M5-sk0"/>
                                                 <constraint firstItem="2DP-Xd-rHJ" firstAttribute="top" secondItem="8G9-T5-90Y" secondAttribute="topMargin" constant="18" id="Mq6-VX-9Jk"/>
                                                 <constraint firstItem="2sG-O2-S7j" firstAttribute="leading" secondItem="F5l-DR-dqX" secondAttribute="trailing" constant="10" id="N3L-3P-XiD"/>
                                                 <constraint firstItem="REo-vW-6xR" firstAttribute="width" secondItem="bLH-X7-Ywp" secondAttribute="width" id="OHO-X3-5KG"/>
@@ -461,11 +525,13 @@
                                                 <constraint firstItem="IZJ-yP-x9o" firstAttribute="top" secondItem="9bE-Ob-fQ7" secondAttribute="bottom" id="PtL-1p-525"/>
                                                 <constraint firstItem="bLH-X7-Ywp" firstAttribute="top" secondItem="SJT-cV-ZzO" secondAttribute="bottom" constant="7" id="Py9-D5-bBH"/>
                                                 <constraint firstItem="HpS-4n-3h3" firstAttribute="leading" secondItem="Fg7-Ui-LeM" secondAttribute="trailing" constant="10" id="QBw-h2-cfN"/>
+                                                <constraint firstItem="G2w-kD-SNX" firstAttribute="top" secondItem="Kc5-yL-Dby" secondAttribute="bottom" constant="10" id="QMK-5D-Wro"/>
                                                 <constraint firstItem="SJT-cV-ZzO" firstAttribute="top" secondItem="Vhs-lW-JCP" secondAttribute="bottom" constant="1" id="QoN-uZ-8aJ"/>
                                                 <constraint firstItem="4UT-lY-S4y" firstAttribute="top" secondItem="7Mp-RC-Mry" secondAttribute="bottom" constant="17" id="R7v-hs-AQC"/>
                                                 <constraint firstAttribute="centerX" secondItem="bLH-X7-Ywp" secondAttribute="centerX" id="SbW-Mq-7oz"/>
                                                 <constraint firstItem="7Mp-RC-Mry" firstAttribute="leading" secondItem="8G9-T5-90Y" secondAttribute="leadingMargin" constant="-8" id="TTV-Gu-QSv"/>
                                                 <constraint firstItem="SJT-cV-ZzO" firstAttribute="leading" secondItem="2sG-O2-S7j" secondAttribute="trailing" constant="5" id="TlH-o2-RUI"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="2A2-1i-TU2" secondAttribute="trailing" constant="2" id="UAR-QZ-snU"/>
                                                 <constraint firstItem="IZJ-yP-x9o" firstAttribute="leading" secondItem="4UT-lY-S4y" secondAttribute="trailing" constant="8" id="UK1-Gh-gwu"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="2DP-Xd-rHJ" secondAttribute="trailing" constant="2" id="UaG-mH-WJK"/>
                                                 <constraint firstItem="2DP-Xd-rHJ" firstAttribute="leading" secondItem="SJT-cV-ZzO" secondAttribute="trailing" constant="54" id="UwM-Dj-FEZ"/>
@@ -491,13 +557,16 @@
                                                 <constraint firstItem="9bE-Ob-fQ7" firstAttribute="leading" secondItem="HpS-4n-3h3" secondAttribute="trailing" constant="10" id="lHw-ig-A0h"/>
                                                 <constraint firstItem="Vhs-lW-JCP" firstAttribute="top" secondItem="8G9-T5-90Y" secondAttribute="topMargin" constant="9" id="lTM-xF-TZu"/>
                                                 <constraint firstItem="IZJ-yP-x9o" firstAttribute="leading" secondItem="4UT-lY-S4y" secondAttribute="trailing" constant="8" id="pyG-dV-2hm"/>
+                                                <constraint firstItem="67o-49-tpi" firstAttribute="top" secondItem="G2w-kD-SNX" secondAttribute="bottom" constant="10" id="qjW-TF-lXo"/>
                                                 <constraint firstItem="7Mp-RC-Mry" firstAttribute="top" secondItem="DH7-tr-yQj" secondAttribute="bottom" constant="9" id="qjc-H2-EZd"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="IZJ-yP-x9o" secondAttribute="trailing" constant="7" id="rAh-Qf-iOc"/>
                                                 <constraint firstItem="bLH-X7-Ywp" firstAttribute="top" secondItem="ujn-i2-WV1" secondAttribute="bottom" constant="18" id="rXk-c6-FEC"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="bLH-X7-Ywp" secondAttribute="trailing" constant="-8" id="sWJ-CZ-v9r"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="67o-49-tpi" secondAttribute="trailing" constant="2" id="sWQ-ci-Jof"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="4UT-lY-S4y" secondAttribute="bottom" constant="32" id="tEc-Sp-Unp"/>
                                                 <constraint firstItem="7Mp-RC-Mry" firstAttribute="top" secondItem="haG-g0-A2D" secondAttribute="bottom" constant="28" id="uQJ-cg-JvF"/>
                                                 <constraint firstItem="Vhs-lW-JCP" firstAttribute="leading" secondItem="F5l-DR-dqX" secondAttribute="trailing" constant="10" id="uV9-Kq-Y3p"/>
+                                                <constraint firstItem="Kc5-yL-Dby" firstAttribute="top" secondItem="ujn-i2-WV1" secondAttribute="bottom" constant="28" id="uue-VM-KyE"/>
                                                 <constraint firstItem="67o-49-tpi" firstAttribute="top" secondItem="2DP-Xd-rHJ" secondAttribute="bottom" constant="31" id="vFM-YJ-uMD"/>
                                                 <constraint firstItem="2DP-Xd-rHJ" firstAttribute="leading" secondItem="Vhs-lW-JCP" secondAttribute="trailing" constant="54" id="vL3-Ve-U2w"/>
                                                 <constraint firstItem="Fg7-Ui-LeM" firstAttribute="leading" secondItem="8G9-T5-90Y" secondAttribute="leadingMargin" constant="2" id="wNa-Q2-5Qg"/>
@@ -517,6 +586,7 @@
                                                     <exclude reference="SbW-Mq-7oz"/>
                                                     <exclude reference="VyK-g5-mdz"/>
                                                     <exclude reference="sWJ-CZ-v9r"/>
+                                                    <exclude reference="vFM-YJ-uMD"/>
                                                     <exclude reference="OHO-X3-5KG"/>
                                                     <exclude reference="baX-bq-bYj"/>
                                                     <exclude reference="zd0-RX-zkB"/>
@@ -530,8 +600,9 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentsButton" destination="9bE-Ob-fQ7" id="0eX-pw-d0P"/>
-                                            <outlet property="likesButton" destination="Fg7-Ui-LeM" id="liD-Z6-ixs"/>
+                                            <outlet property="commentsButton" destination="9bE-Ob-fQ7" id="9BE-Op-qv4"/>
+                                            <outlet property="iLikeButton" destination="2A2-1i-TU2" id="V4e-0O-0NR"/>
+                                            <outlet property="likesButton" destination="Fg7-Ui-LeM" id="Vnx-0r-bJV"/>
                                             <outlet property="postArtist" destination="DH7-tr-yQj" id="NY7-Vv-cOX"/>
                                             <outlet property="postDelete" destination="67o-49-tpi" id="h2P-Ra-8Li"/>
                                             <outlet property="postDescription" destination="IZJ-yP-x9o" id="QBB-tm-rZ4"/>
@@ -541,6 +612,7 @@
                                             <outlet property="postPlay" destination="sur-Rf-hh9" id="Xjh-51-0t7"/>
                                             <outlet property="postTime" destination="ujn-i2-WV1" id="RPi-Vb-XYg"/>
                                             <outlet property="postTitle" destination="haG-g0-A2D" id="opr-GU-L4M"/>
+                                            <outlet property="unlikeButton" destination="Kc5-yL-Dby" id="Kda-l9-m1s"/>
                                             <outlet property="userProfil" destination="F5l-DR-dqX" id="w06-ap-PuV"/>
                                             <outlet property="username" destination="Vhs-lW-JCP" id="Xny-cH-Zr7"/>
                                             <segue destination="38o-7C-Uql" kind="show" identifier="showDetailPublication" id="oif-Cr-gQQ"/>
@@ -636,6 +708,12 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vous ne suivez personne. En attendant, nous vous proposons de découvrir les partages de l'équipe Share a Tune !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yU-48-srM">
+                                <rect key="frame" x="25" y="40" width="270" height="88"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
+                                <color key="textColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -648,13 +726,16 @@
                             <constraint firstAttribute="centerY" secondItem="muk-lx-pkx" secondAttribute="centerY" id="NPK-57-mKH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jbr-Hd-Be3" secondAttribute="trailing" constant="-16" id="TSv-bC-8OU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9ik-DY-dW5" secondAttribute="trailing" constant="-16" id="W4m-pc-01f"/>
+                            <constraint firstItem="4yU-48-srM" firstAttribute="top" secondItem="06m-lp-hgn" secondAttribute="bottom" constant="20" id="YX5-Vd-q49"/>
                             <constraint firstItem="9ik-DY-dW5" firstAttribute="top" secondItem="06m-lp-hgn" secondAttribute="bottom" id="dot-wS-1Ti"/>
                             <constraint firstItem="9ik-DY-dW5" firstAttribute="leading" secondItem="Wtm-Jw-cKD" secondAttribute="leadingMargin" constant="-16" id="f7k-Rt-Xvj"/>
                             <constraint firstItem="jbr-Hd-Be3" firstAttribute="top" secondItem="06m-lp-hgn" secondAttribute="bottom" id="fuU-Vi-yO6"/>
+                            <constraint firstItem="4yU-48-srM" firstAttribute="leading" secondItem="Wtm-Jw-cKD" secondAttribute="leadingMargin" constant="9" id="jgj-7V-9Gg"/>
                             <constraint firstAttribute="centerX" secondItem="muk-lx-pkx" secondAttribute="centerX" id="kAY-H7-NuY"/>
                             <constraint firstAttribute="centerX" secondItem="Kpv-09-ghg" secondAttribute="centerX" id="kve-bo-zLs"/>
                             <constraint firstAttribute="centerY" secondItem="Kpv-09-ghg" secondAttribute="centerY" id="owH-sy-T1w"/>
                             <constraint firstItem="Vk0-9p-cup" firstAttribute="leading" secondItem="Wtm-Jw-cKD" secondAttribute="leadingMargin" constant="-16" id="q55-Fi-QOI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4yU-48-srM" secondAttribute="trailing" constant="9" id="rL7-ew-E85"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RcS-yh-fjz" secondAttribute="trailing" constant="-16" id="tIr-tA-x2J"/>
                         </constraints>
                     </view>
@@ -666,6 +747,7 @@
                         <outlet property="feedTable" destination="jbr-Hd-Be3" id="VFw-tI-0Zt"/>
                         <outlet property="noInternetLabel" destination="muk-lx-pkx" id="RKM-ox-BRR"/>
                         <outlet property="noPostLabel" destination="Kpv-09-ghg" id="A5q-cz-0R7"/>
+                        <outlet property="notFollowingLabel" destination="4yU-48-srM" id="Bq3-lJ-IAA"/>
                         <outlet property="notificationIcon" destination="IY6-Zj-GsL" id="U65-b1-NmZ"/>
                         <outlet property="playerArtist" destination="wiC-wB-Sfl" id="TQB-n2-ZUN"/>
                         <outlet property="playerSong" destination="fnz-g0-dH5" id="XNa-32-7m4"/>
@@ -693,6 +775,9 @@
                                 <items>
                                     <barButtonItem image="Feed" id="g4k-q1-flZ">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" id="oO2-Ox-3cx"/>
                                         </connections>
@@ -700,6 +785,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ajz-f9-OI2"/>
                                     <barButtonItem image="Recherche" id="eNv-AI-a7U">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="e3E-YI-yFu"/>
                                         </connections>
@@ -707,6 +795,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="POK-qP-rLE"/>
                                     <barButtonItem image="Partager" id="iDU-Yk-xfe">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="Ewy-h6-6OJ"/>
                                         </connections>
@@ -714,6 +805,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="6Za-vs-t3e"/>
                                     <barButtonItem image="Notifications" id="xOd-yk-izk">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="p5h-bs-foB"/>
                                         </connections>
@@ -721,6 +815,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="IlX-4V-fD2"/>
                                     <barButtonItem image="profil" id="FKn-PU-8dC">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfilBouton" id="6ee-pM-vHJ"/>
                                         </connections>
@@ -788,6 +885,9 @@
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="3ye-0e-W2Q"/>
                                     <barButtonItem title="Suivis" id="e1G-Sa-ed8">
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher tous les utilisateurs que vous Suivez"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="followingButton:" destination="fHj-JH-dUi" id="zHi-f7-FyK"/>
                                         </connections>
@@ -795,6 +895,9 @@
                                     <barButtonItem systemItem="flexibleSpace" id="ACB-10-n1M"/>
                                     <barButtonItem title="Tous" id="S6f-uE-w8i">
                                         <color key="tintColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher tous les utilisateurs de Share a Tune"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="allButton:" destination="fHj-JH-dUi" id="Gvw-qW-nQ3"/>
                                         </connections>
@@ -1193,9 +1296,9 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="middleTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" enabled="NO" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vr-eL-Bg8">
                                 <rect key="frame" x="35" y="40" width="250" height="287"/>
-                                <string key="text">Bienvenue sur Share A Tune ! Vous êtes à deux minutes de pouvoir partager vos coups de coeurs musicaux avec vos amis ! Pour pouvoir nous rejoindre, nous vous demandons de bien vouloir fournir les quelques informations suivantes. 
+                                <string key="text">Bienvenue sur Share A Tune ! Vous êtes à deux minutes de pouvoir partager vos coups de coeur musicaux avec vos amis ! Pour pouvoir nous rejoindre, nous vous demandons de bien vouloir fournir les quelques informations suivantes. 
 
-En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mais pas d’inquiètude, vous pourrez à tout moment les désactiver ou vous désinscrire si vous le souhaitez. </string>
+En vous inscrivant, vous êtes susceptible de recevoir quelques notifications mais pas d’inquiètude, vous pourrez à tout moment les désactiver ou vous désinscrire si vous le souhaitez. </string>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="0.5607843137254902" green="0.5607843137254902" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1541,7 +1644,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="middleTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" enabled="NO" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CF-FZ-1NY">
                                 <rect key="frame" x="35" y="40" width="250" height="123"/>
-                                <string key="text">Ca y est, vous êtes maintenant membre de Share A Tune ! Il ne vous reste plus qu’à vous connecter et vous pourrez alors partager vos coups de coeurs musicaux à tout moment ! Amusez-vous bien ! </string>
+                                <string key="text">Ca y est, vous êtes maintenant membre de Share a Tune ! Vous pouvez dès à présent partager vos coups de coeur musicaux avec vos amis à tout moment ! Amusez-vous bien ! </string>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1661,7 +1764,6 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                         </state>
                                         <connections>
                                             <action selector="deletePostAlert:" destination="Mrv-fI-EBo" eventType="touchUpInside" id="iLp-oW-20x"/>
-                                            <action selector="likeButtonClick:" destination="38o-7C-Uql" eventType="touchUpInside" id="Mk5-p9-qb3"/>
                                             <action selector="unlikeButtonClicked:" destination="38o-7C-Uql" eventType="touchUpInside" id="KBm-e0-UrE"/>
                                         </connections>
                                     </button>
@@ -1818,7 +1920,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                             <constraint firstAttribute="height" constant="25" id="U8l-8D-maq"/>
                                             <constraint firstAttribute="width" constant="69" id="pvO-YT-nIB"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="itunesIcon">
+                                        <state key="normal" title="Afficher les informations de ce titre sur iTunes" image="itunesIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1846,6 +1948,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                         <state key="normal" title="Jouer l'extrait" image="playIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Jouer l'extrait"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="playPreview:" destination="38o-7C-Uql" eventType="touchUpInside" id="es5-Aw-WhG"/>
                                         </connections>
@@ -1889,6 +1994,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                         <color key="minimumTrackTintColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Barre de progression temporelle de l'extrait"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="sliderChangeValue:" destination="38o-7C-Uql" eventType="valueChanged" id="yWE-dE-75B"/>
                                         </connections>
@@ -1985,6 +2093,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <items>
                                     <barButtonItem image="Feed" id="owU-kE-l9C">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" identifier="BackHome" id="vFv-fJ-73U"/>
                                         </connections>
@@ -1992,6 +2103,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="3EX-yj-CBT"/>
                                     <barButtonItem image="Recherche" id="S1i-j3-GXo">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="4K6-C6-hcZ"/>
                                         </connections>
@@ -1999,6 +2113,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="mjv-fX-qoy"/>
                                     <barButtonItem image="Partager" id="KAo-2y-2hW">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="pqS-9w-oNu"/>
                                         </connections>
@@ -2006,6 +2123,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="gIN-l4-K3M"/>
                                     <barButtonItem image="Notifications" id="UAO-fJ-8Mo">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="581-NL-F0M"/>
                                         </connections>
@@ -2013,6 +2133,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Eux-56-aH8"/>
                                     <barButtonItem image="profil" id="cfV-DY-Wi3">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfil" id="A1T-WT-ghI"/>
                                         </connections>
@@ -2092,6 +2215,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <items>
                                     <barButtonItem image="Feed" id="g83-P4-ffS">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" id="D8b-fZ-ohe"/>
                                         </connections>
@@ -2099,6 +2225,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="qhZ-sS-1Vp"/>
                                     <barButtonItem image="Recherche" id="lnx-0c-nf8">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="aRm-aG-GMc"/>
                                         </connections>
@@ -2106,6 +2235,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Vy2-hG-P4e"/>
                                     <barButtonItem image="Partager" id="RNl-nM-50B">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="INd-ys-3FL"/>
                                         </connections>
@@ -2113,6 +2245,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LOi-4Z-ENZ"/>
                                     <barButtonItem image="Notifications" id="5DF-wk-xdT">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="PqI-9W-8gp"/>
                                         </connections>
@@ -2120,6 +2255,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iBS-Y4-MKw"/>
                                     <barButtonItem image="profil" id="2or-Zy-1MV">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfil" id="AMy-cJ-8FR"/>
                                         </connections>
@@ -2288,6 +2426,48 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                         <constraint firstAttribute="height" constant="58" id="FwM-ic-UlY"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NdX-fk-40j">
+                                                    <rect key="frame" x="270" y="75" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="Z5V-Np-i55"/>
+                                                        <constraint firstAttribute="height" constant="40" id="wi8-pM-glQ"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Ne plus aimer cette publication" image="likedIcon">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="38o-7C-Uql" kind="show" identifier="ShowDetailUnlike" id="9AJ-W3-SeG"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07G-5V-J7k">
+                                                    <rect key="frame" x="270" y="75" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="g6L-nf-KYI"/>
+                                                        <constraint firstAttribute="width" constant="40" id="pOE-wh-lWM"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Aimer la publication" image="likeIcon">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="38o-7C-Uql" kind="show" identifier="ShowDetailLike" id="dcd-t7-3DT"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cb-Jd-ay1">
+                                                    <rect key="frame" x="270" y="125" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="RPS-3l-uza"/>
+                                                        <constraint firstAttribute="width" constant="40" id="Ug7-gc-9dL"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Commenter cette publication" image="commentButton">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="ta0-jj-O1a" kind="show" identifier="showComments" id="SoP-8w-IZq"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9Y-ns-oek">
                                                     <rect key="frame" x="10" y="336" width="218" height="21"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
@@ -2304,6 +2484,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                     <state key="normal" title="Jouer l'extrait" image="playIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Jouer l'extrait"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <segue destination="38o-7C-Uql" kind="show" identifier="showDetailPublication" id="7d9-nB-rXw"/>
                                                     </connections>
@@ -2326,7 +2509,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="69" id="Kli-zI-Eth"/>
                                                         <constraint firstAttribute="height" constant="25" id="SDS-45-5fK"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button" image="itunesIcon">
+                                                    <state key="normal" title="Afficher les informations de ce titre sur iTunes" image="itunesIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -2349,10 +2532,10 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lwa-3y-4fd">
-                                                    <rect key="frame" x="275" y="75" width="35" height="36"/>
+                                                    <rect key="frame" x="270" y="175" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="6p3-kf-yaI"/>
-                                                        <constraint firstAttribute="height" constant="36" id="TTM-6X-uBS"/>
+                                                        <constraint firstAttribute="width" constant="40" id="6p3-kf-yaI"/>
+                                                        <constraint firstAttribute="height" constant="40" id="TTM-6X-uBS"/>
                                                     </constraints>
                                                     <state key="normal" title="Supprimer cette publication" image="closeIcon">
                                                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2415,12 +2598,14 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                 <constraint firstItem="YRJ-KP-INW" firstAttribute="leading" secondItem="dgT-W1-zy4" secondAttribute="leadingMargin" constant="2" id="2Ge-vU-7Bs"/>
                                                 <constraint firstItem="EwT-CW-VAP" firstAttribute="top" secondItem="qqr-7I-EBD" secondAttribute="bottom" constant="10" id="2uV-md-QDE"/>
                                                 <constraint firstItem="i9x-j6-tAh" firstAttribute="top" secondItem="dgT-W1-zy4" secondAttribute="topMargin" constant="18" id="3mC-cM-m2Q"/>
+                                                <constraint firstItem="6cb-Jd-ay1" firstAttribute="top" secondItem="NdX-fk-40j" secondAttribute="bottom" constant="10" id="3n2-WG-6JF"/>
                                                 <constraint firstItem="JCA-eK-Yu8" firstAttribute="centerY" secondItem="YRJ-KP-INW" secondAttribute="centerY" id="3nO-XZ-Bas"/>
                                                 <constraint firstItem="i9x-j6-tAh" firstAttribute="leading" secondItem="0Xh-0R-LoL" secondAttribute="trailing" constant="54" id="3sd-I1-PnO"/>
                                                 <constraint firstItem="dd0-VF-eZd" firstAttribute="top" secondItem="0Xh-0R-LoL" secondAttribute="bottom" constant="7" id="4Ov-ms-gv1"/>
                                                 <constraint firstItem="EwT-CW-VAP" firstAttribute="top" secondItem="qqr-7I-EBD" secondAttribute="bottom" constant="10" id="4iT-hA-Czu"/>
                                                 <constraint firstItem="0Xh-0R-LoL" firstAttribute="leading" secondItem="PzP-nl-nNu" secondAttribute="trailing" constant="5" id="4mS-XV-8er"/>
                                                 <constraint firstItem="EwT-CW-VAP" firstAttribute="top" secondItem="YRJ-KP-INW" secondAttribute="bottom" constant="10" id="69s-Eq-58t"/>
+                                                <constraint firstItem="lwa-3y-4fd" firstAttribute="top" secondItem="6cb-Jd-ay1" secondAttribute="bottom" constant="10" id="79R-Te-Rae"/>
                                                 <constraint firstItem="qqr-7I-EBD" firstAttribute="leading" secondItem="JCA-eK-Yu8" secondAttribute="trailing" constant="10" id="8Q5-kJ-SQF"/>
                                                 <constraint firstAttribute="centerX" secondItem="dd0-VF-eZd" secondAttribute="centerX" id="9UG-05-N53"/>
                                                 <constraint firstItem="YRJ-KP-INW" firstAttribute="leading" secondItem="dgT-W1-zy4" secondAttribute="leadingMargin" constant="2" id="AQH-PB-wSu"/>
@@ -2468,19 +2653,26 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                                 <constraint firstItem="0Xh-0R-LoL" firstAttribute="top" secondItem="UyR-Oi-1UU" secondAttribute="bottom" constant="1" id="Wq4-1y-opY"/>
                                                 <constraint firstItem="i9x-j6-tAh" firstAttribute="leading" secondItem="UyR-Oi-1UU" secondAttribute="trailing" constant="54" id="Wu3-oF-5pi"/>
                                                 <constraint firstItem="PzP-nl-nNu" firstAttribute="leading" secondItem="SEO-7W-Kan" secondAttribute="trailing" constant="10" id="X8w-wY-Iny"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="07G-5V-J7k" secondAttribute="trailing" constant="2" id="Yi3-X8-qox"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="qqr-7I-EBD" secondAttribute="trailing" constant="2" id="akp-5X-l7r"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="qqr-7I-EBD" secondAttribute="trailing" constant="2" id="bgr-8A-FI0"/>
+                                                <constraint firstItem="07G-5V-J7k" firstAttribute="top" secondItem="xbQ-nV-nxA" secondAttribute="bottom" constant="28" id="bt9-3r-Mj8"/>
+                                                <constraint firstItem="6cb-Jd-ay1" firstAttribute="top" secondItem="NdX-fk-40j" secondAttribute="bottom" constant="10" id="dEh-sK-OB5"/>
                                                 <constraint firstItem="gid-9Z-naj" firstAttribute="top" secondItem="I9Y-ns-oek" secondAttribute="bottom" constant="28" id="dna-Er-5WZ"/>
                                                 <constraint firstItem="gid-9Z-naj" firstAttribute="top" secondItem="0hj-2W-sLZ" secondAttribute="bottom" id="dtw-CR-MD3"/>
                                                 <constraint firstItem="xbQ-nV-nxA" firstAttribute="top" secondItem="dgT-W1-zy4" secondAttribute="topMargin" constant="18" id="euo-d9-Wb6"/>
                                                 <constraint firstItem="dd0-VF-eZd" firstAttribute="top" secondItem="PzP-nl-nNu" secondAttribute="bottom" constant="11" id="fJU-U0-Ybr"/>
                                                 <constraint firstItem="boa-ss-I3m" firstAttribute="top" secondItem="YRJ-KP-INW" secondAttribute="bottom" constant="10" id="fMr-gr-8SH"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6cb-Jd-ay1" secondAttribute="trailing" constant="2" id="gAx-3n-9dB"/>
                                                 <constraint firstItem="boa-ss-I3m" firstAttribute="leading" secondItem="dgT-W1-zy4" secondAttribute="leadingMargin" constant="2" id="gWO-wn-dfK"/>
                                                 <constraint firstItem="UyR-Oi-1UU" firstAttribute="top" secondItem="dgT-W1-zy4" secondAttribute="topMargin" constant="9" id="gfe-je-U7t"/>
                                                 <constraint firstItem="gid-9Z-naj" firstAttribute="top" secondItem="czL-Rx-w4q" secondAttribute="bottom" constant="11" id="hCf-hG-9Rz"/>
                                                 <constraint firstItem="dd0-VF-eZd" firstAttribute="top" secondItem="SEO-7W-Kan" secondAttribute="bottom" constant="10" id="hnX-oH-Gvf"/>
                                                 <constraint firstItem="gid-9Z-naj" firstAttribute="leading" secondItem="dgT-W1-zy4" secondAttribute="leadingMargin" constant="-8" id="iS8-sV-uBj"/>
+                                                <constraint firstItem="6cb-Jd-ay1" firstAttribute="top" secondItem="07G-5V-J7k" secondAttribute="bottom" constant="10" id="itN-cj-Fmz"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="EwT-CW-VAP" secondAttribute="trailing" constant="7" id="jAc-bY-TCM"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="NdX-fk-40j" secondAttribute="trailing" constant="2" id="jhe-eY-koM"/>
+                                                <constraint firstItem="NdX-fk-40j" firstAttribute="top" secondItem="xbQ-nV-nxA" secondAttribute="bottom" constant="28" id="mWL-hc-eps"/>
                                                 <constraint firstItem="qqr-7I-EBD" firstAttribute="leading" secondItem="JCA-eK-Yu8" secondAttribute="trailing" constant="10" id="qUn-pb-pcR"/>
                                                 <constraint firstItem="qqr-7I-EBD" firstAttribute="leading" secondItem="JCA-eK-Yu8" secondAttribute="trailing" constant="10" id="qqq-yP-2GA"/>
                                                 <constraint firstItem="boa-ss-I3m" firstAttribute="top" secondItem="YRJ-KP-INW" secondAttribute="bottom" constant="10" id="r1p-uO-2ER"/>
@@ -2495,6 +2687,8 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="9UG-05-N53"/>
+                                                    <exclude reference="dEh-sK-OB5"/>
+                                                    <exclude reference="Pk6-I5-VrC"/>
                                                     <exclude reference="IZt-ek-5hn"/>
                                                     <exclude reference="J9G-fU-dFG"/>
                                                     <exclude reference="LE5-8q-uRh"/>
@@ -2517,7 +2711,8 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentsButton" destination="qqr-7I-EBD" id="bxG-01-IYy"/>
+                                            <outlet property="commentsButton" destination="qqr-7I-EBD" id="Sp8-Li-7Fh"/>
+                                            <outlet property="iLikeButton" destination="07G-5V-J7k" id="ntd-Q9-siW"/>
                                             <outlet property="likesButton" destination="YRJ-KP-INW" id="oCk-hR-E4c"/>
                                             <outlet property="postArtist" destination="hf8-gB-G8Z" id="wMm-3V-ZKg"/>
                                             <outlet property="postDelete" destination="lwa-3y-4fd" id="0nL-QX-Mnl"/>
@@ -2528,6 +2723,7 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                             <outlet property="postPlay" destination="7c5-R3-EWe" id="IE2-Eq-qBv"/>
                                             <outlet property="postTime" destination="xbQ-nV-nxA" id="QQc-ub-Gwl"/>
                                             <outlet property="postTitle" destination="I9Y-ns-oek" id="IgP-Y8-pzJ"/>
+                                            <outlet property="unlikeButton" destination="NdX-fk-40j" id="u9E-Hn-K9A"/>
                                             <outlet property="userProfil" destination="SEO-7W-Kan" id="qir-T8-eCp"/>
                                             <outlet property="username" destination="UyR-Oi-1UU" id="EAY-yk-fY9"/>
                                             <segue destination="38o-7C-Uql" kind="show" identifier="showDetailPublication" id="JUi-c4-Zc7"/>
@@ -2739,17 +2935,41 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <outlet property="delegate" destination="mWn-ZN-dWn" id="mNy-jY-xKN"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vKF-ag-z2P">
+                                <rect key="frame" x="0.0" y="20" width="320" height="35"/>
+                                <color key="backgroundColor" red="0.74901960779999999" green="0.15686274510000001" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="2qc-5J-DE6"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="gdB-8Y-5Dj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vous n'êtes pas connecté à internet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehK-1k-sGv">
+                                <rect key="frame" x="25" y="272" width="270" height="24"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="vKF-ag-z2P" secondAttribute="trailing" constant="-16" id="6ZS-Ma-PE8"/>
                             <constraint firstItem="grs-NK-cAR" firstAttribute="top" secondItem="pIp-Cq-5Qf" secondAttribute="bottom" id="DWS-bn-Dub"/>
                             <constraint firstItem="pIp-Cq-5Qf" firstAttribute="leading" secondItem="zJU-FS-bhN" secondAttribute="leadingMargin" constant="-16" id="F4q-9c-pEd"/>
+                            <constraint firstItem="vKF-ag-z2P" firstAttribute="leading" secondItem="zJU-FS-bhN" secondAttribute="leadingMargin" constant="-16" id="Gat-cy-fGH"/>
+                            <constraint firstItem="vKF-ag-z2P" firstAttribute="top" secondItem="coa-fA-gGQ" secondAttribute="bottom" id="Sef-QW-p7z"/>
+                            <constraint firstAttribute="centerX" secondItem="ehK-1k-sGv" secondAttribute="centerX" id="WPH-mw-I0A"/>
+                            <constraint firstAttribute="centerY" secondItem="ehK-1k-sGv" secondAttribute="centerY" id="ma4-bP-les"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pIp-Cq-5Qf" secondAttribute="trailing" constant="-16" id="oNI-8j-Lhe"/>
                             <constraint firstItem="pIp-Cq-5Qf" firstAttribute="top" secondItem="coa-fA-gGQ" secondAttribute="bottom" id="yaJ-9j-jmT"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="erreurBar" destination="vKF-ag-z2P" id="Ks1-NN-Jiw"/>
+                        <outlet property="noInternetLabel" destination="ehK-1k-sGv" id="5mN-OS-RDQ"/>
                         <outlet property="usersTable" destination="pIp-Cq-5Qf" id="PRN-om-6FG"/>
                     </connections>
                 </viewController>
@@ -2951,6 +3171,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <items>
                                     <barButtonItem image="Feed" id="CZU-l4-i2W">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" id="CHP-I0-0xx"/>
                                         </connections>
@@ -2958,6 +3181,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="aXP-j6-bwf"/>
                                     <barButtonItem image="Recherche" id="C10-u5-Aab">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="ZF1-8c-ghE"/>
                                         </connections>
@@ -2965,6 +3191,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="9XJ-cV-FO8"/>
                                     <barButtonItem image="Partager" id="g0H-0H-rf3">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="ZaT-Yd-lwB"/>
                                         </connections>
@@ -2972,6 +3201,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ktj-xt-O7i"/>
                                     <barButtonItem image="Notifications" id="BOn-X6-afv">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="iJB-L5-y1Z"/>
                                         </connections>
@@ -2979,6 +3211,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hxx-rU-1ut"/>
                                     <barButtonItem image="profil" id="fq2-aM-DVQ">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfil" id="qtG-aY-HWQ"/>
                                         </connections>
@@ -3321,6 +3556,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <items>
                                     <barButtonItem image="Feed" id="QBv-fd-jgt">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" id="lep-BQ-Ef3"/>
                                         </connections>
@@ -3328,6 +3566,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8Py-eG-8Py"/>
                                     <barButtonItem image="Recherche" id="Xez-RF-YOa">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="2oe-hm-HFD"/>
                                         </connections>
@@ -3335,6 +3576,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bWI-ae-Wf6"/>
                                     <barButtonItem image="Partager" id="TWt-dd-Oad">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="Sy5-1I-xkg"/>
                                         </connections>
@@ -3342,6 +3586,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hPH-ha-Sba"/>
                                     <barButtonItem image="Notifications" id="vPN-sO-mWh">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="h38-mV-TpW"/>
                                         </connections>
@@ -3349,6 +3596,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="IGL-6L-SRm"/>
                                     <barButtonItem image="profil" id="bxk-0o-1RS">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfil" id="PKS-kh-goe"/>
                                         </connections>
@@ -3471,6 +3721,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <items>
                                     <barButtonItem image="Feed" id="gxa-IP-IDg">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Aller à l'accueil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="Mrv-fI-EBo" kind="show" id="d7K-pU-aZe"/>
                                         </connections>
@@ -3478,6 +3731,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="UvB-sw-B9A"/>
                                     <barButtonItem image="Recherche" id="0cU-OC-izQ">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Rechercher des utilisateurs"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="fHj-JH-dUi" kind="show" id="WrG-pP-8cx"/>
                                         </connections>
@@ -3485,6 +3741,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="UUQ-hT-8mB"/>
                                     <barButtonItem image="Partager" id="5JF-52-zxK">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Partager un coup de coeur"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="JR4-se-5T3" kind="show" id="BIN-fE-oyG"/>
                                         </connections>
@@ -3492,6 +3751,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hz8-Iq-3p3"/>
                                     <barButtonItem image="Notifications" id="k1j-gM-K90">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mes notifications"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="tPV-E2-kVi" kind="show" id="ddX-ip-R2t"/>
                                         </connections>
@@ -3499,6 +3761,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RZ4-HB-wOR"/>
                                     <barButtonItem image="profil" id="fvw-7s-oYb">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="Afficher mon profil"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="DS7-AU-hpf" kind="show" identifier="ShowUserProfil" id="kbr-yq-uWb"/>
                                         </connections>
@@ -3528,22 +3793,90 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kc6-cS-KUy">
+                                <rect key="frame" x="0.0" y="471" width="320" height="53"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artiste" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmz-2X-RzX">
+                                        <rect key="frame" x="10" y="30" width="224" height="17"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Titre du morceau" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idn-ca-1cR">
+                                        <rect key="frame" x="10" y="8" width="224" height="22"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9oz-wp-1ly">
+                                        <rect key="frame" x="277" y="10" width="33" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="33" id="SiY-rw-cbp"/>
+                                            <constraint firstAttribute="height" constant="33" id="Wgm-gK-jm4"/>
+                                        </constraints>
+                                        <state key="normal" title="Mettre l'extrait en pause" image="pauseIcon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playerPause:" destination="tPV-E2-kVi" eventType="touchUpInside" id="12T-Fn-cSb"/>
+                                            <action selector="playerPause:" destination="fHj-JH-dUi" eventType="touchUpInside" id="9gf-o5-OeB"/>
+                                            <action selector="playerPause:" destination="Mrv-fI-EBo" eventType="touchUpInside" id="W95-cc-dBX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3D-NV-vGU">
+                                        <rect key="frame" x="242" y="14" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="2hc-re-6mk"/>
+                                            <constraint firstAttribute="height" constant="25" id="COI-pz-L5d"/>
+                                        </constraints>
+                                        <state key="normal" title="Arrêter la lecture" image="stopIcon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playerStop:" destination="tPV-E2-kVi" eventType="touchUpInside" id="IwY-Sx-KAL"/>
+                                            <action selector="playerStop:" destination="Mrv-fI-EBo" eventType="touchUpInside" id="RUB-3t-EtD"/>
+                                            <action selector="playerStop:" destination="fHj-JH-dUi" eventType="touchUpInside" id="T07-VE-cfr"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="cmz-2X-RzX" firstAttribute="leading" secondItem="kc6-cS-KUy" secondAttribute="leading" constant="10" id="DQi-5H-8ED"/>
+                                    <constraint firstAttribute="height" constant="53" id="I72-Nf-psH"/>
+                                    <constraint firstItem="cmz-2X-RzX" firstAttribute="top" secondItem="idn-ca-1cR" secondAttribute="bottom" id="JTQ-88-YKX"/>
+                                    <constraint firstItem="cmz-2X-RzX" firstAttribute="top" secondItem="idn-ca-1cR" secondAttribute="bottom" id="K7u-ES-XdS"/>
+                                    <constraint firstItem="I3D-NV-vGU" firstAttribute="top" secondItem="kc6-cS-KUy" secondAttribute="top" constant="14" id="Qmb-nl-WCc"/>
+                                    <constraint firstItem="I3D-NV-vGU" firstAttribute="leading" secondItem="cmz-2X-RzX" secondAttribute="trailing" constant="8" id="RlC-U2-d1x"/>
+                                    <constraint firstItem="idn-ca-1cR" firstAttribute="top" secondItem="kc6-cS-KUy" secondAttribute="top" constant="8" id="TPF-ff-VHf"/>
+                                    <constraint firstItem="9oz-wp-1ly" firstAttribute="leading" secondItem="I3D-NV-vGU" secondAttribute="trailing" constant="10" id="V1m-bk-Zou"/>
+                                    <constraint firstAttribute="bottom" secondItem="cmz-2X-RzX" secondAttribute="bottom" constant="6" id="Z9I-rp-d7h"/>
+                                    <constraint firstItem="I3D-NV-vGU" firstAttribute="leading" secondItem="idn-ca-1cR" secondAttribute="trailing" constant="8" id="bSY-ya-OLU"/>
+                                    <constraint firstItem="9oz-wp-1ly" firstAttribute="top" secondItem="kc6-cS-KUy" secondAttribute="top" constant="10" id="bkc-gn-20C"/>
+                                    <constraint firstAttribute="bottom" secondItem="I3D-NV-vGU" secondAttribute="bottom" constant="14" id="jLh-c5-S08"/>
+                                    <constraint firstAttribute="bottom" secondItem="9oz-wp-1ly" secondAttribute="bottom" constant="10" id="lat-lR-tHS"/>
+                                    <constraint firstAttribute="trailing" secondItem="9oz-wp-1ly" secondAttribute="trailing" constant="10" id="leP-Xz-Nxf"/>
+                                    <constraint firstItem="idn-ca-1cR" firstAttribute="leading" secondItem="kc6-cS-KUy" secondAttribute="leading" constant="10" id="wWn-sg-9Dl"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XxU-d2-1bk" firstAttribute="leading" secondItem="LhO-GQ-dTl" secondAttribute="leadingMargin" constant="-16" id="EOt-kb-5EY"/>
                             <constraint firstItem="7dl-9O-YO3" firstAttribute="leading" secondItem="LhO-GQ-dTl" secondAttribute="leadingMargin" constant="-16" id="FQU-9N-YKJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kc6-cS-KUy" secondAttribute="trailing" constant="-16" id="H0a-Kn-zcy"/>
                             <constraint firstAttribute="centerY" secondItem="3dj-Ac-vcE" secondAttribute="centerY" id="MB7-do-AGD"/>
                             <constraint firstItem="AmR-sY-fLu" firstAttribute="top" secondItem="7dl-9O-YO3" secondAttribute="bottom" id="NB5-vX-C6m"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7dl-9O-YO3" secondAttribute="trailing" constant="-16" id="OPt-UE-Gmx"/>
                             <constraint firstItem="XxU-d2-1bk" firstAttribute="top" secondItem="aDt-Ij-Z5z" secondAttribute="bottom" id="Obt-Dj-DbM"/>
                             <constraint firstAttribute="centerY" secondItem="lY6-Fg-lLu" secondAttribute="centerY" id="YY7-hH-dYq"/>
+                            <constraint firstItem="kc6-cS-KUy" firstAttribute="leading" secondItem="LhO-GQ-dTl" secondAttribute="leadingMargin" constant="-16" id="c4n-e4-ksX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="o98-5Y-xSq" secondAttribute="trailing" constant="-16" id="fCe-jd-Vya"/>
                             <constraint firstAttribute="centerX" secondItem="lY6-Fg-lLu" secondAttribute="centerX" id="gNJ-HA-eCk"/>
                             <constraint firstAttribute="centerX" secondItem="3dj-Ac-vcE" secondAttribute="centerX" id="ggf-9f-VjB"/>
                             <constraint firstItem="o98-5Y-xSq" firstAttribute="top" secondItem="aDt-Ij-Z5z" secondAttribute="bottom" id="huP-Pz-E6O"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XxU-d2-1bk" secondAttribute="trailing" constant="-16" id="lf2-2v-Agh"/>
                             <constraint firstItem="o98-5Y-xSq" firstAttribute="leading" secondItem="LhO-GQ-dTl" secondAttribute="leadingMargin" constant="-16" id="tSo-cb-to1"/>
+                            <constraint firstItem="7dl-9O-YO3" firstAttribute="top" secondItem="kc6-cS-KUy" secondAttribute="bottom" id="vY9-gD-iMm"/>
                             <constraint firstItem="7dl-9O-YO3" firstAttribute="top" secondItem="o98-5Y-xSq" secondAttribute="bottom" id="yKy-qp-5A6"/>
                         </constraints>
                     </view>
@@ -3554,6 +3887,9 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
                         <outlet property="noNotifLabel" destination="lY6-Fg-lLu" id="w4Q-xY-GLP"/>
                         <outlet property="notificationIcon" destination="k1j-gM-K90" id="mbR-1k-2Xw"/>
                         <outlet property="notificationTable" destination="o98-5Y-xSq" id="nUW-W8-W0F"/>
+                        <outlet property="playerArtist" destination="cmz-2X-RzX" id="quU-V0-PtK"/>
+                        <outlet property="playerSong" destination="idn-ca-1cR" id="6eb-W0-MnC"/>
+                        <outlet property="playerView" destination="kc6-cS-KUy" id="iNs-Pz-Wa2"/>
                         <segue destination="DS7-AU-hpf" kind="show" identifier="showNotifUser" id="CYP-p3-uBQ"/>
                         <segue destination="38o-7C-Uql" kind="show" identifier="showDetailPublication" id="7Pt-e5-LgU"/>
                         <segue destination="ta0-jj-O1a" kind="show" identifier="showComments" id="CA1-m5-QgN"/>
@@ -3589,6 +3925,106 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
             </objects>
             <point key="canvasLocation" x="1734" y="1482"/>
         </scene>
+        <!--First View Controller-->
+        <scene sceneID="o1O-7g-ArI">
+            <objects>
+                <viewController id="SA0-oA-die" customClass="FirstViewController" customModule="Share_a_Tune" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9vl-ec-h1z"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ujn-Nz-NvP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jhb-MD-rk8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="U52-0v-AkG">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="2He-CL-83n">
+                                <rect key="frame" x="103" y="40" width="115" height="139"/>
+                                <accessibility key="accessibilityConfiguration" label="Logo de Share a Tune">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="165" id="J64-km-W9l"/>
+                                    <constraint firstAttribute="height" constant="139" id="nNe-hT-CR9"/>
+                                    <constraint firstAttribute="width" constant="136" id="qHD-p7-XSv"/>
+                                    <constraint firstAttribute="width" constant="115" id="yKt-Xo-Wc9"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="J64-km-W9l"/>
+                                        <exclude reference="qHD-p7-XSv"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mew-0e-M6W">
+                                <rect key="frame" x="16" y="427" width="288" height="33"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
+                                <state key="normal" title="Je possède déja un compte">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Ude-Sx-S0j" kind="show" identifier="HasAccount" id="KYG-iP-ksd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ata-k2-1hI">
+                                <rect key="frame" x="47" y="225" width="226" height="30"/>
+                                <color key="backgroundColor" red="0.74117647060000003" green="0.0" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="8YY-D8-2I5"/>
+                                    <constraint firstAttribute="width" constant="226" id="nQF-oi-Zr0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="16"/>
+                                <state key="normal" title="Créer mon compte">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Yft-Aq-e1Z" kind="show" id="Tl5-P3-U6O"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mew-0e-M6W" firstAttribute="leading" secondItem="jhb-MD-rk8" secondAttribute="leadingMargin" id="8kK-7X-17m"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="U52-0v-AkG" secondAttribute="trailing" constant="-16" id="Keg-jE-cET"/>
+                            <constraint firstAttribute="centerX" secondItem="Ata-k2-1hI" secondAttribute="centerX" id="MBh-sD-Ri9"/>
+                            <constraint firstItem="Mew-0e-M6W" firstAttribute="trailing" secondItem="jhb-MD-rk8" secondAttribute="trailingMargin" id="Okh-jL-V0J"/>
+                            <constraint firstAttribute="centerX" secondItem="Ata-k2-1hI" secondAttribute="centerX" id="SR2-Fk-pIe"/>
+                            <constraint firstAttribute="centerX" secondItem="2He-CL-83n" secondAttribute="centerX" id="TG6-mr-qEk"/>
+                            <constraint firstItem="U52-0v-AkG" firstAttribute="leading" secondItem="jhb-MD-rk8" secondAttribute="leadingMargin" constant="-16" id="Y0v-He-tRX"/>
+                            <constraint firstItem="Ujn-Nz-NvP" firstAttribute="top" secondItem="U52-0v-AkG" secondAttribute="bottom" id="edA-nX-jSS"/>
+                            <constraint firstItem="U52-0v-AkG" firstAttribute="top" secondItem="jhb-MD-rk8" secondAttribute="topMargin" id="fmI-2Y-KwZ"/>
+                            <constraint firstItem="Ujn-Nz-NvP" firstAttribute="top" secondItem="Mew-0e-M6W" secondAttribute="bottom" constant="20" id="nWF-qf-8xV"/>
+                            <constraint firstAttribute="centerY" secondItem="Ata-k2-1hI" secondAttribute="centerY" id="qWe-Tp-ocT"/>
+                            <constraint firstItem="2He-CL-83n" firstAttribute="top" secondItem="9vl-ec-h1z" secondAttribute="bottom" constant="20" id="sPO-Bb-9su"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="SR2-Fk-pIe"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="fnc-su-vC2"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <segue destination="Ude-Sx-S0j" kind="show" identifier="AlreadyLaunched" id="tjq-fH-W4O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2CW-ta-OER" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="273" y="3"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Feed" width="27" height="27"/>
@@ -3615,14 +4051,16 @@ En vous inscrivant, vous êtes suseptible de recevoir quelques notifications mai
         <image name="timeIcon" width="300" height="301"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oX2-jO-dfJ"/>
-        <segue reference="clc-Pu-pOJ"/>
-        <segue reference="JUi-c4-Zc7"/>
-        <segue reference="vFv-fJ-73U"/>
-        <segue reference="9G4-xn-YQT"/>
-        <segue reference="581-NL-F0M"/>
-        <segue reference="4K6-C6-hcZ"/>
-        <segue reference="e3G-w3-bYW"/>
-        <segue reference="pqS-9w-oNu"/>
+        <segue reference="CkK-gt-Nw8"/>
+        <segue reference="S5g-6K-QW6"/>
+        <segue reference="oO2-Ox-3cx"/>
+        <segue reference="X7f-ft-r1t"/>
+        <segue reference="N3q-Qy-8ZR"/>
+        <segue reference="smq-Gk-HLB"/>
+        <segue reference="gEu-4o-8tv"/>
+        <segue reference="WBE-rh-jke"/>
+        <segue reference="SHX-zl-8JC"/>
+        <segue reference="Tl5-P3-U6O"/>
+        <segue reference="tjq-fH-W4O"/>
     </inferredMetricsTieBreakers>
 </document>

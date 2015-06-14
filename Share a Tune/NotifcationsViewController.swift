@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import SystemConfiguration
 import Foundation
+import MediaPlayer
 
 class NotifcationsViewController: UIViewController , UITableViewDelegate{
     
@@ -28,6 +29,36 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
         time = true;
         errorFade(time, self.erreurBar)
     }
+    
+    
+    
+    //-------------- Déclarations + Gestions du player Musical -----------------//
+    
+    
+    @IBOutlet var playerView: UIView!
+    @IBOutlet var playerSong: UILabel!
+    @IBOutlet var playerArtist: UILabel!
+    
+    @IBAction func playerPause(sender: AnyObject) {
+        
+        if playerIsPaused == true{
+            playPlayer(sender as! UIButton, playerSong, playerArtist)
+        }else{
+            pausePlayer(sender as! UIButton)
+        }
+        
+    }
+    
+    @IBAction func playerStop(sender: AnyObject) {
+        stopPlayer(playerView, notificationTable)
+    }
+    
+    
+    func hidePlayer(note : NSNotification){
+        stopPlayer(playerView, notificationTable)
+    }
+    
+    
     
     var refresher : UIRefreshControl = UIRefreshControl()
     
@@ -51,10 +82,8 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
     
     
     
-    
-    
     func getUserPicture(){
-    
+        
         if currentUser!.valueForKey("profilePicture") != nil{
             var pictureFile: AnyObject? = currentUser!.valueForKey("profilePicture")!
             pictureFile!.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
@@ -115,7 +144,7 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
                             self.getPosts()
                             self.notificationTable.reloadData()
                         }
-                       
+                        
                     }
                     
                     
@@ -132,7 +161,7 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
             noInternetLabel.alpha = 1
             notificationTable.alpha = 0.5
         }
-    
+        
         
     }
     
@@ -151,6 +180,8 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
                         self.notificationTable.reloadData()
                     }
                 }
+                
+                self.notificationTable.reloadData()
                 
             } else {
                 println("Error: \(error!) \(error!.userInfo!)")
@@ -203,8 +234,13 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
         refresher.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
         notificationTable.addSubview(refresher)
         
+        //Initialisation du player
         
-        // Do any additional setup after loading the view.
+        initialisePlayer(playerView, playerSong, playerArtist, notificationTable)
+        
+        let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -258,7 +294,7 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
             secondView.idToFind = thingToGo
         }
         
-
+        
         
         
     }
@@ -282,9 +318,10 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
         var currentSender = senderList[currentNotif.valueForKey("likerId") as! String]
         var currentPost = posts[currentNotif.valueForKey("postId") as! String]
         var notifType = currentNotif.valueForKey("notificationType") as? String
-        var notifDate: AnyObject? = currentNotif.valueForKey("updatedAt")
+        var notifDate: AnyObject? = currentNotif.valueForKey("createdAt")
         var postType = currentPost?.valueForKey("coverLink") as? String
         var labelString = NSMutableAttributedString()
+        
         
         var senderName = ""
         var senderNameLenght = Int()
@@ -294,7 +331,7 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
         }
         
         var notifFinalDate : String = ""
-
+        
         if notifDate != nil {
             notifFinalDate = makeDate(notifDate!)
         }
@@ -310,6 +347,8 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
             
             
             cell.notificationText.attributedText = labelString
+            cell.accessibilityLabel = "\(cell.notificationText.text!) . Appuyez pour afficher son profil"
+            
             
             
             var profilPictureFile: AnyObject? = PFUser.currentUser()?.valueForKey("profilePicture")
@@ -340,6 +379,7 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
                 
                 
                 cell.notificationText.attributedText = labelString
+                cell.accessibilityLabel = "\(cell.notificationText.text!) . Appuyez pour afficher la publication"
             }
             
             if notifType == "comment"{
@@ -357,6 +397,7 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
                 
                 
                 cell.notificationText.attributedText = labelString
+                cell.accessibilityLabel = "\(cell.notificationText.text!) . Appuyez pour afficher les commentaires de la publication"
             }
             
             
@@ -404,8 +445,8 @@ class NotifcationsViewController: UIViewController , UITableViewDelegate{
                     }
                 }
             }
-         
-
+            
+            
             
             
         }

@@ -314,6 +314,16 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
     }
     
+    
+    override func viewDidAppear(animated: Bool) {
+        if currentButton == "boutonSuivi"{
+            loadFollowedUser()
+        }else{
+            loadAllUser(false)
+        }
+    }
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
         return 1;
     }
@@ -332,6 +342,10 @@ class UserSearchViewController: UIViewController, UISearchBarDelegate, UISearchD
         
         cell.imageCell.layer.cornerRadius = 0.5 * cell.imageCell.bounds.size.width
         cell.labelCell.text = currentUser?.valueForKey("username") as? String
+        if cell.labelCell.text != nil {
+           cell.accessibilityLabel = "Appuyez pour afficher le profil de \(cell.labelCell.text!)"
+        }
+        
         
         currentUser?.valueForKey("profilePicture")!.getDataInBackgroundWithBlock { (imageData , imageError ) -> Void in
             

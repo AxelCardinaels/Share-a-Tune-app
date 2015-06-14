@@ -46,17 +46,18 @@
 		776CB1DB1B1103AD00F26B4E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776CB1D81B1103AC00F26B4E /* FBSDKLoginKit.framework */; };
 		776CB1DC1B1103AD00F26B4E /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776CB1D91B1103AC00F26B4E /* FBSDKShareKit.framework */; };
 		776CB1DF1B12661400F26B4E /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776CB1DE1B12661300F26B4E /* PostTableViewCell.swift */; };
-		776F20731B259EB50096C7AD /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		776F20751B2773C70096C7AD /* SingleProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F20741B2773C70096C7AD /* SingleProjectViewController.swift */; };
 		776F20771B279C9B0096C7AD /* CommentairesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F20761B279C9B0096C7AD /* CommentairesViewController.swift */; };
 		776F20791B27C7730096C7AD /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F20781B27C7730096C7AD /* CommentTableViewCell.swift */; };
 		776F207B1B2B01650096C7AD /* UserCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F207A1B2B01650096C7AD /* UserCountViewController.swift */; };
+		776F207D1B2CC3AF0096C7AD /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776F207C1B2CC3AF0096C7AD /* FirstViewController.swift */; };
 		77B965D51AFAC3CE00CE1145 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */; };
 		77B965D81AFAC96900CE1145 /* InscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */; };
 		77B965DE1AFAE0CF00CE1145 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */; };
 		77B965E01AFAE2C900CE1145 /* InscriptionFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965DF1AFAE2C900CE1145 /* InscriptionFinalViewController.swift */; };
 		77B965E41AFB7CBF00CE1145 /* addphoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B965E31AFB7CBF00CE1145 /* addphoto.png */; };
 		77B965E81AFBB4E500CE1145 /* SignUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B965E71AFBB4E500CE1145 /* SignUpFirstViewController.swift */; };
+		77C207551B2DBD2A0051410A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D74FD1AFA753600C59D82 /* Parse.framework */; };
 		77C239831B24A5ED001F0599 /* NotifcationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C239821B24A5ED001F0599 /* NotifcationsViewController.swift */; };
 		77C239851B24A629001F0599 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C239841B24A629001F0599 /* NotificationTableViewCell.swift */; };
 		77CB43BC1B0CD54700D7A9FA /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB43BB1B0CD54700D7A9FA /* NewPostViewController.swift */; };
@@ -124,6 +125,7 @@
 		776F20761B279C9B0096C7AD /* CommentairesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentairesViewController.swift; sourceTree = "<group>"; };
 		776F20781B27C7730096C7AD /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		776F207A1B2B01650096C7AD /* UserCountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountViewController.swift; sourceTree = "<group>"; };
+		776F207C1B2CC3AF0096C7AD /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		77B965D41AFAC3CE00CE1145 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		77B965D71AFAC96900CE1145 /* InscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InscriptionViewController.swift; sourceTree = "<group>"; };
 		77B965DD1AFAE0CF00CE1145 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				776F20731B259EB50096C7AD /* Parse.framework in Frameworks */,
+				77C207551B2DBD2A0051410A /* Parse.framework in Frameworks */,
 				773B75D81B13D3A500EE8C3C /* AVFoundation.framework in Frameworks */,
 				776CB1DC1B1103AD00F26B4E /* FBSDKShareKit.framework in Frameworks */,
 				776CB1DA1B1103AC00F26B4E /* FBSDKCoreKit.framework in Frameworks */,
@@ -211,6 +213,7 @@
 				776CB1DE1B12661300F26B4E /* PostTableViewCell.swift */,
 				771D74DB1AFA63BD00C59D82 /* AppDelegate.swift */,
 				771D74DF1AFA63BD00C59D82 /* Main.storyboard */,
+				776F207C1B2CC3AF0096C7AD /* FirstViewController.swift */,
 				776F207A1B2B01650096C7AD /* UserCountViewController.swift */,
 				776F20781B27C7730096C7AD /* CommentTableViewCell.swift */,
 				776F20761B279C9B0096C7AD /* CommentairesViewController.swift */,
@@ -430,6 +433,7 @@
 				7708C85B1B024F2B006B1AE9 /* UserSearchViewController.swift in Sources */,
 				776F20771B279C9B0096C7AD /* CommentairesViewController.swift in Sources */,
 				7708C8601B0265A9006B1AE9 /* UsersTableViewCell.swift in Sources */,
+				776F207D1B2CC3AF0096C7AD /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +620,9 @@
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 				);
 				INFOPLIST_FILE = "Share a Tune/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -667,6 +674,9 @@
 					a,
 					Tune,
 					/Users/Axel/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Share",
+					a,
+					Tune,
 					"$(PROJECT_DIR)/Share",
 					a,
 					Tune,

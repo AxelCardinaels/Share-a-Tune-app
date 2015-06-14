@@ -51,6 +51,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var actualImageType = ""
     var hasAlbum = true
     var hasArtist = true;
+    var selectImage = false
     
     //-------------- Variables pour l'affichage des erreurs -----------------//
     
@@ -130,9 +131,10 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     //Choix du mode d'importation via le système d'alert
     
+    
     @IBAction func ChoixPhoto(sender: AnyObject) {
         var alert = UIAlertController(title: nil, message: "Choisissez la source de votre photo", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        
+        selectImage = true
         
         if isCamera == true{
             alert.addAction(UIAlertAction(title: "Prendre une photo", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
@@ -157,7 +159,8 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         }))
         
         alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            self.selectImage = false
         }))
         
         
@@ -367,6 +370,11 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                 
                 if resultCount as! NSObject == 0{
                     self.songExist = false;
+                    var image = UIImage(named: "noCover")
+                    self.pochetteMorceau.image = image
+                    self.photoPost.setImage(image, forState: UIControlState.Normal)
+                    self.photoPost.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+                    
                     
                 }else{
                     self.songExist = true;
@@ -463,7 +471,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
                         
                         if canSaveImage == true{
                             
-                            var imageData = UIImagePNGRepresentation(pochetteMorceau.image)
+                            var imageData = UIImageJPEGRepresentation(pochetteMorceau.image, 0.8)
                             var imageFile = PFFile(name:"customCover", data: imageData)
                             
                             post["coverLink"] = "customImage"
@@ -641,7 +649,7 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     
     func applicationCameBackFromBackground(note : NSNotification){
-        getCurrentSong()
+          getCurrentSong()
         
     }
     
@@ -676,7 +684,12 @@ class NewPostViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     override func viewDidAppear(animated: Bool) {
-        getCurrentSong()
+        println(selectImage)
+        if selectImage != true{
+            getCurrentSong()
+        }
+        
+        selectImage = false
     }
     
     

@@ -36,4 +36,8 @@ class PostTableViewCell: UITableViewCell {
     
     @IBOutlet var commentsButton: UIButton!
     
+    @IBOutlet var unlikeButton: UIButton!
+    @IBOutlet var iLikeButton: UIButton!
+    
+    
 }

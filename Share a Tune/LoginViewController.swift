@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import Foundation
 import SystemConfiguration
+import MediaPlayer
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -110,6 +111,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.username.delegate = self;
         self.password.delegate = self;
+        
+        killPlayer()
         
         
         

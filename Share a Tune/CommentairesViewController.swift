@@ -273,6 +273,7 @@ class CommentairesViewController: UIViewController, UITextViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return comments.count
     }
+
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
@@ -310,6 +311,10 @@ class CommentairesViewController: UIViewController, UITextViewDelegate {
         return height
     }
     
+    
+    
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowUserProfil" {
             var secondView: UserProfilViewController = segue.destinationViewController as! UserProfilViewController
@@ -322,6 +327,8 @@ class CommentairesViewController: UIViewController, UITextViewDelegate {
             secondView.title = theName as? String
         }
     }
+    
+
     
     
     
