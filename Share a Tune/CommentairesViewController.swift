@@ -273,6 +273,7 @@ class CommentairesViewController: UIViewController, UITextViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return comments.count
     }
+    
 
     
     
@@ -323,6 +324,59 @@ class CommentairesViewController: UIViewController, UITextViewDelegate {
         return height
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var actualComment = comments[indexPath.row]
+        var actualUser = commentsUser[(actualComment.valueForKey("posterId") as? String)!]
+        
+        var commentId = actualComment.objectId
+        
+        
+        if actualUser?.objectId == PFUser.currentUser()?.objectId {
+            var alert = UIAlertController(title: nil, message: "Modification du commentaire", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            
+            alert.addAction(UIAlertAction(title: "Supprimer le commentiare", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+                
+                if commentId != nil{
+                    var query = PFQuery(className:"Comments")
+                    query.whereKey("objectId", equalTo: commentId!)
+                    query.findObjectsInBackgroundWithBlock {
+                        (objects: [AnyObject]?, error: NSError?) -> Void in
+                        
+                        if let objects = objects as? [PFObject] {
+                            for object in objects {
+                                object.deleteInBackgroundWithBlock {
+                                    (success: Bool, error: NSError?) -> Void in
+                                    if (success) {
+                                        self.getComments()
+                                        alert.dismissViewControllerAnimated(true, completion: nil)
+                                    } else {
+                                        println("fail")
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+             
+                
+                alert.dismissViewControllerAnimated(true, completion: nil)
+                
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+
+        }
+
+        
+        
+    }
     
     
     

@@ -48,13 +48,14 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var theView: UIView!
     @IBOutlet var profilPicture: UIImageView!
     @IBOutlet var profilDescription: UILabel!
+    
     var actualUserID = ""
     var following = [String]()
     var followers = [String]()
     var post = [PFObject]()
     var userStock = [PFObject]()
     var likes = [String : String]()
-    var likeLikes = [String : Bool]()
+    var likeLikes = [String : String]()
     var comments = [String: String]()
     
     
@@ -396,10 +397,10 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
                     
                     for object in objects{
                         
-                        if object.valueForKey("likedId") as? String == PFUser.currentUser()?.objectId{
-                            self.likeLikes.updateValue(true, forKey: idToFind)
+                        if object.valueForKey("likerId") as? String == PFUser.currentUser()?.objectId{
+                            self.likeLikes.updateValue("yes", forKey: idToFind)
                         }else{
-                            self.likeLikes.updateValue(false, forKey: idToFind)
+                            self.likeLikes.updateValue("no", forKey: idToFind)
                         }
                         
                     }
@@ -521,7 +522,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismissViewControllerAnimated(true, completion: nil)
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -692,9 +693,11 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
         
         var daUser = currentUser.valueForKey("username") as? String
         
-        cell.username.setTitle(daUser!, forState: UIControlState.Normal)
-        cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        cell.username.accessibilityLabel = "Publié par \(daUser!)"
+        if daUser != nil{
+            cell.username.setTitle(daUser!, forState: UIControlState.Normal)
+            cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+            cell.username.accessibilityLabel = "Publié par \(daUser!)"
+        }
         
         
         //On calcul la durée entre la date du post et la date actuelle
@@ -812,7 +815,7 @@ class UserProfilViewController: UIViewController, UITableViewDelegate {
             cell.postDelete.alpha = 1
         }
         
-        if currentLike != nil{
+        if currentLike == "yes"{
             cell.unlikeButton.alpha = 1
             cell.iLikeButton.alpha = 0
         }else{

@@ -33,6 +33,22 @@ class FirstViewController: UIViewController {
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        //On récupère le bouton clické et sa valeur ( pseudo de l'utilisateur ). On le passe comme titre de la vue de profil
+        
+        if segue.identifier == "CreateAccount" {
+            
+            var navVC = segue.destinationViewController as! UINavigationController
+            
+            var loginVC = navVC.viewControllers.first as! LoginViewController
+            loginVC.newUser = "newUser"
+            
+        }
+        
+        
+    }
+    
     
     
 }

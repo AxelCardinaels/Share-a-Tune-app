@@ -17,8 +17,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet var notificationIcon: UIBarButtonItem!
     
-    
-    
     //-------------- Gestion du rafraichissement -----------------//
     
     var refresher : UIRefreshControl = UIRefreshControl()
@@ -35,7 +33,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var erreurBar: UILabel!
     @IBOutlet var noInternetLabel: UILabel!
     @IBOutlet var noPostLabel: UILabel!
-    var noFollowing = false
     
     
     func timeOut(){
@@ -47,18 +44,16 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     //-------------- Déclarations des variables utiles pour followers, posts (feed en somme) -----------------//
     
     @IBOutlet var feedTable: UITableView!
+    @IBOutlet var noFollowLabel: UILabel!
     
     var followed = [String]()
     var post = [PFObject]()
     var followedInfo = [String : PFObject]()
     var likes = [String : String]()
-    var likeLikes = [String : Bool]()
+    var likeLikes = [String : String]()
     var comments = [String : String]()
-    @IBOutlet var notFollowingLabel: UILabel!
     var noFollowSeen = false
-    
-    
-    
+    var noFollowing = false
     
     //-------------- Déclarations + Gestions du player Musical -----------------//
     
@@ -91,8 +86,9 @@ class FeedViewController: UIViewController, UITableViewDelegate {
     //-------------- Récupération des followers -----------------//
     
     func getFollowedList(){
-        noFollowing = false;
+        
         var error = ""
+        self.noPostLabel.alpha = 0
         
         if isConnectedToNetwork() == false{
             error = "noInternet"
@@ -101,7 +97,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         if error == ""{
             self.noPostLabel.alpha = 0
             self.noInternetLabel.alpha = 0
-            self.notFollowingLabel.alpha = 0
             var currentUser = PFUser.currentUser()!.objectId!
             var query = PFQuery(className: "Followers")
             query.whereKey("follower", equalTo: currentUser)
@@ -110,62 +105,24 @@ class FeedViewController: UIViewController, UITableViewDelegate {
                 (objects: [AnyObject]?, error: NSError?) -> Void in
                 
                 if error == nil {
-                    
                     self.followed.removeAll(keepCapacity: true)
                     self.followed.append(currentUser)
-                    
-                    
-                    if objects!.count > 0 {
-                        if let objects = objects as? [PFObject] {
+                    if let objects = objects as? [PFObject] {
+                        
+                        if objects.count == 0{
+                            self.showshareatune()
                             
+                        }else{
                             for object in objects {
                                 var followedUser: AnyObject? = object.valueForKey("following")
                                 self.getFollowedInfos(object.valueForKey("following") as! String)
                                 self.followed.append(followedUser! as! String)
                             }
+                            self.getFollowedInfos(currentUser)
+                            self.getOrderedPosts()
                         }
-                        self.getFollowedInfos(currentUser)
-                        self.getOrderedPosts()
-
-                    }else{
-                        self.noFollowing = true
                         
-                        if self.noFollowSeen != true{
-                            if playerIsPlaying != true{
-                                self.notFollowingLabel.alpha = 1
-                                var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(120, 0.0, 0.0, 0.0)
-                                self.feedTable.contentInset = contentInsets
-                                self.noFollowSeen = true
-                            }
-                            
-                        }
-                    
-                        var query = PFUser.query()
-                        
-                        query!.whereKey("objectId", equalTo: "1oAbreXpMu")
-                        
-                        query!.findObjectsInBackgroundWithBlock {
-                            (objects: [AnyObject]?, error: NSError?) -> Void in
-                            
-                            if error == nil {
-                                
-                                self.followed.removeAll(keepCapacity: true)
-                                self.followed.append(currentUser)
-                                    if let objects = objects as? [PFObject] {
-                                        
-                                        for object in objects {
-                                            var followedUser: AnyObject? = object.valueForKey("objectId")
-                                            self.getFollowedInfos(object.valueForKey("objectId") as! String)
-                                            self.followed.append(followedUser! as! String)
-                                        }
-                                    }
-                                    self.getFollowedInfos(currentUser)
-                                    self.getOrderedPosts()
-                                    
-                                }else{
-                                println("Error: \(error!) \(error!.userInfo!)")
-                            }
-                        }
+                       
                     }
                     
                     
@@ -182,30 +139,53 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
     }
     
+     //-------------- Si l'utilisateur ne suit personne -----------------//
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        
-        if playerIsPlaying != false{
-            var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 60, 0.0)
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
-                self.notFollowingLabel.alpha = 0
-                self.feedTable.contentInset = contentInsets
-                
-            })
-        }else{
-            var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
-                self.notFollowingLabel.alpha = 0
-                self.feedTable.contentInset = contentInsets
-                
-            })
+    func showshareatune(){
+        if noFollowSeen != true{
+            self.noFollowLabel.alpha = 1
+            var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(120, 0.0, 0.0, 0.0)
+            self.feedTable.contentInset = contentInsets
+            self.noFollowSeen = true
         }
-       
         
+        var currentUser = PFUser.currentUser()!.objectId!
+        var query = PFUser.query()
+        self.followed.removeAll(keepCapacity: true)
+        self.followedInfo.removeAll(keepCapacity: true)
+        self.followed.append(currentUser)
+        self.getFollowedInfos(currentUser)
+        self.followed.append("1oAbreXpMu")
+        self.getFollowedInfos("1oAbreXpMu")
+        
+        
+        self.getOrderedPosts()
         
         
     }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+       if playerIsPlaying != false{
+                var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 60, 0.0)
+                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.noFollowLabel.alpha = 0
+                self.feedTable.contentInset = contentInsets
+            })
+       }else{
+            var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.noFollowLabel.alpha = 0
+            self.feedTable.contentInset = contentInsets
+            })
+        }
+   
+    }
 
+    
+    
+    
+    
+    
     
     
     //-------------- Récupération des infos des followers -----------------//
@@ -257,10 +237,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
                 if let objects = objects as? [PFObject] {
                     
                     if objects.count == 0{
-                        if self.noFollowing != true{
-                           self.noPostLabel.alpha = 1
-                        }
-                        
+                        self.noPostLabel.alpha = 1
                     }
                     
                     for object in objects {
@@ -292,16 +269,14 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             if error == nil {
                 if let objects = objects as? [PFObject] {
                     
-                    
                     self.likes.updateValue("\(objects.count) j'aime", forKey: idToFind)
                     
                     for object in objects{
                         
-                        
-                        if object.valueForKey("likedId") as? String == PFUser.currentUser()?.objectId{
-                            self.likeLikes.updateValue(true, forKey: idToFind)
+                        if object.valueForKey("likerId") as? String == PFUser.currentUser()?.objectId{
+                            self.likeLikes.updateValue("yes", forKey: idToFind)
                         }else{
-                           self.likeLikes.updateValue(false, forKey: idToFind)
+                            self.likeLikes.updateValue("no", forKey: idToFind)
                         }
                         
                     }
@@ -332,6 +307,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             }
         }
     }
+    
     //-------------- Nettoyage d'un post -----------------//
     
     func cleanPost(postId : String){
@@ -375,8 +351,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-    
-    
     //-------------- Suppression d'un post -----------------//
     
     @IBAction func deletePostAlert(sender: AnyObject) {
@@ -407,16 +381,13 @@ class FeedViewController: UIViewController, UITableViewDelegate {
                                 println("fail")
                             }
                         }
-
                         
                     }
                 }
-                
+                self.getOrderedPosts()
             }
             
-      
-            
-            
+            alert.dismissViewControllerAnimated(true, completion: nil)
             
             
         }))
@@ -476,7 +447,9 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         //On affiche la bar de navigation
         self.navigationController?.navigationBarHidden = false;
         
+        //Initialisation du player
         
+        initialisePlayer(playerView, playerSong, playerArtist, feedTable)
         
         let playerHasDonePlaying: Void = NSNotificationCenter.defaultCenter().addObserver(self , selector: "hidePlayer:" , name: MPMoviePlayerPlaybackDidFinishNotification , object: nil)
         
@@ -490,23 +463,12 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         
         makeNotifLabel(self, notificationIcon)
         getNotif()
-        
-        //Initialisation du player
-        
-        initialisePlayer(playerView, playerSong, playerArtist, feedTable)
-        
-        if playerIsPlaying{
-            notFollowingLabel.alpha = 0
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
         initialisePlayer(playerView, playerSong, playerArtist, feedTable)
         getNotif()
-        getOrderedPosts()
-        if playerIsPlaying{
-            notFollowingLabel.alpha = 0
-        }
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int{
@@ -527,18 +489,21 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         var currentCell = indexPath
         var currentPost = post[indexPath.row]
         var currentLikeNumber = likes[currentPost.objectId!]
-        var currentLike = likeLikes[currentPost.objectId!]
         var currentCommentNumber = comments[currentPost.objectId!]
         var currentUser = followedInfo[currentPost.valueForKey("userID") as! String]
+        var currentLike = likeLikes[currentPost.objectId!]
         
-        
-      
-        
+        //println(currentPost.objectId)
         //Affiche du nom de l'utilisateur
-        var daUser = currentUser!.valueForKey("username") as? String
-        cell.username.setTitle(daUser!, forState: UIControlState.Normal)
+        cell.username.setTitle(currentUser?.valueForKey("username") as? String, forState: UIControlState.Normal)
+        
         cell.username.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        cell.username.accessibilityLabel = "Publié par \(daUser!)"
+        
+        if cell.username.titleLabel?.text != nil{
+            cell.username.accessibilityLabel = "Publié par \(cell.username.titleLabel?.text!)"
+        }
+        
+        
         
         
         //On calcul la durée entre la date du post et la date actuelle
@@ -568,7 +533,6 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             cell.commentsButton.setTitle(currentCommentNumber, forState: UIControlState.Normal)
             cell.commentsButton.accessibilityLabel = "Afficher les \(currentCommentNumber!) pour cette publication"
         }
-        
         
         //On récupère l'image du post
         
@@ -661,13 +625,14 @@ class FeedViewController: UIViewController, UITableViewDelegate {
         }
         
         
-        if currentLike != nil{
+        if currentLike == "yes"{
             cell.unlikeButton.alpha = 1
             cell.iLikeButton.alpha = 0
         }else{
             cell.unlikeButton.alpha = 0
             cell.iLikeButton.alpha = 1
         }
+        
         
         return cell;
     }
@@ -720,7 +685,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             var indexPath = self.feedTable.indexPathForRowAtPoint(positionButton)
             var rowIndex = indexPath?.row
             var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
- 
+            
             secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
             
         }
@@ -734,7 +699,7 @@ class FeedViewController: UIViewController, UITableViewDelegate {
             var theCell = feedTable.cellForRowAtIndexPath(indexPath!)
             secondView.idToFind = post[rowIndex!].valueForKey("objectId") as! String
             secondView.typeToGet = "likes"
-
+            
         }
         
         if segue.identifier == "ShowDetailLike"{

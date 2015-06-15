@@ -15,13 +15,13 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="xx3-1d-VYk">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="oJ3-bD-jne">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="oJ3-bD-jne">
                                 <rect key="frame" x="103" y="40" width="115" height="139"/>
                                 <accessibility key="accessibilityConfiguration" label="Logo de Share a Tune">
                                     <bool key="isElement" value="YES"/>
@@ -39,7 +39,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom d'utilisateur" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="id3-80-EYR">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom d'utilisateur" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="id3-80-EYR">
                                 <rect key="frame" x="35" y="214" width="250" height="30"/>
                                 <color key="backgroundColor" red="0.52156862745098043" green="0.098039215686274508" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -49,7 +49,7 @@
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre mot de passe" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MY4-UX-32N">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre mot de passe" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MY4-UX-32N">
                                 <rect key="frame" x="35" y="254" width="250" height="30"/>
                                 <color key="backgroundColor" red="0.52156862749999999" green="0.098039215690000001" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -59,7 +59,7 @@
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk7-WX-wQw">
+                            <button opaque="NO" contentMode="center" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk7-WX-wQw">
                                 <rect key="frame" x="47" y="324" width="226" height="30"/>
                                 <color key="backgroundColor" red="0.74117647058823533" green="0.0" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -82,7 +82,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnX-cw-5ib">
-                                <rect key="frame" x="16" y="427" width="288" height="33"/>
+                                <rect key="frame" x="16" y="363" width="288" height="33"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="15"/>
                                 <state key="normal" title="S'inscrire sur Share a Tune">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -92,7 +92,7 @@
                                     <segue destination="Yft-Aq-e1Z" kind="show" id="i75-Uy-EM2"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHk-6i-9Nt">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHk-6i-9Nt">
                                 <rect key="frame" x="0.0" y="25" width="320" height="35"/>
                                 <color key="backgroundColor" red="0.74901960779999999" green="0.15686274510000001" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -135,6 +135,7 @@
                         <outlet property="senderButton" destination="kk7-WX-wQw" id="Z3E-h4-Znq"/>
                         <outlet property="username" destination="id3-80-EYR" id="Gm1-IO-OXr"/>
                         <segue destination="gCT-kW-CPa" kind="show" identifier="isLogged" id="KrA-2D-aJ9"/>
+                        <segue destination="Yft-Aq-e1Z" kind="show" identifier="signUp" id="V3F-wo-zbR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -745,9 +746,9 @@
                     <connections>
                         <outlet property="erreurBar" destination="9ik-DY-dW5" id="MrY-IK-2cP"/>
                         <outlet property="feedTable" destination="jbr-Hd-Be3" id="VFw-tI-0Zt"/>
+                        <outlet property="noFollowLabel" destination="4yU-48-srM" id="9bT-Tm-ZnJ"/>
                         <outlet property="noInternetLabel" destination="muk-lx-pkx" id="RKM-ox-BRR"/>
                         <outlet property="noPostLabel" destination="Kpv-09-ghg" id="A5q-cz-0R7"/>
-                        <outlet property="notFollowingLabel" destination="4yU-48-srM" id="Bq3-lJ-IAA"/>
                         <outlet property="notificationIcon" destination="IY6-Zj-GsL" id="U65-b1-NmZ"/>
                         <outlet property="playerArtist" destination="wiC-wB-Sfl" id="TQB-n2-ZUN"/>
                         <outlet property="playerSong" destination="fnz-g0-dH5" id="XNa-32-7m4"/>
@@ -1291,10 +1292,10 @@
                         <viewControllerLayoutGuide type="bottom" id="LR2-cm-ytg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dne-hS-7Kb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="middleTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" enabled="NO" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vr-eL-Bg8">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="middleTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" enabled="NO" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Vr-eL-Bg8">
                                 <rect key="frame" x="35" y="40" width="250" height="287"/>
                                 <string key="text">Bienvenue sur Share A Tune ! Vous êtes à deux minutes de pouvoir partager vos coups de coeur musicaux avec vos amis ! Pour pouvoir nous rejoindre, nous vous demandons de bien vouloir fournir les quelques informations suivantes. 
 
@@ -1303,7 +1304,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                 <color key="textColor" red="0.5607843137254902" green="0.5607843137254902" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MA1-lv-ZzO">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MA1-lv-ZzO">
                                 <rect key="frame" x="45" y="357" width="230" height="34"/>
                                 <color key="backgroundColor" red="0.79607843137254897" green="0.078431372549019607" blue="0.32156862745098042" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1338,7 +1339,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="niF-jD-Noq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="929" y="727"/>
+            <point key="canvasLocation" x="924" y="749"/>
         </scene>
         <!--S'inscrire-->
         <scene sceneID="B8w-4q-LYe">
@@ -1349,10 +1350,10 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                         <viewControllerLayoutGuide type="bottom" id="l74-Hi-3R7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gnt-FP-yzj">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KO-R9-P1d">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KO-R9-P1d">
                                 <rect key="frame" x="45" y="367" width="230" height="34"/>
                                 <color key="backgroundColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1373,7 +1374,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     <action selector="signUp:" destination="RS5-gt-vIc" eventType="touchUpInside" id="uAw-bH-0Qw"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre adresse email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uqf-4k-viH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre adresse email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uqf-4k-viH">
                                 <rect key="frame" x="35" y="107" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="bFi-7L-q0a"/>
@@ -1390,7 +1391,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom d'utilisateur" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w0B-uw-Woi">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom d'utilisateur" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w0B-uw-Woi">
                                 <rect key="frame" x="35" y="147" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="4qq-d2-km6"/>
@@ -1407,7 +1408,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre mot de passe" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-he-fWv">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre mot de passe" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-he-fWv">
                                 <rect key="frame" x="35" y="187" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="ocI-cd-g9l"/>
@@ -1424,13 +1425,13 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Votre identité sur Share a Tune" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBt-Gk-5Vq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Votre identité sur Share a Tune" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBt-Gk-5Vq">
                                 <rect key="frame" x="89" y="40" width="142" height="47"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="h6r-Vc-ioK">
+                            <button opaque="NO" contentMode="center" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="h6r-Vc-ioK">
                                 <rect key="frame" x="117" y="242" width="85" height="85"/>
                                 <color key="backgroundColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1505,16 +1506,16 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                         <viewControllerLayoutGuide type="bottom" id="WMI-Pc-vas"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iZ3-pI-vrM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vos informations du monde véritable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7c-Is-09t">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Vos informations du monde véritable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7c-Is-09t">
                                 <rect key="frame" x="84" y="40" width="153" height="47"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="al8-tv-FL7">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="al8-tv-FL7">
                                 <rect key="frame" x="45" y="217" width="230" height="34"/>
                                 <color key="backgroundColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1535,7 +1536,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     <action selector="signUpName:" destination="n2a-en-SUY" eventType="touchUpInside" id="eI0-u8-Fex"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre prénom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cwx-Fe-XNh">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre prénom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cwx-Fe-XNh">
                                 <rect key="frame" x="35" y="107" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="Zwe-oP-NCo"/>
@@ -1552,7 +1553,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rbx-2P-XDm">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Votre nom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rbx-2P-XDm">
                                 <rect key="frame" x="35" y="147" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="t7p-0f-KbY"/>
@@ -1618,10 +1619,10 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                         <viewControllerLayoutGuide type="bottom" id="0We-ZI-92B"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="E6b-3M-Xfb">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dm6-t2-YFg">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dm6-t2-YFg">
                                 <rect key="frame" x="30" y="193" width="260" height="34"/>
                                 <color key="backgroundColor" red="0.79607843140000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1642,7 +1643,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     <segue destination="vXZ-lx-hvc" kind="show" id="oX2-jO-dfJ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="middleTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" enabled="NO" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CF-FZ-1NY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="middleTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" enabled="NO" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CF-FZ-1NY">
                                 <rect key="frame" x="35" y="40" width="250" height="123"/>
                                 <string key="text">Ca y est, vous êtes maintenant membre de Share a Tune ! Vous pouvez dès à présent partager vos coups de coeur musicaux avec vos amis à tout moment ! Amusez-vous bien ! </string>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
@@ -3988,7 +3989,7 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Yft-Aq-e1Z" kind="show" id="Tl5-P3-U6O"/>
+                                    <segue destination="Ude-Sx-S0j" kind="show" identifier="CreateAccount" id="fwU-IL-Qvv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -4051,16 +4052,16 @@ En vous inscrivant, vous êtes susceptible de recevoir quelques notifications ma
         <image name="timeIcon" width="300" height="301"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CkK-gt-Nw8"/>
-        <segue reference="S5g-6K-QW6"/>
+        <segue reference="VQW-tS-qcV"/>
+        <segue reference="fwU-IL-Qvv"/>
+        <segue reference="V3F-wo-zbR"/>
+        <segue reference="WBE-rh-jke"/>
         <segue reference="oO2-Ox-3cx"/>
         <segue reference="X7f-ft-r1t"/>
         <segue reference="N3q-Qy-8ZR"/>
         <segue reference="smq-Gk-HLB"/>
+        <segue reference="S5g-6K-QW6"/>
         <segue reference="gEu-4o-8tv"/>
-        <segue reference="WBE-rh-jke"/>
         <segue reference="SHX-zl-8JC"/>
-        <segue reference="Tl5-P3-U6O"/>
-        <segue reference="tjq-fH-W4O"/>
     </inferredMetricsTieBreakers>
 </document>

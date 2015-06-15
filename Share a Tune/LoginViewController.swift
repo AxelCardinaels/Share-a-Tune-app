@@ -28,6 +28,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var senderButton: UIButton!
     
     @IBOutlet var theScrollView: UIScrollView!
+    var newUser = ""
     
     
 //-------------- Gestion du login -----------------//
@@ -115,7 +116,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         killPlayer()
         
         
-        
+        if newUser == "newUser"{
+            println("Hi")
+            performSegueWithIdentifier("signUp", sender: self)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
